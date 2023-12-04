@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1600</width>
-    <height>900</height>
+    <width>1920</width>
+    <height>1080</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,8 +21,8 @@ border-radius: 7px;</string>
    <widget class="QLabel" name="lblTituloPrincipal">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>73</y>
+      <x>535</x>
+      <y>154</y>
       <width>850</width>
       <height>250</height>
      </rect>
@@ -36,7 +36,7 @@ border-radius: 7px;</string>
      </font>
     </property>
     <property name="text">
-     <string>SISTEMA INTEGRADO DE COMPRA Y VENTA</string>
+     <string>SISTEMA INTEGRADO DE VENTA</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -48,8 +48,8 @@ border-radius: 7px;</string>
    <widget class="QLabel" name="imgVenta">
     <property name="geometry">
      <rect>
-      <x>625</x>
-      <y>415</y>
+      <x>785</x>
+      <y>504</y>
       <width>350</width>
       <height>250</height>
      </rect>
@@ -76,8 +76,8 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QLabel" name="lblVenta">
     <property name="geometry">
      <rect>
-      <x>625</x>
-      <y>720</y>
+      <x>785</x>
+      <y>794</y>
       <width>350</width>
       <height>40</height>
      </rect>
@@ -100,8 +100,8 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QLabel" name="lblSubTituloPrincipal">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>323</y>
+      <x>535</x>
+      <y>404</y>
       <width>850</width>
       <height>60</height>
      </rect>
@@ -131,7 +131,7 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QLabel" name="lblmimizar">
     <property name="geometry">
      <rect>
-      <x>1520</x>
+      <x>1840</x>
       <y>10</y>
       <width>30</width>
       <height>30</height>
@@ -153,7 +153,7 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QLabel" name="lblcerrar">
     <property name="geometry">
      <rect>
-      <x>1560</x>
+      <x>1880</x>
       <y>10</y>
       <width>30</width>
       <height>30</height>
@@ -190,7 +190,7 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QPushButton" name="btnminimizar">
     <property name="geometry">
      <rect>
-      <x>1520</x>
+      <x>1840</x>
       <y>10</y>
       <width>30</width>
       <height>30</height>
@@ -209,7 +209,7 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QPushButton" name="btnCerrar">
     <property name="geometry">
      <rect>
-      <x>1560</x>
+      <x>1880</x>
       <y>10</y>
       <width>30</width>
       <height>30</height>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1920</width>
-    <height>1080</height>
+    <height>1600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1207,7 +1207,7 @@ border-top:0;
       </column>
       <column>
        <property name="text">
-        <string>Especie</string>
+        <string>Tipo</string>
        </property>
        <property name="font">
         <font>
@@ -1294,6 +1294,16 @@ border-top:0;
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Estado Pesada</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>ID Pesada</string>
        </property>
       </column>
      </widget>
@@ -1553,8 +1563,7 @@ border-top:0;</string>
        <string notr="true">border:none;
 background-color: rgb(192, 192, 192);
 border:2px solid black;
-border-left:0;
-border-top:0;</string>
+border-left:0;</string>
       </property>
       <property name="text">
        <string>GALLINA CHICA (6)</string>
@@ -1697,8 +1706,7 @@ border-bottom:0;</string>
        <string notr="true">border:none;
 background-color: rgb(192, 192, 192);
 border:2px solid black;
-border-left:0;
-border-top:0;</string>
+border-left:0;</string>
       </property>
       <property name="text">
        <string>YUGO PELADO (2)</string>
@@ -1754,8 +1762,7 @@ border-bottom:0;</string>
        <string notr="true">border:none;
 background-color: rgb(192, 192, 192);
 border:2px solid black;
-border-left:0;
-border-top:0;</string>
+border-left:0;</string>
       </property>
       <property name="text">
        <string>TECNICO PELADO (4)</string>
@@ -1925,15 +1932,20 @@ border-right:0;
         <bold>true</bold>
        </font>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">border:none;
 background-color: rgb(192, 192, 192);
 border:2px solid black;
-border-left:0;
-border-top:0;</string>
+border-left:0;</string>
       </property>
       <property name="text">
        <string>POLLO MALTRATADO (8)</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="lblKgPolloMaltratado">
@@ -3907,6 +3919,448 @@ border-radius: 5px;</string>
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="frmAlertaTipoTrozados">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>340</y>
+      <width>800</width>
+      <height>400</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#frmAlertaTipoTrozados{background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border:none;
+border-radius: 10px;
+border: 2px solid #D9D9D9;}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="btnAceptarFrmTipoTrozados">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>310</y>
+       <width>150</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(36, 211, 21);
+color: rgb(255, 255, 255);
+border:none;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>Aceptar (↵)</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="btnPechuga">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>116</y>
+       <width>160</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border: 2px solid black;
+  border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string>PECHUGA (1)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="btnPierna">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>116</y>
+       <width>160</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border: 2px solid black;
+  border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string>PIERNA (2)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="btnAlas">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>116</y>
+       <width>160</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border: 2px solid black;
+  border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string>ALAS (3)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="btnMenudencia">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>205</y>
+       <width>160</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border: 2px solid black;
+  border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string>MENUDENCIA (4)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="btnDorso">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>205</y>
+       <width>160</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border: 2px solid black;
+  border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string>DORSO (5)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="btnOtros">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>205</y>
+       <width>160</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border: 2px solid black;
+  border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string>OTROS (6)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_5">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>90</y>
+       <width>700</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(139, 139, 139);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblTextSeleccioneTipoTrozado">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>25</y>
+       <width>700</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>24</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>SELECCIONE TIPO TROZADO</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frmIngresarNumeroPesada">
+    <property name="geometry">
+     <rect>
+      <x>735</x>
+      <y>395</y>
+      <width>450</width>
+      <height>290</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#frmIngresarNumeroPesada{background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border:none;
+border-radius: 10px;
+border: 2px solid #D9D9D9;}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="lblTextoIngresarNumeroPesada">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>20</y>
+       <width>350</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>15</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Ingresar numero de pesada</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtNumeroDePesada">
+     <property name="geometry">
+      <rect>
+       <x>75</x>
+       <y>115</y>
+       <width>300</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius: 5px;
+border: 2px solid #000;
+padding: 5px</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string>Ingrese cantidad</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnAceptarFrmIngresarNumeroPesada">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>200</y>
+       <width>150</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(36, 211, 21);
+color: rgb(255, 255, 255);
+border:none;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>Aceptar (↵)</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnCancelarFrmIngresarNumeroPesada">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>200</y>
+       <width>150</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(234, 29, 49);
+color: rgb(255, 255, 255);
+border:none;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>Cancelar (-)</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_6">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>80</y>
+       <width>350</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(139, 139, 139);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </widget>
    <zorder>frmPrincipal</zorder>
    <zorder>frmColores</zorder>
    <zorder>frmIngresarCantidadJabas</zorder>
@@ -3914,6 +4368,8 @@ border-radius: 5px;</string>
    <zorder>frmAlertaEliminar</zorder>
    <zorder>frmIngresarPassword</zorder>
    <zorder>frmAplicarDescuento</zorder>
+   <zorder>frmAlertaTipoTrozados</zorder>
+   <zorder>frmIngresarNumeroPesada</zorder>
    <zorder>frmAlerta</zorder>
   </widget>
  </widget>

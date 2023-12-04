@@ -201,7 +201,7 @@ color: rgb(255, 255, 255);</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../Imagenes/impresora.png</pixmap>
+       <pixmap>../../../Users/Edinson Santos/.designer/Imagenes/impresora.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>

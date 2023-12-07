@@ -31,7 +31,6 @@ class WorkerThread(QThread):
                     self.update_peso.emit("0.00")
                     self.update_estado.emit("0")   
                 else:
-                    print("result: ", result)
                     #self.update_peso.emit(result[6:14])
                     self.update_peso.emit(result[2:10])
                     self.update_baliza.emit(result[2:10])
@@ -41,7 +40,7 @@ class WorkerThread(QThread):
     
     def stop(self):
         print("Thread Stopped")
-        self.terminate() 
+        self.terminate()
 
 """Creamos hilo para la ejecución en segundo plano del Indicador , de esta forma
 evitamos que la aplicación se detenga por la lectura constante """

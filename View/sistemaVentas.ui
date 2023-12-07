@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1920</width>
-    <height>1600</height>
+    <height>1080</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -205,6 +205,26 @@ color: rgb(255, 255, 255);</string>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnCambiarModo">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>60</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:none;
+background-color: transparent;</string>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>
@@ -504,7 +524,7 @@ color: rgb(255, 255, 255);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>384</width>
+        <width>320</width>
         <height>60</height>
        </rect>
       </property>
@@ -530,9 +550,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="btnDescuentoXDevolucion">
       <property name="geometry">
        <rect>
-        <x>384</x>
+        <x>320</x>
         <y>0</y>
-        <width>384</width>
+        <width>320</width>
         <height>60</height>
        </rect>
       </property>
@@ -558,9 +578,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="btnEliminarUltimaPesada">
       <property name="geometry">
        <rect>
-        <x>768</x>
+        <x>640</x>
         <y>0</y>
-        <width>384</width>
+        <width>320</width>
         <height>60</height>
        </rect>
       </property>
@@ -586,9 +606,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="btnEditarUltimaCantidad">
       <property name="geometry">
        <rect>
-        <x>1152</x>
+        <x>960</x>
         <y>0</y>
-        <width>384</width>
+        <width>320</width>
         <height>60</height>
        </rect>
       </property>
@@ -614,9 +634,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="btnIngresarPesoJabas">
       <property name="geometry">
        <rect>
-        <x>1535</x>
+        <x>1600</x>
         <y>0</y>
-        <width>384</width>
+        <width>320</width>
         <height>60</height>
        </rect>
       </property>
@@ -634,6 +654,34 @@ color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
        <string>PESO DE JABAS (0)</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="btnEditarUltimaCantidad_2">
+      <property name="geometry">
+       <rect>
+        <x>1280</x>
+        <y>0</y>
+        <width>320</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Poppins</family>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 133, 200);
+color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>EDITAR JABAS (F1)</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1400,6 +1448,9 @@ border-top:0;
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>IBeamCursor</cursorShape>
       </property>
       <property name="styleSheet">
        <string notr="true"/>
@@ -3648,8 +3699,8 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(35, 40, 3, 255), stop:0.16 rgba(136, 106, 22, 255), stop:0.225 rgba(166, 140, 41, 255), stop:0.285 rgba(204, 181, 74, 255), stop:0.345 rgba(235, 219, 102, 255), stop:0.415 rgba(245, 236, 112, 255), stop:0.52 rgba(209, 190, 76, 255), stop:0.57 rgba(187, 156, 51, 255), stop:0.635 rgba(168, 142, 42, 255), stop:0.695 rgba(202, 174, 68, 255), stop:0.75 rgba(218, 202, 86, 255), stop:0.815 rgba(208, 187, 73, 255), stop:0.88 rgba(187, 156, 51, 255), stop:0.935 rgba(137, 108, 26, 255), stop:1 rgba(35, 40, 3, 255));
-color: rgb(255, 255, 255);
+      <string notr="true">background-color: rgb(255, 255, 0);
+color: rgb(0, 0, 0);
 border:none;
 border-radius: 5px;</string>
      </property>
@@ -3678,9 +3729,9 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(9, 41, 4, 255), stop:0.085 rgba(2, 79, 0, 255), stop:0.19 rgba(50, 147, 22, 255), stop:0.275 rgba(236, 191, 49, 255), stop:0.39 rgba(243, 61, 34, 255), stop:0.555 rgba(135, 81, 60, 255), stop:0.667 rgba(121, 75, 255, 255), stop:0.825 rgba(164, 255, 244, 255), stop:0.885 rgba(104, 222, 71, 255), stop:1 rgba(93, 128, 0, 255));
-border:none;
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border:2px solid #000000;
 border-radius: 5px;</string>
      </property>
      <property name="text">
@@ -3799,13 +3850,13 @@ border: 2px solid #D9D9D9;}</string>
       </font>
      </property>
      <property name="text">
-      <string>Ingresar cantidad de Jabas</string>
+      <string>Ingresar Peso de Jabas</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLineEdit" name="txtCantidadParaIngresarJabas">
+    <widget class="QLineEdit" name="txtPesoParaIngresarJabas">
      <property name="geometry">
       <rect>
        <x>75</x>
@@ -4361,6 +4412,119 @@ border-radius: 5px;</string>
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="frmDecidirReporte">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>440</y>
+      <width>500</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#frmDecidirReporte{background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border:none;
+border-radius: 10px;
+border: 2px solid #D9D9D9;}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>35</y>
+       <width>400</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>18</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #24D315;</string>
+     </property>
+     <property name="text">
+      <string>¿Incluir Precio en el Reporte?</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnNoPrecioReporte">
+     <property name="geometry">
+      <rect>
+       <x>275</x>
+       <y>115</y>
+       <width>150</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(234, 29, 49);
+color: rgb(255, 255, 255);
+border:none;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>NO (2)</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnSiPrecioReporte">
+     <property name="geometry">
+      <rect>
+       <x>75</x>
+       <y>115</y>
+       <width>150</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Poppins</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(36, 211, 21);
+color: rgb(255, 255, 255);
+border:none;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>SI (1)</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
    <zorder>frmPrincipal</zorder>
    <zorder>frmColores</zorder>
    <zorder>frmIngresarCantidadJabas</zorder>
@@ -4370,6 +4534,7 @@ border-radius: 5px;</string>
    <zorder>frmAplicarDescuento</zorder>
    <zorder>frmAlertaTipoTrozados</zorder>
    <zorder>frmIngresarNumeroPesada</zorder>
+   <zorder>frmDecidirReporte</zorder>
    <zorder>frmAlerta</zorder>
   </widget>
  </widget>

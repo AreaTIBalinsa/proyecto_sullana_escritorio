@@ -1,6 +1,7 @@
 # Importación de Librerias
 from PyQt5.QtWidgets import QMainWindow, QLabel, QTableWidgetItem , QWidget, QLabel, QHBoxLayout
 from PyQt5 import QtCore
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -128,7 +129,15 @@ frmEditarCantidadDescuento = False
 frmSeleccionarTipoTrozado = False
 frmIngresarNumeroPesadaEditar = False
 frmIngresarNumeroPesadaEliminar = False
+frmIngresarNumeroColoresEditar = False
 frmRegistrarColoresJabas = False
+frmSeleccionarTipoTrozadoDesc = False
+frmRegistrarColoresJabasEditar = False
+frmDecidirReporte = False
+frmIngresarNumeroPesoJabaEditar = False
+
+imprimePrecio = False
+modoOscuro = False
 
 # Variables para la Base de Datos
 numProceso = 0
@@ -193,7 +202,7 @@ class LetrasWidget(QWidget):
             if int(numero) != 0:
 
                 label = QLabel(numero)
-                label.setStyleSheet(f"color: {text_color.name()}; background-color: {color.name()}; border: 1px solid #000000; padding: 4px; text-align: center")
+                label.setStyleSheet(f"border-radius: 5px; color: {text_color.name()}; background-color: {color.name()}; border: 1px solid #000000; padding: 4px; text-align: center")
                 label.setFont(fuente)
                 label.setAlignment(Qt.AlignCenter)
                 layout.addWidget(label)
@@ -333,21 +342,6 @@ class Inicio(QMainWindow):
         
         self.fn_declaraEspecie()
         self.fn_declaraPassword()
-        
-        tablaDePesos = self.ui.tblDetallePesadas
-        tablaDePesos.setColumnWidth(0, 80)
-        tablaDePesos.setColumnWidth(1, 300)
-        tablaDePesos.setColumnWidth(2, 100)
-        tablaDePesos.setColumnWidth(3, 150)
-        tablaDePesos.setColumnWidth(4, 150)
-        tablaDePesos.setColumnWidth(5, 100)
-        tablaDePesos.setColumnWidth(6, 100)
-        tablaDePesos.setColumnWidth(7, 250)
-        tablaDePesos.setColumnWidth(8, 150)
-        tablaDePesos.setColumnWidth(9, 100)
-        tablaDePesos.setColumnHidden(10, True)
-        tablaDePesos.setColumnHidden(11, True)
-        tablaDePesos.setAlternatingRowColors(True)
 
         self.ui.txtCodigoCliente.setEnabled(True)
         self.ui.txtCodigoCliente.setFocus(True)
@@ -365,6 +359,7 @@ class Inicio(QMainWindow):
         self.ui.frmIngresarCantidadJabas.setHidden(True)
         self.ui.frmAlertaTipoTrozados.setHidden(True)
         self.ui.frmIngresarNumeroPesada.setHidden(True)
+        self.ui.frmDecidirReporte.setHidden(True)
         
         self.ui.txtCantidadParaIngresar.textChanged.connect(self.fn_validarEntradaNumerica)
         self.ui.txtCantidadDescuento.textChanged.connect(self.fn_validarEntradaNumerica)
@@ -380,7 +375,99 @@ class Inicio(QMainWindow):
         
         self.ui.btnCerrarFrmAlerta.clicked.connect(self.fn_btnCerrarFrmAlerta)
         
+        tablaDePesos = self.ui.tblDetallePesadas
+        tablaDePesos.setColumnWidth(0, 80)
+        tablaDePesos.setColumnWidth(1, 300)
+        tablaDePesos.setColumnWidth(2, 100)
+        tablaDePesos.setColumnWidth(3, 150)
+        tablaDePesos.setColumnWidth(4, 150)
+        tablaDePesos.setColumnWidth(5, 100)
+        tablaDePesos.setColumnWidth(6, 100)
+        tablaDePesos.setColumnWidth(7, 250)
+        tablaDePesos.setColumnWidth(8, 150)
+        tablaDePesos.setColumnWidth(9, 100)
+        tablaDePesos.setColumnHidden(10, True)
+        tablaDePesos.setColumnHidden(11, True)
+        tablaDePesos.setAlternatingRowColors(True)
+        
+        self.estilosPorDefectoTabla = self.ui.tblDetallePesadas.styleSheet()
+
+        self.ui.btnCambiarModo.clicked.connect(self.fn_cambiarModo)
+        
     # ======================== Funciones llamadas por los Hilos ========================
+
+    def fn_cambiarModo(self):
+        global modoOscuro
+        
+        tablaDePesos = self.ui.tblDetallePesadas
+        
+        if modoOscuro == False:
+            modoOscuro = True
+            self.ui.lblSeleccioneEspecie.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblPesoIndicador.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblUnidadPesaje.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.frmIndicadorSistema.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            
+            self.ui.lblKgYugoVivo.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgYugoPelado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgTecnicoVivo.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgTecnicoPelado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgGallinaDoble.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgGallinaChica.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgGallo.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgPolloMaltratado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.lblKgPolloTrozado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            
+            self.ui.frmTotales.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            self.ui.txtCodigoCliente.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+            
+            self.ui.tblDetallePesadas.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
+        else:
+            modoOscuro = False
+            
+            self.ui.lblSeleccioneEspecie.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblPesoIndicador.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblUnidadPesaje.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.frmIndicadorSistema.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            
+            self.ui.lblKgYugoVivo.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgYugoPelado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgTecnicoVivo.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgTecnicoPelado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgGallinaDoble.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgGallinaChica.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgGallo.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgPolloMaltratado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.lblKgPolloTrozado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.frmTotales.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            self.ui.txtCodigoCliente.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
+            
+            self.ui.tblDetallePesadas.setStyleSheet(self.estilosPorDefectoTabla)
+            
+        self.ajustarColoresAlternosTabla(tablaDePesos)
+            
+    # Función para ajustar colores alternos de las filas en la tabla
+    def ajustarColoresAlternosTabla(self, tabla):
+        if modoOscuro:
+            # Establecer colores oscuros para el modo oscuro
+            color_fila_alternante = QtGui.QColor(45, 45, 45)  # Puedes ajustar estos valores según tu preferencia
+            color_header = QtGui.QColor(32, 33, 36)  # Color para el header en modo oscuro
+        else:
+            # Establecer colores claros para el modo claro
+            color_fila_alternante = QtGui.QColor(240, 240, 240)  # Puedes ajustar estos valores según tu preferencia
+            color_header = QtGui.QColor(255, 255, 255)  # Color para el header en modo claro
+
+        # Aplicar colores alternos a las filas de la tabla
+        for fila in range(tabla.rowCount()):
+            if fila % 2 == 1:
+                for columna in range(tabla.columnCount()):
+                    item = tabla.item(fila, columna)
+                    if item is not None:
+                        item.setBackground(color_fila_alternante)
+
+        # Aplicar color al header
+        header = tabla.horizontalHeader()
+        header.setStyleSheet("QHeaderView::section { background-color: %s; }" % color_header.name())
     
     def evt_actualizar_peso(self, val):
         global pesoBalanza1
@@ -390,7 +477,6 @@ class Inicio(QMainWindow):
             try:
                 signo = val[0:1]
                 val = float(val[1:8])
-                print("val: ", val , "signo: ", signo)
                 
                 if (signo == "-") and val != 0:
                     self.ui.lblPesoIndicador.setText("-"+str(format(val, ".2f")))
@@ -498,7 +584,12 @@ class Inicio(QMainWindow):
             not frmRegistrarDescuentoCan and
             not frmSeleccionarTipoTrozado and
             not frmIngresarNumeroPesadaEditar and
-            not frmIngresarNumeroPesadaEliminar
+            not frmIngresarNumeroPesadaEliminar and
+            not frmSeleccionarTipoTrozadoDesc and
+            not frmRegistrarColoresJabasEditar and
+            not frmIngresarNumeroColoresEditar and
+            not frmDecidirReporte and
+            not frmIngresarNumeroPesoJabaEditar
         )
         
     def condiciones_alertas(self):
@@ -533,6 +624,12 @@ class Inicio(QMainWindow):
         global frmIngresarNumeroPesadaEliminar
         global idPesadaEditarOEliminar
         global frmRegistrarColoresJabas
+        global frmSeleccionarTipoTrozadoDesc
+        global frmIngresarNumeroColoresEditar
+        global frmRegistrarColoresJabasEditar
+        global frmDecidirReporte
+        global imprimePrecio
+        global frmIngresarNumeroPesoJabaEditar
         
         if event.key() == Qt.Key_Escape:
             self.close()
@@ -569,7 +666,7 @@ class Inicio(QMainWindow):
             self.ui.txtCantidadSextoColor.setText("")
             self.ui.txtCantidadSeptimoColor.setText("")
             self.ui.txtCantidadParaIngresar.setText("")
-            self.ui.frmColores.setHidden(False)
+            self.ui.frmColores.setHidden(False)  
             frmRegistrarColoresJabas = True
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and self.ui.lwListaClientes.isVisible():
@@ -626,22 +723,45 @@ class Inicio(QMainWindow):
             self.fn_alerta("¡EDITADO EXITOSO!",correcto,"El registro se edito correctamente.")
             frmEditarCantidadDescuento = False
             
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarJabas == True and frmInicioProceso == True and self.ui.frmIngresarCantidad.isVisible() and self.ui.txtCantidadParaIngresar.text() != "":
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarJabas == True and frmIngresarNumeroPesoJabaEditar == False and frmInicioProceso == True and self.ui.frmIngresarCantidadJabas.isVisible() and self.ui.txtPesoParaIngresarJabas.text() != "":
             self.fn_registrarTara()
-            self.ui.frmIngresarCantidad.setHidden(True)
+            self.ui.frmIngresarCantidadJabas.setHidden(True)
             self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente.")
             frmRegistrarJabas = False
             
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmInicioProceso == True and frmIngresarNumeroPesoJabaEditar == True and frmRegistrarJabas == False and not self.ui.lwListaClientes.isVisible() and self.ui.txtNumeroDePesada.text()  != "" and int(self.ui.txtNumeroDePesada.text()) > 0 :
+            numeroDePesada = int(self.ui.txtNumeroDePesada.text())
+            tablaDePesos = self.ui.tblDetallePesadas
+            totalFilas = tablaDePesos.rowCount()
+
+            if numeroDePesada <= totalFilas:
+                # Obtener el índice ajustado según la cantidad total de filas
+                txtNumeroDePesada = totalFilas - numeroDePesada
+                idPesadaEditarOEliminar = tablaDePesos.item(txtNumeroDePesada, 11).text()
+                
+                self.ui.txtPesoParaIngresarJabas.setText("")
+                self.ui.frmIngresarNumeroPesada.setHidden(True)
+                self.ui.frmIngresarCantidadJabas.setHidden(False)
+                self.ui.txtPesoParaIngresarJabas.setFocus(True)
+                frmRegistrarJabas = True
+                frmIngresarNumeroPesoJabaEditar = False
+            else:
+                self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
+            
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.ui.frmAlertaTipoTrozados.setHidden(True)
             frmSeleccionarTipoTrozado = False
             
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarDescuento == True and frmInicioProceso == True and self.ui.frmAplicarDescuento.isVisible() and idEspecieDesc != 0:
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarDescuento == True and frmInicioProceso == True and self.ui.frmAplicarDescuento.isVisible() and idEspecieDesc != 0 and frmSeleccionarTipoTrozadoDesc == False:
             self.ui.txtCantidadDescuento.setEnabled(True)
             self.ui.imgIconDesc.setPixmap(QPixmap(descuento))
             frmRegistrarDescuento = False
             frmRegistrarDescuentoCan = True
             self.ui.txtCantidadDescuento.setFocus(True)
+            
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == False and frmSeleccionarTipoTrozadoDesc == True:
+            self.ui.frmAlertaTipoTrozados.setHidden(True)
+            frmSeleccionarTipoTrozadoDesc = False
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarDescuento == False and frmRegistrarDescuentoCan == True and frmInicioProceso == True and self.ui.frmAplicarDescuento.isVisible() and self.ui.txtCantidadDescuento.text() != "":
             if idEspecieDesc == primerEspecie and int(self.ui.txtCantYugoVivo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
@@ -674,6 +794,18 @@ class Inicio(QMainWindow):
             self.ui.frmIngresarPassword.setHidden(False)
             frmAlertaEliminarPeso = False
             frmEliminarPeso = True
+            
+        if event.key() == Qt.Key_1 and frmDecidirReporte == True and frmInicioProceso == True and self.ui.frmDecidirReporte.isVisible():
+            self.ui.frmDecidirReporte.setHidden(True)
+            frmDecidirReporte = False
+            imprimePrecio = True
+            self.fn_imprimirReporte()
+        
+        if event.key() == Qt.Key_2 and frmDecidirReporte == True and frmInicioProceso == True and self.ui.frmDecidirReporte.isVisible():
+            self.ui.frmDecidirReporte.setHidden(True)
+            frmDecidirReporte = False
+            imprimePrecio = False
+            self.fn_imprimirReporte()
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmAlertaEliminarPeso == False and frmEliminarPeso == True and frmInicioProceso == True and self.ui.frmIngresarPassword.isVisible() and self.ui.txtPasswordEliminar.text() != "":
             passwordExtraido = self.ui.txtPasswordEliminar.text()
@@ -736,6 +868,54 @@ class Inicio(QMainWindow):
                 frmIngresarNumeroPesadaEliminar = False
             else:
                 self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
+        
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabasEditar == True and frmIngresarNumeroColoresEditar == False:
+            self.ui.frmColores.setHidden(True)
+            self.fn_actualizarPesadaColores()
+            self.fn_alerta("¡EDITADO EXITOSO!",correcto,"El registro se edito correctamente.",1500)
+            frmRegistrarColoresJabasEditar = False
+                
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmInicioProceso == True and frmIngresarNumeroColoresEditar == True and not self.ui.lwListaClientes.isVisible() and self.ui.txtNumeroDePesada.text()  != "" and int(self.ui.txtNumeroDePesada.text()) > 0 :
+            numeroDePesada = int(self.ui.txtNumeroDePesada.text())
+            tablaDePesos = self.ui.tblDetallePesadas
+            totalFilas = tablaDePesos.rowCount()
+
+            if numeroDePesada <= totalFilas:
+                # Obtener el índice ajustado según la cantidad total de filas
+                txtNumeroDePesada = totalFilas - numeroDePesada
+                idPesadaEditarOEliminar = tablaDePesos.item(txtNumeroDePesada, 11).text()
+                
+                datosColoresEditar = self.conexion.db_consultarColoresEditar(idPesadaEditarOEliminar)
+                
+                if datosColoresEditar != "":
+                
+                    datosColoresEditarDesestruturado = datosColoresEditar.split(' | ')
+                    
+                    arregloEditar = []
+                    
+                    for letra in datosColoresEditarDesestruturado:
+                        numero = letra[1:]
+                        if int(numero) == 0 :
+                            numero = ""
+                        arregloEditar.append(numero)
+                    
+                    self.ui.txtCantidadPrimerColor.setText(arregloEditar[0])
+                    self.ui.txtCantidadSegundoColor.setText(arregloEditar[1])
+                    self.ui.txtCantidadTercerColor.setText(arregloEditar[2])
+                    self.ui.txtCantidadCuartoColor.setText(arregloEditar[3])
+                    self.ui.txtCantidadQuintoColor.setText(arregloEditar[4])
+                    self.ui.txtCantidadSextoColor.setText(arregloEditar[5])
+                    self.ui.txtCantidadSeptimoColor.setText(arregloEditar[6])
+                    
+                    self.ui.txtNumeroDePesada.setText("")
+                    self.ui.frmIngresarNumeroPesada.setHidden(True)
+                    self.ui.frmColores.setHidden(False)
+                    frmRegistrarColoresJabasEditar = True
+                    frmIngresarNumeroColoresEditar = False
+                else:
+                    self.fn_alerta("¡ADVERTENCIA!",error,"El registro es un descuento, por lo tanto no puede realizar esta acción.",1500)
+            else:
+                self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
             
     def keyReleaseEvent(self, event):
         global balanzaSeleccionada
@@ -758,20 +938,25 @@ class Inicio(QMainWindow):
         global frmIngresarNumeroPesadaEliminar
         global idPesadaEditarOEliminar
         global frmRegistrarColoresJabas
+        global frmSeleccionarTipoTrozadoDesc
+        global frmRegistrarColoresJabasEditar
+        global frmIngresarNumeroColoresEditar
+        global frmDecidirReporte
+        global frmIngresarNumeroPesoJabaEditar
         
-        if (event.key() == Qt.Key_F1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        if (event.key() == Qt.Key_R) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadPrimerColor.setFocus(True)
-        elif (event.key() == Qt.Key_F2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        elif (event.key() == Qt.Key_C) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadSegundoColor.setFocus(True)
-        elif (event.key() == Qt.Key_F3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        elif (event.key() == Qt.Key_A) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadTercerColor.setFocus(True)
-        elif (event.key() == Qt.Key_F4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        elif (event.key() == Qt.Key_V) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadCuartoColor.setFocus(True)
-        elif (event.key() == Qt.Key_F5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        elif (event.key() == Qt.Key_N) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadQuintoColor.setFocus(True)
-        elif (event.key() == Qt.Key_F6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        elif (event.key() == Qt.Key_D) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadSextoColor.setFocus(True)
-        elif (event.key() == Qt.Key_F7) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabas == True:
+        elif (event.key() == Qt.Key_O) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadSeptimoColor.setFocus(True)
         
         if (event.key() == Qt.Key_Right) and self.condiciones_base():
@@ -818,53 +1003,103 @@ class Inicio(QMainWindow):
             self.fn_seleccionarEspecie(decimaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaEspecie))
                 
-        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecie(decimaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaEspecie))
-        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecie(decimaPrimeraEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaPrimeraEspecie))
-        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecie(decimaSegundaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaSegundaEspecie))
-        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecie(decimaTerceraEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaTerceraEspecie))
-        elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecie(decimaCuartaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaCuartaEspecie))
-        elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True:
+        elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecie(decimaQuintaOtrasEspecies)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaQuintaOtrasEspecies))
             
-        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False:
+        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+            self.fn_seleccionarEspecieDescuento(decimaEspecie)
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaEspecie))
+        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+            self.fn_seleccionarEspecieDescuento(decimaPrimeraEspecie)
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaPrimeraEspecie))
+        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+            self.fn_seleccionarEspecieDescuento(decimaSegundaEspecie)
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaSegundaEspecie))
+        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+            self.fn_seleccionarEspecieDescuento(decimaTerceraEspecie)
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaTerceraEspecie))
+        elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+            self.fn_seleccionarEspecieDescuento(decimaCuartaEspecie)
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaCuartaEspecie))
+        elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+            self.fn_seleccionarEspecieDescuento(decimaQuintaOtrasEspecies)
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaQuintaOtrasEspecies))
+            
+        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
             if int(self.ui.txtCantYugoVivo.text().split()[0].strip()) > 0 :
                 self.fn_seleccionarEspecieDescuento(primerEspecie)
             else:
                 idEspecieDesc = 0
                 self.fn_seleccionarEspecieDescuento(idEspecieDesc)
                 self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombrePrimerEspecie),1500)
-        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False:
+        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
             if int(self.ui.txtCantYugoPelado.text().split()[0].strip()) > 0 :
                 self.fn_seleccionarEspecieDescuento(segundaEspecie)
             else:
                 idEspecieDesc = 0
                 self.fn_seleccionarEspecieDescuento(idEspecieDesc)
                 self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreSegundaEspecie),1500)
-        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False:
+        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
             if int(self.ui.txtCantTecnicoVivo.text().split()[0].strip()) > 0 :
                 self.fn_seleccionarEspecieDescuento(terceraEspecie)
             else:
                 idEspecieDesc = 0
                 self.fn_seleccionarEspecieDescuento(idEspecieDesc)
                 self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreTerceraEspecie),1500)
-        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False:
+        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
             if int(self.ui.txtCantTecnicoPelado.text().split()[0].strip()) > 0 :
                 self.fn_seleccionarEspecieDescuento(cuartaEspecie)
             else:
                 idEspecieDesc = 0
                 self.fn_seleccionarEspecieDescuento(idEspecieDesc)
                 self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreCuartaEspecie),1500)
+        elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
+            if int(self.ui.txtCantGallinaDoble.text().split()[0].strip()) > 0 :
+                self.fn_seleccionarEspecieDescuento(quintaEspecie)
+            else:
+                idEspecieDesc = 0
+                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreQuintaEspecie),1500)
+        elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
+            if int(self.ui.txtCantGallinaChica.text().split()[0].strip()) > 0 :
+                self.fn_seleccionarEspecieDescuento(sextaEspecie)
+            else:
+                idEspecieDesc = 0
+                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreSextaEspecie),1500)
+        elif (event.key() == Qt.Key_7) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
+            if int(self.ui.txtCantGallo.text().split()[0].strip()) > 0 :
+                self.fn_seleccionarEspecieDescuento(septimaEspecie)
+            else:
+                idEspecieDesc = 0
+                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreSeptimaEspecie),1500)
+        elif (event.key() == Qt.Key_8) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
+            if int(self.ui.txtCantPolloMaltratado.text().split()[0].strip()) > 0 :
+                self.fn_seleccionarEspecieDescuento(octavaEspecie)
+            else:
+                idEspecieDesc = 0
+                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreOctavaEspecie),1500)
+        elif (event.key() == Qt.Key_9) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
+            self.fn_seleccionarEspecieDescuento(decimaEspecie)
+            self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaEspecie))
             
         if (event.key() == Qt.Key_Slash) and self.condiciones_base() and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
             if listoParaAccionar == True :
@@ -898,23 +1133,35 @@ class Inicio(QMainWindow):
                 self.fn_alerta("¡ADVERTENCIA!",error,"En este momento no puedes editar por que no hay registros.",3000)
             
         if (event.key() == Qt.Key_0) and self.condiciones_base() and frmInicioProceso == True and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
-            self.ui.txtCantidadParaIngresar.setText("")
-            self.fn_alertaCantidad("Ingresar cantidad de Jabas")
-            frmRegistrarJabas = True
-            self.ui.txtCantidadParaIngresar.setFocus(True)
+            # self.ui.txtPesoParaIngresarJabas.setText("")
+            # self.ui.frmIngresarCantidadJabas.setHidden(False)
+            # frmRegistrarJabas = True
+            # self.ui.txtPesoParaIngresarJabas.setFocus(True)
+            
+            if listoParaAccionar == True :
+                idPesadaEditarOEliminar = 0
+                self.ui.txtNumeroDePesada.setText("")
+                self.ui.txtNumeroDePesada.setFocus(True)
+                self.ui.frmIngresarNumeroPesada.setHidden(False)
+                frmIngresarNumeroPesoJabaEditar = True
+            else:
+                self.fn_alerta("¡ADVERTENCIA!",error,"En este momento no puedes eliminar por que no hay registros.",2500)
             
         if (event.key() == Qt.Key_Shift) and self.condiciones_base() and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
-            self.fn_imprimirReporte()
+            self.ui.frmDecidirReporte.setHidden(False)
+            frmDecidirReporte = True
             
         if event.key() == Qt.Key_Minus and frmInicioProceso == True:
             if (self.ui.frmIngresarCantidad.isVisible()):
                 self.ui.frmIngresarCantidad.setHidden(True)
                 frmRegistrarCantidad = False
                 frmEditarCantidad = False
-                frmRegistrarJabas = False
                 frmEditarCantidadTara = False
                 frmEditarCantidadDescuento = False
-            elif (self.ui.frmAplicarDescuento.isVisible()):
+            elif (self.ui.frmIngresarCantidadJabas.isVisible()):
+                self.ui.frmIngresarCantidadJabas.setHidden(True)
+                frmRegistrarJabas = False
+            elif (self.ui.frmAplicarDescuento.isVisible()) and frmSeleccionarTipoTrozadoDesc == False:
                 self.ui.frmAplicarDescuento.setHidden(True)
                 frmRegistrarDescuento = False
                 frmRegistrarDescuentoCan = False
@@ -928,11 +1175,17 @@ class Inicio(QMainWindow):
                 self.ui.frmIngresarNumeroPesada.setHidden(True)
                 frmIngresarNumeroPesadaEditar = False
                 frmIngresarNumeroPesadaEliminar = False
+                frmIngresarNumeroColoresEditar = False
+                frmIngresarNumeroPesoJabaEditar = False
             elif (self.ui.frmColores.isVisible()):
                 self.ui.frmColores.setHidden(True)
                 frmRegistrarColoresJabas = False
+                frmRegistrarColoresJabasEditar = False
+            elif (self.ui.frmDecidirReporte.isVisible()):
+                self.ui.frmDecidirReporte.setHidden(True)
+                frmDecidirReporte = False
                 
-        if event.key() == Qt.Key_F12 and not self.ui.frmAlerta.isVisible():
+        if event.key() == Qt.Key_F5 and not self.ui.frmAlerta.isVisible():
             if not btnActualizar and contadorActualizar == 0:
                 btnActualizar = True
                 contadorActualizar = 30
@@ -941,6 +1194,24 @@ class Inicio(QMainWindow):
                 self.fn_abrirAnimacion()
             else:
                 self.fn_alerta("ADVERTENCIA", error, "Debe esperar {} segundos antes de volver a actualizar.".format(contadorActualizar), 1000)
+            
+        if event.key() == Qt.Key_F1 and self.condiciones_base() and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
+            if listoParaAccionar == True :
+                idPesadaEditarOEliminar = 0
+                self.ui.txtCantidadPrimerColor.setText("")
+                self.ui.txtCantidadSegundoColor.setText("")
+                self.ui.txtCantidadTercerColor.setText("")
+                self.ui.txtCantidadCuartoColor.setText("")
+                self.ui.txtCantidadQuintoColor.setText("")
+                self.ui.txtCantidadSextoColor.setText("")
+                self.ui.txtCantidadSeptimoColor.setText("")
+                self.ui.txtCantidadParaIngresar.setText("")
+                self.ui.frmIngresarNumeroPesada.setHidden(False)
+                self.ui.txtNumeroDePesada.setText("")
+                self.ui.txtNumeroDePesada.setFocus(True) 
+                frmIngresarNumeroColoresEditar = True
+            else:
+                self.fn_alerta("¡ADVERTENCIA!",error,"En este momento no puedes editar por que no hay registros.",3000)
             
     # ======================== Termina eventos con el Teclado ========================
     
@@ -986,6 +1257,8 @@ class Inicio(QMainWindow):
                 print(f"Error al interactuar con la base de datos: {e}")
             else:
                 s2.close()
+                
+            self.ui.frmAlerta.setHidden(True)
     
     def fn_declaraEspecie(self):
         global primerEspecie
@@ -1021,6 +1294,7 @@ class Inicio(QMainWindow):
         
         
         nombresEspecies = self.conexion.db_buscaEspecies()
+        
         primerEspecie = nombresEspecies[0][0]
         nombrePrimerEspecie = nombresEspecies[0][1]
         
@@ -1083,8 +1357,10 @@ class Inicio(QMainWindow):
         self.ui.btnDescGallinaDoble.setText("{} (5)".format(nombreQuintaEspecie))
         self.ui.btnDescGallinaChica.setText("{} (6)".format(nombreSextaEspecie))
         self.ui.btnDescGallo.setText("{} (7)".format(nombreSeptimaEspecie))
-        self.ui.btnDescPolloMaltratado.setText("{} (8)".format(nombreOctavaEspecie))
-        self.ui.btnDescPolloTrozado.setText("{} (9)".format(nombreNovenaEspecie))
+        nombreOctavaEspecie_formateado = " \n ".join(nombreOctavaEspecie.split())
+        self.ui.btnDescPolloMaltratado.setText("{} (8)".format(nombreOctavaEspecie_formateado))
+        self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie, nombresEspecies[9][1]))
+
         
     def fn_declararPuertoArduino(self):
         global COMAR
@@ -1487,6 +1763,7 @@ class Inicio(QMainWindow):
         global precioClienteDesc
         global especieDesCli1
         global especieDesCli2
+        global frmSeleccionarTipoTrozadoDesc
         
         self.ui.btnDescYugoVivo.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         self.ui.btnDescYugoPelado.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
@@ -1497,6 +1774,12 @@ class Inicio(QMainWindow):
         self.ui.btnDescGallo.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         self.ui.btnDescPolloMaltratado.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         self.ui.btnDescPolloTrozado.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnPechuga.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnPierna.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnAlas.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnMenudencia.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnDorso.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnOtros.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         
         if especieDesc == 1:
             self.ui.btnDescYugoVivo.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
@@ -1515,25 +1798,50 @@ class Inicio(QMainWindow):
             precioClienteDesc = precioCuartaEspecie
             idEspecieDesc = cuartaEspecie
         elif especieDesc == 5:
-            self.ui.btnDescTecnicoPelado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnDescGallinaDoble.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioQuintaEspecie
             idEspecieDesc = quintaEspecie
         elif especieDesc == 6:
-            self.ui.btnDescTecnicoPelado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnDescGallinaChica.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioSextaEspecie
             idEspecieDesc = sextaEspecie
         elif especieDesc == 7:
-            self.ui.btnDescTecnicoPelado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnDescGallo.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioSeptimaEspecie
             idEspecieDesc = septimaEspecie
         elif especieDesc == 8:
-            self.ui.btnDescTecnicoPelado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnDescPolloMaltratado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioOctavaEspecie
             idEspecieDesc = octavaEspecie
-        elif especieDesc == 9:
-            self.ui.btnDescTecnicoPelado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
-            """ precioClienteDesc = precioNovenaEspecie
-            idEspecieDesc = novenaEspecie """
+        elif especieDesc == 10:
+            self.ui.btnPechuga.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            precioClienteDesc = precioDecimaEspecie
+            idEspecieDesc = decimaEspecie
+        elif especieDesc == 11:
+            self.ui.btnPierna.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            precioClienteDesc = precioDecimaPrimeraEspecie
+            idEspecieDesc = decimaPrimeraEspecie
+        elif especieDesc == 12:
+            self.ui.btnAlas.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            precioClienteDesc = precioDecimaSegundaEspecie
+            idEspecieDesc = decimaSegundaEspecie
+        elif especieDesc == 13:
+            self.ui.btnMenudencia.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            precioClienteDesc = precioDecimaTerceraEspecie
+            idEspecieDesc = decimaTerceraEspecie
+        elif especieDesc == 14:
+            self.ui.btnDorso.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            precioClienteDesc = precioDecimaCuartaEspecie
+            idEspecieDesc = decimaCuartaEspecie
+        elif especieDesc == 15:
+            self.ui.btnOtros.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            precioClienteDesc = precioDecimaQuintaOtrasEspecies
+            idEspecieDesc = decimaQuintaOtrasEspecies
+            
+        if especieDesc == 10 or especieDesc == 11 or especieDesc == 12 or especieDesc == 13 or especieDesc == 14 or especieDesc == 15:
+            self.ui.btnDescPolloTrozado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.frmAlertaTipoTrozados.setHidden(False)
+            frmSeleccionarTipoTrozadoDesc = True
             
         if balanzaSeleccionada == 1:
             especieDesCli1 = idEspecieDesc
@@ -1588,37 +1896,20 @@ class Inicio(QMainWindow):
         cantidadSeptimoColor = 0
         numeroJabasPes = 0
         
-        registroCantidadPrimerColor = self.ui.txtCantidadPrimerColor.text()
-        registroCantidadSegundoColor = self.ui.txtCantidadSegundoColor.text()
-        registroCantidadTercerColor = self.ui.txtCantidadTercerColor.text()
-        registroCantidadCuartaColor = self.ui.txtCantidadCuartoColor.text()
-        registroCantidadQuintoColor = self.ui.txtCantidadQuintoColor.text()
-        registroCantidadSextoColor = self.ui.txtCantidadSextoColor.text()
-        registroCantidadSeptimoColor = self.ui.txtCantidadSeptimoColor.text()
-        
-        if (registroCantidadPrimerColor != ""):
-            cantidadPrimerColor = registroCantidadPrimerColor
-            numeroJabasPes += int(cantidadPrimerColor)
-        if (registroCantidadSegundoColor != ""):
-            cantidadSegundoColor = registroCantidadSegundoColor
-            numeroJabasPes += int(cantidadSegundoColor)
-        if (registroCantidadTercerColor != ""):
-            cantidadTercerColor = registroCantidadTercerColor
-            numeroJabasPes += int(cantidadTercerColor)
-        if (registroCantidadCuartaColor != ""):
-            cantidadCuartaColor = registroCantidadCuartaColor
-            numeroJabasPes += int(cantidadCuartaColor)
-        if (registroCantidadQuintoColor != ""):
-            cantidadQuintoColor = registroCantidadQuintoColor
-            numeroJabasPes += int(cantidadQuintoColor)
-        if (registroCantidadSextoColor != ""):
-            cantidadSextoColor = registroCantidadSextoColor
-            numeroJabasPes += int(cantidadSextoColor)
-        if (registroCantidadSeptimoColor != ""):
-            cantidadSeptimoColor = registroCantidadSeptimoColor
-            numeroJabasPes += int(cantidadSeptimoColor)
+        colores = ['PrimerColor', 'SegundoColor', 'TercerColor', 'CuartoColor', 'QuintoColor', 'SextoColor', 'SeptimoColor']
+
+        for color in colores:
+            cantidad_color = getattr(self.ui, f"txtCantidad{color}").text()
             
-        coloresJabas = "R"+str(cantidadPrimerColor)+" | C"+str(cantidadSegundoColor)+" | A"+str(cantidadTercerColor)+" | V"+str(cantidadCuartaColor)+" | N"+str(cantidadQuintoColor)+" | D"+str(cantidadSextoColor)+" | O"+str(cantidadSeptimoColor)
+            # Verificar si el campo está vacío y asignar 0 en ese caso
+            if cantidad_color == "":
+                cantidad_color = 0
+            else:
+                cantidad_color = int(cantidad_color)
+
+            numeroJabasPes += cantidad_color
+
+        coloresJabas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("RCAVNDO", colores))
         
         self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioCliente,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
         
@@ -1636,6 +1927,43 @@ class Inicio(QMainWindow):
                   
         self.fn_listarVenta()
         
+    def fn_actualizarPesadaColores(self):
+        global cantidadPrimerColor
+        global cantidadSegundoColor
+        global cantidadTercerColor
+        global cantidadCuartaColor
+        global cantidadQuintoColor
+        global cantidadSextoColor
+        global cantidadSeptimoColor
+        
+        cantidadPrimerColor = 0
+        cantidadSegundoColor = 0
+        cantidadTercerColor = 0
+        cantidadCuartaColor = 0
+        cantidadQuintoColor = 0
+        cantidadSextoColor = 0
+        cantidadSeptimoColor = 0
+        numeroJabasPes = 0
+        
+        colores = ['PrimerColor', 'SegundoColor', 'TercerColor', 'CuartoColor', 'QuintoColor', 'SextoColor', 'SeptimoColor']
+
+        for color in colores:
+            cantidad_color = getattr(self.ui, f"txtCantidad{color}").text()
+            
+            # Verificar si el campo está vacío y asignar 0 en ese caso
+            if cantidad_color == "":
+                cantidad_color = 0
+            else:
+                cantidad_color = int(cantidad_color)
+
+            numeroJabasPes += cantidad_color
+
+        coloresJabas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("RCAVNDO", colores))
+        
+        self.conexion.db_actualizarPesadaColores(idPesadaEditarOEliminar,numeroJabasPes,coloresJabas)
+        
+        self.fn_listarVenta()
+        
     def fn_registrarDescuento(self):
         global pesoNeto
         global cantidadRegistro
@@ -1650,7 +1978,7 @@ class Inicio(QMainWindow):
         
         pesoNeto = float(self.ui.lblPesoIndicador.text())*-1
         cantidadRegistro = int(self.ui.txtCantidadDescuento.text())*-1
-        self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioCliente,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
+        self.conexion.db_registrarPesadas(numProceso,idEspecieDesc,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioClienteDesc,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
         
         if balanzaSeleccionada == 1:
             user_input_arduino = "agi"
@@ -1666,34 +1994,9 @@ class Inicio(QMainWindow):
         
         self.fn_listarVenta()
         
-    def fn_registrarTara(self):
-        global pesoNeto
-        global cantidadRegistro
-        global user_input_arduino
-        global pesoBalanza1
-        global pesoBalanza2
-        global horaPeso
-        global fechaPeso
-        
-        horaPeso = datetime.now().strftime('%H:%M:%S')
-        fechaPeso = datetime.now().strftime('%Y-%m-%d')
-        
-        pesoNeto = float(self.ui.lblPesoIndicador.text())*-1
-        cantidadRegistro = int(self.ui.txtCantidadParaIngresar.text())
-        self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioCliente,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
-        
-        if balanzaSeleccionada == 1:
-            user_input_arduino = "agi"
-            time.sleep(1)
-            user_input_arduino = "k"
-            pesoBalanza1 = True
-            
-        elif balanzaSeleccionada == 2:
-            user_input_arduino = "bhj"
-            time.sleep(1)
-            user_input_arduino = "l"
-            pesoBalanza2 = True 
-        
+    def fn_registrarTara(self):        
+        pesoNetoJabas = float(self.ui.txtPesoParaIngresarJabas.text())
+        self.conexion.db_actualizarPesoJabas(pesoNetoJabas,idPesadaEditarOEliminar)
         self.fn_listarVenta()
         
     def fn_editarCantidad(self):
@@ -1766,11 +2069,14 @@ class Inicio(QMainWindow):
                     
                         tablaDePesos.insertRow(row_number)
                         
+                        
                         for column_number, data in enumerate(row_data):
                             
                             if column_number == 0:  # Columna de "correlativo"
                                 data = (row_number - len(pesosListarTabla))*-1
                             if column_number == 4:  # Columna de "pesoNetoPes"
+                                data = "{:.2f} Kg".format(data)
+                            if column_number == 8:  # Columna de "pesoNetoPes"
                                 data = "{:.2f} Kg".format(data)
                             if column_number == 9 :  # Columna de "horaPes"
                                 hours, remainder = divmod(data.seconds, 3600)
@@ -1782,31 +2088,31 @@ class Inicio(QMainWindow):
                                 
                             if column_number == 3 and row_data[10] == 1: # Columna de "idEspecie" y columna de "estadoPes"
                                 if data == nombrePrimerEspecie:
-                                    totalPesoPrimerEspecie += row_data[4] # Columna de "pesoNetoPes" 
+                                    totalPesoPrimerEspecie += (row_data[4]-row_data[12]) # Columna de "pesoNetoPes"
                                     totalCantidadPrimerEspecie += row_data[5] # Columna de "cantidadPes"
                                 elif data == nombreSegundaEspecie:
-                                    totalPesoSegundaEspecie += row_data[4]
+                                    totalPesoSegundaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadSegundaEspecie += row_data[5]
                                 elif data == nombreTerceraEspecie:
-                                    totalPesoTerceraEspecie += row_data[4]
+                                    totalPesoTerceraEspecie += (row_data[4]-row_data[12])
                                     totalCantidadTerceraEspecie += row_data[5]
                                 elif data == nombreCuartaEspecie:
-                                    totalPesoCuartaEspecie += row_data[4]
+                                    totalPesoCuartaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadCuartaEspecie += row_data[5]
                                 elif data == nombreQuintaEspecie:
-                                    totalPesoQuintaEspecie += row_data[4]
+                                    totalPesoQuintaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadQuintaEspecie += row_data[5]
                                 elif data == nombreSextaEspecie:
-                                    totalPesoSextaEspecie += row_data[4]
+                                    totalPesoSextaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadSextaEspecie += row_data[5]
                                 elif data == nombreSeptimaEspecie:
-                                    totalPesoSeptimaEspecie += row_data[4]
+                                    totalPesoSeptimaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadSeptimaEspecie += row_data[5]
                                 elif data == nombreOctavaEspecie:
-                                    totalPesoOctavaEspecie += row_data[4]
+                                    totalPesoOctavaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadOctavaEspecie += row_data[5]
                                 elif data == nombreDecimaEspecie or data == nombreDecimaPrimeraEspecie or data == nombreDecimaSegundaEspecie or data == nombreDecimaTerceraEspecie or data == nombreDecimaCuartaEspecie or data == nombreDecimaQuintaOtrasEspecies:
-                                    totalPesoNovenaEspecie += row_data[4]
+                                    totalPesoNovenaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadNovenaEspecie += row_data[5]
                                 
                                 totalCantidadTotalEspecies += row_data[5]
@@ -1816,18 +2122,22 @@ class Inicio(QMainWindow):
                             tablaDePesos.setItem(row_number, column_number, item)
 
                             if column_number == 7:  # Columna de "letras"
-                                letras = data.split(' | ')
-                                color_column = column_number
+                                if data != "":
+                                    letras = data.split(' | ')
+                                    color_column = column_number
 
-                                letras_widget = LetrasWidget(letras)
+                                    letras_widget = LetrasWidget(letras)
 
-                                item = QTableWidgetItem()
-                                tablaDePesos.setItem(row_number, color_column, item)
-                                tablaDePesos.setCellWidget(row_number, color_column, letras_widget)
+                                    item = QTableWidgetItem()
+                                    tablaDePesos.setItem(row_number, color_column, item)
+                                    tablaDePesos.setCellWidget(row_number, color_column, letras_widget)
                             
-                            # Después de insertar filas y configurar elementos
-                            tablaDePesos.resizeRowsToContents()
-
+                                    # Después de insertar filas y configurar elementos
+                                    tablaDePesos.resizeRowsToContents()
+                        
+                            if column_number == 6:
+                                if row_data[6] > 0:
+                                    totalDeJabas += row_data[6]
                             
                         if (row_data[10] == 0):
                             self.fn_pintarCeldasRegistrosEliminados(row_number)
@@ -1874,29 +2184,58 @@ class Inicio(QMainWindow):
         reporteTotalCantidadTerceraEspecie = 0
         reporteTotalCantidadCuartaEspecie = 0
         
+        reporteTotalCantidadQuintaEspecie = 0
+        reporteTotalCantidadSextaEspecie = 0
+        reporteTotalCantidadSeptimaEspecie = 0
+        reporteTotalCantidadOctavaEspecie = 0
+        reporteTotalCantidadDecimaEspecie = 0
+        reporteTotalCantidadDecimaPrimeraEspecie = 0
+        reporteTotalCantidadDecimaSegundaEspecie = 0
+        reporteTotalCantidadDecimaTerceraEspecie = 0
+        reporteTotalCantidadDecimaCuartaEspecie = 0
+        reporteTotalCantidadDecimaQuintaEspecie = 0
+        
         reporteTotalPesoPrimerEspecie = 0
         reporteTotalPesoSegundaEspecie = 0
         reporteTotalPesoTerceraEspecie = 0
         reporteTotalPesoCuartaEspecie = 0
         
+        reporteTotalPesoQuintaEspecie = 0
+        reporteTotalPesoSextaEspecie = 0
+        reporteTotalPesoSeptimaEspecie = 0
+        reporteTotalPesoOctavaEspecie = 0
+        reporteTotalPesoDecimaEspecie = 0
+        reporteTotalPesoDecimaPrimeraEspecie = 0
+        reporteTotalPesoDecimaSegundaEspecie = 0
+        reporteTotalPesoDecimaTerceraEspecie = 0
+        reporteTotalPesoDecimaCuartaEspecie = 0
+        reporteTotalPesoDecimaQuintaEspecie = 0
+        
         contarDescuentos = 0
         contarJabas = 0
+        
+        precio = "PRECIO"
+        if imprimePrecio == False :
+            precio = ""
         
         file = open("ArchivosDeTexto/reporte.txt", "w") 
         file.write("\n")
         file.write(" FECHA : "+fechaPeso+"     HORA : "+horaPeso+"\n")
         file.write(" CLIENTE :  "+str(self.ui.txtNombreCliente.text())+" \n")
         file.write("\n")
-        file.write(" {:<13}{:<10}{:<7}{:<9}\n".format("PRODUCTO", "Kg", "CANT.", "HORA"))
+        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format("PRODUCTO", "Kg", "CANT.", precio))
         file.write("========================================\n")
         
         for item in datosTicket:
             reporteEspecie = item[0]
             reportePeso = item[1]
             reporteCantidad = item[2]
-            reporteHora = "{:02}:{:02}:{:02}".format(item[3].seconds // 3600, (item[3].seconds // 60) % 60, item[3].seconds % 60)
+            reportePrecio = item[3]
             reporteJabas = item[4]
             
+            if imprimePrecio == False :
+                reportePrecio = ""
+                
             if reportePeso < 0:
                 contarDescuentos += 1
                 
@@ -1906,19 +2245,59 @@ class Inicio(QMainWindow):
             if (reporteEspecie == nombrePrimerEspecie) and reportePeso > 0 :
                 reporteTotalCantidadPrimerEspecie += reporteCantidad
                 reporteTotalPesoPrimerEspecie += reportePeso
-                file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
             elif (reporteEspecie == nombreSegundaEspecie) and reportePeso > 0 :
                 reporteTotalCantidadSegundaEspecie += reporteCantidad
                 reporteTotalPesoSegundaEspecie += reportePeso
-                file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
             elif (reporteEspecie == nombreTerceraEspecie) and reportePeso > 0 :
                 reporteTotalCantidadTerceraEspecie += reporteCantidad
                 reporteTotalPesoTerceraEspecie += reportePeso
-                file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
             elif (reporteEspecie == nombreCuartaEspecie) and reportePeso > 0 :
                 reporteTotalCantidadCuartaEspecie += reporteCantidad
                 reporteTotalPesoCuartaEspecie += reportePeso
-                file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreQuintaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadQuintaEspecie += reporteCantidad
+                reporteTotalPesoQuintaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreSextaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadSextaEspecie += reporteCantidad
+                reporteTotalPesoSextaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreSeptimaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadSeptimaEspecie += reporteCantidad
+                reporteTotalPesoSeptimaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreOctavaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadOctavaEspecie += reporteCantidad
+                reporteTotalPesoOctavaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreDecimaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadDecimaEspecie += reporteCantidad
+                reporteTotalPesoDecimaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreDecimaPrimeraEspecie) and reportePeso > 0 :
+                reporteTotalCantidadDecimaPrimeraEspecie += reporteCantidad
+                reporteTotalPesoDecimaPrimeraEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreDecimaSegundaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadDecimaSegundaEspecie += reporteCantidad
+                reporteTotalPesoDecimaSegundaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreDecimaTerceraEspecie) and reportePeso > 0 :
+                reporteTotalCantidadDecimaTerceraEspecie += reporteCantidad
+                reporteTotalPesoDecimaTerceraEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreDecimaCuartaEspecie) and reportePeso > 0 :
+                reporteTotalCantidadDecimaCuartaEspecie += reporteCantidad
+                reporteTotalPesoDecimaCuartaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+            elif (reporteEspecie == nombreDecimaQuintaOtrasEspecies) and reportePeso > 0 :
+                reporteTotalCantidadDecimaQuintaEspecie += reporteCantidad
+                reporteTotalPesoDecimaQuintaEspecie += reportePeso
+                file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
                 
         if contarDescuentos > 0 :
             
@@ -1930,25 +2309,68 @@ class Inicio(QMainWindow):
                 reporteEspecie = item[0]
                 reportePeso = item[1]
                 reporteCantidad = item[2]
-                reporteHora = "{:02}:{:02}:{:02}".format(item[3].seconds // 3600, (item[3].seconds // 60) % 60, item[3].seconds % 60)
+                reportePrecio = item[3]
                 reporteJabas = item[4]
+                
+                if imprimePrecio == False :
+                    reportePrecio = ""
                 
                 if (reporteEspecie == nombrePrimerEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadPrimerEspecie += reporteCantidad
                     reporteTotalPesoPrimerEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreSegundaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadSegundaEspecie += reporteCantidad
                     reporteTotalPesoSegundaEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreTerceraEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadTerceraEspecie += reporteCantidad
                     reporteTotalPesoTerceraEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreCuartaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadCuartaEspecie += reporteCantidad
                     reporteTotalPesoCuartaEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reporteHora))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreQuintaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadQuintaEspecie += reporteCantidad
+                    reporteTotalPesoQuintaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreSextaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadSextaEspecie += reporteCantidad
+                    reporteTotalPesoSextaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreSeptimaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadSeptimaEspecie += reporteCantidad
+                    reporteTotalPesoSeptimaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreOctavaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadOctavaEspecie += reporteCantidad
+                    reporteTotalPesoOctavaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreDecimaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadDecimaEspecie += reporteCantidad
+                    reporteTotalPesoDecimaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreDecimaPrimeraEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadDecimaPrimeraEspecie += reporteCantidad
+                    reporteTotalPesoDecimaPrimeraEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreDecimaSegundaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadDecimaSegundaEspecie += reporteCantidad
+                    reporteTotalPesoDecimaSegundaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreDecimaTerceraEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadDecimaTerceraEspecie += reporteCantidad
+                    reporteTotalPesoDecimaTerceraEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreDecimaCuartaEspecie) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadDecimaCuartaEspecie += reporteCantidad
+                    reporteTotalPesoDecimaCuartaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                elif (reporteEspecie == nombreDecimaQuintaOtrasEspecies) and reportePeso < 0 and reporteJabas == 0:
+                    reporteTotalCantidadDecimaQuintaEspecie += reporteCantidad
+                    reporteTotalPesoDecimaQuintaEspecie += reportePeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
                     
         if contarJabas > 0 :
             
@@ -1960,35 +2382,85 @@ class Inicio(QMainWindow):
                 reporteEspecie = item[0]
                 reportePeso = item[1]
                 reporteCantidad = item[2]
-                reporteHora = "{:02}:{:02}:{:02}".format(item[3].seconds // 3600, (item[3].seconds // 60) % 60, item[3].seconds % 60)
+                reportePrecio = item[3]
                 reporteJabas = item[4]
+                reporteJabasPeso = item[5]
                 
-                if (reporteEspecie == nombrePrimerEspecie) and reportePeso < 0 and reporteJabas != 0:
-                    reporteTotalCantidadPrimerEspecie += reporteCantidad
-                    reporteTotalPesoPrimerEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteJabas, reporteHora))
-                elif (reporteEspecie == nombreSegundaEspecie) and reportePeso < 0 and reporteJabas != 0:
-                    reporteTotalCantidadSegundaEspecie += reporteCantidad
-                    reporteTotalPesoSegundaEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteJabas, reporteHora))
-                elif (reporteEspecie == nombreTerceraEspecie) and reportePeso < 0 and reporteJabas != 0:
-                    reporteTotalCantidadTerceraEspecie += reporteCantidad
-                    reporteTotalPesoTerceraEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteJabas, reporteHora))
-                elif (reporteEspecie == nombreCuartaEspecie) and reportePeso < 0 and reporteJabas != 0:
-                    reporteTotalCantidadCuartaEspecie += reporteCantidad
-                    reporteTotalPesoCuartaEspecie += reportePeso
-                    file.write(" {:<13}{:<10}{:<7}{:<9}\n".format(reporteEspecie, reportePeso, reporteJabas, reporteHora))
+                if imprimePrecio == False :
+                    reportePrecio = ""
+                
+                if (reporteEspecie == nombrePrimerEspecie) and reporteJabas != 0:
+                    reporteTotalPesoPrimerEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreSegundaEspecie) and reporteJabas != 0:
+                    reporteTotalPesoSegundaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreTerceraEspecie) and reporteJabas != 0:
+                    reporteTotalPesoTerceraEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreCuartaEspecie) and reporteJabas != 0:
+                    reporteTotalPesoCuartaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreQuintaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoQuintaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreSextaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoSextaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreSeptimaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoSeptimaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreOctavaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoOctavaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreDecimaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoDecimaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreDecimaPrimeraEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoDecimaPrimeraEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreDecimaSegundaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoDecimaSegundaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreDecimaTerceraEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoDecimaTerceraEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreDecimaCuartaEspecie) and reporteJabas != 0 :
+                    reporteTotalPesoDecimaCuartaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                elif (reporteEspecie == nombreDecimaQuintaOtrasEspecies) and reporteJabas != 0 :
+                    reporteTotalPesoDecimaQuintaEspecie -= reporteJabasPeso
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                
         
         file.write("\n")
         file.write(" TOTALES :           \n")
         file.write("========================================\n")
-        file.write(" PRODUCTO        Kg.       CANTIDAD     \n")
+        file.write(" PRODUCTO          Kg.     CANTIDAD     \n")
         file.write("========================================\n")
-        file.write(" {:<16}{:<10.1f}{:<9}\n".format(nombrePrimerEspecie, reporteTotalPesoPrimerEspecie, reporteTotalCantidadPrimerEspecie))
-        file.write(" {:<16}{:<10.1f}{:<9}\n".format(nombreSegundaEspecie, reporteTotalPesoSegundaEspecie, reporteTotalCantidadSegundaEspecie))
-        file.write(" {:<16}{:<10.1f}{:<9}\n".format(nombreTerceraEspecie, reporteTotalPesoTerceraEspecie, reporteTotalCantidadTerceraEspecie))
-        file.write(" {:<16}{:<10.1f}{:<9}\n".format(nombreCuartaEspecie, reporteTotalPesoCuartaEspecie, reporteTotalCantidadCuartaEspecie))
+
+        especies_info = [
+            (nombrePrimerEspecie, reporteTotalPesoPrimerEspecie, reporteTotalCantidadPrimerEspecie),
+            (nombreSegundaEspecie, reporteTotalPesoSegundaEspecie, reporteTotalCantidadSegundaEspecie),
+            (nombreTerceraEspecie, reporteTotalPesoTerceraEspecie, reporteTotalCantidadTerceraEspecie),
+            (nombreCuartaEspecie, reporteTotalPesoCuartaEspecie, reporteTotalCantidadCuartaEspecie),
+            (nombreQuintaEspecie, reporteTotalPesoQuintaEspecie, reporteTotalCantidadQuintaEspecie),
+            (nombreSextaEspecie, reporteTotalPesoSextaEspecie, reporteTotalCantidadSextaEspecie),
+            (nombreSeptimaEspecie, reporteTotalPesoSeptimaEspecie, reporteTotalCantidadSeptimaEspecie),
+            (nombreOctavaEspecie, reporteTotalPesoOctavaEspecie, reporteTotalCantidadOctavaEspecie),
+            (nombreDecimaEspecie, reporteTotalPesoDecimaEspecie, reporteTotalCantidadDecimaEspecie),
+            (nombreDecimaPrimeraEspecie, reporteTotalPesoDecimaPrimeraEspecie, reporteTotalCantidadDecimaPrimeraEspecie),
+            (nombreDecimaSegundaEspecie, reporteTotalPesoDecimaSegundaEspecie, reporteTotalCantidadDecimaSegundaEspecie),
+            (nombreDecimaTerceraEspecie, reporteTotalPesoDecimaTerceraEspecie, reporteTotalCantidadDecimaTerceraEspecie),
+            (nombreDecimaCuartaEspecie, reporteTotalPesoDecimaCuartaEspecie, reporteTotalCantidadDecimaCuartaEspecie),
+            (nombreDecimaQuintaOtrasEspecies, reporteTotalPesoDecimaQuintaEspecie, reporteTotalCantidadDecimaQuintaEspecie),
+        ]
+
+        for especie_info in especies_info:
+            nombre_especie, peso_especie, cantidad_especie = especie_info
+            if peso_especie != 0 or cantidad_especie != 0:
+                file.write(" {:<18}{:<10.2f}{:<9}\n".format(nombre_especie, peso_especie, cantidad_especie))
+
         file.write("========================================\n")
         file.write("===       GRACIAS POR SU COMPRA      ===\n")
         file.write("========================================\n")
@@ -1998,7 +2470,7 @@ class Inicio(QMainWindow):
         if  reporteTotalCantidadPrimerEspecie == 0 and reporteTotalCantidadSegundaEspecie == 0 and reporteTotalCantidadTerceraEspecie == 0 and reporteTotalCantidadCuartaEspecie == 0:
             self.fn_alerta("¡REPORTE NO ENVIDO!",error,"El reporte no se puede imprimir por valores nulos.", 2000)
         else:
-            self.imprimirTicketWindows()
+            # self.imprimirTicketWindows()
             self.fn_alerta("¡REPORTE ENVIADO!",correcto,"El reporte sera impreso en estos momentos.")
     
     def imprimirTicketWindows(self):

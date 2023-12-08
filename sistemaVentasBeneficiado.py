@@ -363,7 +363,7 @@ class Inicio(QMainWindow):
         self.ui.frmAlertaEliminar.setHidden(True)
         self.ui.txtCantJabasTotales.setHidden(True)
         self.ui.txtCantidadDeJabas.setHidden(True)
-        self.ui.frmColores.setHidden(True)
+        self.ui.frmCubetas.setHidden(True)
         self.ui.frmIngresarCantidadJabas.setHidden(True)
         self.ui.frmAlertaTipoTrozados.setHidden(True)
         self.ui.frmIngresarNumeroPesada.setHidden(True)
@@ -374,13 +374,11 @@ class Inicio(QMainWindow):
         self.ui.txtCantidadDescuento.textChanged.connect(self.fn_validarEntradaNumerica)
         self.ui.txtNumeroDePesada.textChanged.connect(self.fn_validarEntradaNumerica)
         
-        self.ui.txtCantidadPrimerColor.textChanged.connect(self.fn_validarEntradaNumerica)
-        self.ui.txtCantidadSegundoColor.textChanged.connect(self.fn_validarEntradaNumerica)
-        self.ui.txtCantidadTercerColor.textChanged.connect(self.fn_validarEntradaNumerica)
-        self.ui.txtCantidadCuartoColor.textChanged.connect(self.fn_validarEntradaNumerica)
-        self.ui.txtCantidadQuintoColor.textChanged.connect(self.fn_validarEntradaNumerica)
-        self.ui.txtCantidadSextoColor.textChanged.connect(self.fn_validarEntradaNumerica)
-        self.ui.txtCantidadSeptimoColor.textChanged.connect(self.fn_validarEntradaNumerica)
+        self.ui.txtCantidadPrimeraVariedad.textChanged.connect(self.fn_validarEntradaNumerica)
+        self.ui.txtCantidadSegundaVariedad.textChanged.connect(self.fn_validarEntradaNumerica)
+        self.ui.txtCantidadTerceraVariedad.textChanged.connect(self.fn_validarEntradaNumerica)
+        self.ui.txtCantidadCuartaVariedad.textChanged.connect(self.fn_validarEntradaNumerica)
+        self.ui.txtCantidadQuintaVariedad.textChanged.connect(self.fn_validarEntradaNumerica)
         
         self.ui.btnCerrarFrmAlerta.clicked.connect(self.fn_btnCerrarFrmAlerta)
         
@@ -531,7 +529,7 @@ class Inicio(QMainWindow):
             not self.ui.frmAplicarDescuento.isVisible() and
             not self.ui.frmIngresarPassword.isVisible() and
             not self.ui.frmAlertaEliminar.isVisible() and
-            not self.ui.frmColores.isVisible() and
+            not self.ui.frmCubetas.isVisible() and
             not self.ui.frmIngresarCantidadJabas.isVisible() and
             not self.ui.frmAlertaTipoTrozados.isVisible() and
             not self.ui.frmIngresarNumeroPesada.isVisible() and
@@ -569,21 +567,19 @@ class Inicio(QMainWindow):
         if event.key() == Qt.Key_Escape:
             self.close()
             
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarColoresJabas == True and frmRegistrarCantidad == False and frmInicioProceso == True and self.ui.frmColores.isVisible():     
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarColoresJabas == True and frmRegistrarCantidad == False and frmInicioProceso == True and self.ui.frmCubetas.isVisible():     
             
             cantidadTotalJabas = 0
-            registroCantidadPrimerColor = int(self.ui.txtCantidadPrimerColor.text().strip()) if self.ui.txtCantidadPrimerColor.text().strip() else 0
-            registroCantidadSegundoColor = int(self.ui.txtCantidadSegundoColor.text().strip()) if self.ui.txtCantidadSegundoColor.text().strip() else 0
-            registroCantidadTercerColor = int(self.ui.txtCantidadTercerColor.text().strip()) if self.ui.txtCantidadTercerColor.text().strip() else 0
-            registroCantidadCuartaColor = int(self.ui.txtCantidadCuartoColor.text().strip()) if self.ui.txtCantidadCuartoColor.text().strip() else 0
-            registroCantidadQuintoColor = int(self.ui.txtCantidadQuintoColor.text().strip()) if self.ui.txtCantidadQuintoColor.text().strip() else 0
-            registroCantidadSextoColor = int(self.ui.txtCantidadSextoColor.text().strip()) if self.ui.txtCantidadSextoColor.text().strip() else 0
-            registroCantidadSeptimoColor = int(self.ui.txtCantidadSeptimoColor.text().strip()) if self.ui.txtCantidadSeptimoColor.text().strip() else 0
+            registroCantidadPrimerColor = int(self.ui.txtCantidadPrimeraVariedad.text().strip()) if self.ui.txtCantidadPrimeraVariedad.text().strip() else 0
+            registroCantidadSegundoColor = int(self.ui.txtCantidadSegundaVariedad.text().strip()) if self.ui.txtCantidadSegundaVariedad.text().strip() else 0
+            registroCantidadTercerColor = int(self.ui.txtCantidadTerceraVariedad.text().strip()) if self.ui.txtCantidadTerceraVariedad.text().strip() else 0
+            registroCantidadCuartaColor = int(self.ui.txtCantidadCuartaVariedad.text().strip()) if self.ui.txtCantidadCuartaVariedad.text().strip() else 0
+            registroCantidadQuintoColor = int(self.ui.txtCantidadQuintaVariedad.text().strip()) if self.ui.txtCantidadQuintaVariedad.text().strip() else 0
             
-            cantidadTotalJabas = registroCantidadPrimerColor + registroCantidadSegundoColor + registroCantidadTercerColor + registroCantidadCuartaColor + registroCantidadQuintoColor + registroCantidadSextoColor + registroCantidadSeptimoColor
+            cantidadTotalJabas = registroCantidadPrimerColor + registroCantidadSegundoColor + registroCantidadTercerColor + registroCantidadCuartaColor + registroCantidadQuintoColor
                     
             if cantidadTotalJabas != 0:
-                self.ui.frmColores.setHidden(True)
+                self.ui.frmCubetas.setHidden(True)
                 frmRegistrarColoresJabas = False
                 self.ui.txtCantidadParaIngresar.setText("")
                 self.fn_alertaCantidad("Ingresar cantidad de Pollos")
@@ -593,15 +589,13 @@ class Inicio(QMainWindow):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de jabas no puede ser 0.")
     
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and self.condiciones_base() and frmInicioProceso == True and self.condiciones_alertas() and float(self.ui.lblPesoIndicador.text()) > 0:
-            self.ui.txtCantidadPrimerColor.setText("")
-            self.ui.txtCantidadSegundoColor.setText("")
-            self.ui.txtCantidadTercerColor.setText("")
-            self.ui.txtCantidadCuartoColor.setText("")
-            self.ui.txtCantidadQuintoColor.setText("")
-            self.ui.txtCantidadSextoColor.setText("")
-            self.ui.txtCantidadSeptimoColor.setText("")
+            self.ui.txtCantidadPrimeraVariedad.setText("")
+            self.ui.txtCantidadSegundaVariedad.setText("")
+            self.ui.txtCantidadTerceraVariedad.setText("")
+            self.ui.txtCantidadCuartaVariedad.setText("")
+            self.ui.txtCantidadQuintaVariedad.setText("")
             self.ui.txtCantidadParaIngresar.setText("")
-            self.ui.frmColores.setHidden(False)  
+            self.ui.frmCubetas.setHidden(False)  
             frmRegistrarColoresJabas = True
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and self.ui.lwListaClientes.isVisible():
@@ -804,8 +798,8 @@ class Inicio(QMainWindow):
             else:
                 self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
         
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and frmRegistrarColoresJabasEditar == True and frmIngresarNumeroColoresEditar == False:
-            self.ui.frmColores.setHidden(True)
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and frmRegistrarColoresJabasEditar == True and frmIngresarNumeroColoresEditar == False:
+            self.ui.frmCubetas.setHidden(True)
             self.fn_actualizarPesadaColores()
             self.fn_alerta("¡EDITADO EXITOSO!",correcto,"El registro se edito correctamente.",1500)
             frmRegistrarColoresJabasEditar = False
@@ -834,17 +828,15 @@ class Inicio(QMainWindow):
                             numero = ""
                         arregloEditar.append(numero)
                     
-                    self.ui.txtCantidadPrimerColor.setText(arregloEditar[0])
-                    self.ui.txtCantidadSegundoColor.setText(arregloEditar[1])
-                    self.ui.txtCantidadTercerColor.setText(arregloEditar[2])
-                    self.ui.txtCantidadCuartoColor.setText(arregloEditar[3])
-                    self.ui.txtCantidadQuintoColor.setText(arregloEditar[4])
-                    self.ui.txtCantidadSextoColor.setText(arregloEditar[5])
-                    self.ui.txtCantidadSeptimoColor.setText(arregloEditar[6])
+                    self.ui.txtCantidadPrimeraVariedad.setText(arregloEditar[0])
+                    self.ui.txtCantidadSegundaVariedad.setText(arregloEditar[1])
+                    self.ui.txtCantidadTerceraVariedad.setText(arregloEditar[2])
+                    self.ui.txtCantidadCuartaVariedad.setText(arregloEditar[3])
+                    self.ui.txtCantidadQuintaVariedad.setText(arregloEditar[4])
                     
                     self.ui.txtNumeroDePesada.setText("")
                     self.ui.frmIngresarNumeroPesada.setHidden(True)
-                    self.ui.frmColores.setHidden(False)
+                    self.ui.frmCubetas.setHidden(False)
                     frmRegistrarColoresJabasEditar = True
                     frmIngresarNumeroColoresEditar = False
                 else:
@@ -879,20 +871,16 @@ class Inicio(QMainWindow):
         global frmDecidirReporte
         global frmIngresarNumeroPesoJabaEditar
         
-        if (event.key() == Qt.Key_R) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadPrimerColor.setFocus(True)
-        elif (event.key() == Qt.Key_C) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadSegundoColor.setFocus(True)
-        elif (event.key() == Qt.Key_A) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadTercerColor.setFocus(True)
-        elif (event.key() == Qt.Key_V) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadCuartoColor.setFocus(True)
-        elif (event.key() == Qt.Key_N) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadQuintoColor.setFocus(True)
-        elif (event.key() == Qt.Key_D) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadSextoColor.setFocus(True)
-        elif (event.key() == Qt.Key_O) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
-            self.ui.txtCantidadSeptimoColor.setFocus(True)
+        if (event.key() == Qt.Key_C) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+            self.ui.txtCantidadPrimeraVariedad.setFocus(True)
+        elif (event.key() == Qt.Key_A) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+            self.ui.txtCantidadSegundaVariedad.setFocus(True)
+        elif (event.key() == Qt.Key_P) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+            self.ui.txtCantidadTerceraVariedad.setFocus(True)
+        elif (event.key() == Qt.Key_G) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+            self.ui.txtCantidadCuartaVariedad.setFocus(True)
+        elif (event.key() == Qt.Key_O) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+            self.ui.txtCantidadQuintaVariedad.setFocus(True)
         
         if (event.key() == Qt.Key_Right) and self.condiciones_base() and self.condiciones_alertas():
             balanzaSeleccionada = 1
@@ -1117,8 +1105,8 @@ class Inicio(QMainWindow):
                 frmIngresarNumeroPesadaEliminar = False
                 frmIngresarNumeroColoresEditar = False
                 frmIngresarNumeroPesoJabaEditar = False
-            elif (self.ui.frmColores.isVisible()):
-                self.ui.frmColores.setHidden(True)
+            elif (self.ui.frmCubetas.isVisible()):
+                self.ui.frmCubetas.setHidden(True)
                 frmRegistrarColoresJabas = False
                 frmRegistrarColoresJabasEditar = False
             elif (self.ui.frmDecidirReporte.isVisible()):
@@ -1138,13 +1126,11 @@ class Inicio(QMainWindow):
         if event.key() == Qt.Key_F1 and self.condiciones_base() and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
             if listoParaAccionar == True :
                 idPesadaEditarOEliminar = 0
-                self.ui.txtCantidadPrimerColor.setText("")
-                self.ui.txtCantidadSegundoColor.setText("")
-                self.ui.txtCantidadTercerColor.setText("")
-                self.ui.txtCantidadCuartoColor.setText("")
-                self.ui.txtCantidadQuintoColor.setText("")
-                self.ui.txtCantidadSextoColor.setText("")
-                self.ui.txtCantidadSeptimoColor.setText("")
+                self.ui.txtCantidadPrimeraVariedad.setText("")
+                self.ui.txtCantidadSegundaVariedad.setText("")
+                self.ui.txtCantidadTerceraVariedad.setText("")
+                self.ui.txtCantidadCuartaVariedad.setText("")
+                self.ui.txtCantidadQuintaVariedad.setText("")
                 self.ui.txtCantidadParaIngresar.setText("")
                 self.ui.frmIngresarNumeroPesada.setHidden(False)
                 self.ui.txtNumeroDePesada.setText("")

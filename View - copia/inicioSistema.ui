@@ -22,7 +22,7 @@ border-radius: 7px;</string>
     <property name="geometry">
      <rect>
       <x>535</x>
-      <y>154</y>
+      <y>100</y>
       <width>850</width>
       <height>250</height>
      </rect>
@@ -45,20 +45,19 @@ border-radius: 7px;</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="imgVenta">
+   <widget class="QLabel" name="imgVentaBeneficiado">
     <property name="geometry">
      <rect>
-      <x>785</x>
-      <y>504</y>
-      <width>350</width>
-      <height>250</height>
+      <x>625</x>
+      <y>446</y>
+      <width>300</width>
+      <height>300</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">border-color: rgb(0, 0, 0);
 border: 2px solid black;
-border-radius: 15px;
-background-color: rgb(36, 211, 21);</string>
+border-radius: 15px;</string>
     </property>
     <property name="text">
      <string/>
@@ -76,10 +75,10 @@ background-color: rgb(36, 211, 21);</string>
    <widget class="QLabel" name="lblVenta">
     <property name="geometry">
      <rect>
-      <x>785</x>
-      <y>794</y>
-      <width>350</width>
-      <height>40</height>
+      <x>620</x>
+      <y>766</y>
+      <width>311</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="font">
@@ -91,7 +90,8 @@ background-color: rgb(36, 211, 21);</string>
      </font>
     </property>
     <property name="text">
-     <string>VENTA</string>
+     <string>VENTA 
+ BENEFICIADO</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -101,7 +101,7 @@ background-color: rgb(36, 211, 21);</string>
     <property name="geometry">
      <rect>
       <x>535</x>
-      <y>404</y>
+      <y>350</y>
       <width>850</width>
       <height>60</height>
      </rect>
@@ -223,6 +223,57 @@ background-color: rgb(36, 211, 21);</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="imgVentaVivo">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>446</y>
+      <width>300</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-color: rgb(0, 0, 0);
+border: 2px solid black;
+border-radius: 15px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+    <property name="margin">
+     <number>10</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblVenta_2">
+    <property name="geometry">
+     <rect>
+      <x>1009</x>
+      <y>766</y>
+      <width>301</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Poppins</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>VENTA VIVO</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

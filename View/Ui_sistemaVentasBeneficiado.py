@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1920, 1623)
+        MainWindow.resize(1920, 1080)
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -1466,17 +1466,17 @@ class Ui_MainWindow(object):
         self.lblAlertaEliminarTexto.setAlignment(QtCore.Qt.AlignCenter)
         self.lblAlertaEliminarTexto.setWordWrap(True)
         self.lblAlertaEliminarTexto.setObjectName("lblAlertaEliminarTexto")
-        self.frmColores = QtWidgets.QFrame(self.centralwidget)
-        self.frmColores.setGeometry(QtCore.QRect(420, 1140, 1080, 330))
-        self.frmColores.setStyleSheet("#frmColores{background-color: rgb(255, 255, 255);\n"
+        self.frmCubetas = QtWidgets.QFrame(self.centralwidget)
+        self.frmCubetas.setGeometry(QtCore.QRect(560, 380, 800, 330))
+        self.frmCubetas.setStyleSheet("#frmCubetas{background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border:none;\n"
 "border-radius: 10px;\n"
 "border: 2px solid #D9D9D9;}")
-        self.frmColores.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frmColores.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frmColores.setObjectName("frmColores")
-        self.btnPrimerColor = QtWidgets.QLabel(self.frmColores)
+        self.frmCubetas.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frmCubetas.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frmCubetas.setObjectName("frmCubetas")
+        self.btnPrimerColor = QtWidgets.QLabel(self.frmCubetas)
         self.btnPrimerColor.setGeometry(QtCore.QRect(60, 88, 120, 60))
         font = QtGui.QFont()
         font.setFamily("Poppins")
@@ -1484,13 +1484,13 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btnPrimerColor.setFont(font)
-        self.btnPrimerColor.setStyleSheet("background-color: rgb(234, 29, 49);\n"
+        self.btnPrimerColor.setStyleSheet("background-color: #a47f1a;\n"
 "color: rgb(255, 255, 255);\n"
 "border:none;\n"
 "border-radius: 5px;")
         self.btnPrimerColor.setAlignment(QtCore.Qt.AlignCenter)
         self.btnPrimerColor.setObjectName("btnPrimerColor")
-        self.btnSegundoColor = QtWidgets.QLabel(self.frmColores)
+        self.btnSegundoColor = QtWidgets.QLabel(self.frmCubetas)
         self.btnSegundoColor.setGeometry(QtCore.QRect(200, 88, 120, 60))
         font = QtGui.QFont()
         font.setFamily("Poppins")
@@ -1503,7 +1503,7 @@ class Ui_MainWindow(object):
 "border-radius: 5px;")
         self.btnSegundoColor.setAlignment(QtCore.Qt.AlignCenter)
         self.btnSegundoColor.setObjectName("btnSegundoColor")
-        self.btnTercerColor = QtWidgets.QLabel(self.frmColores)
+        self.btnTercerColor = QtWidgets.QLabel(self.frmCubetas)
         self.btnTercerColor.setGeometry(QtCore.QRect(340, 88, 120, 60))
         font = QtGui.QFont()
         font.setFamily("Poppins")
@@ -1517,7 +1517,7 @@ class Ui_MainWindow(object):
 "border-radius: 5px;")
         self.btnTercerColor.setAlignment(QtCore.Qt.AlignCenter)
         self.btnTercerColor.setObjectName("btnTercerColor")
-        self.btnCuartoColor = QtWidgets.QLabel(self.frmColores)
+        self.btnCuartoColor = QtWidgets.QLabel(self.frmCubetas)
         self.btnCuartoColor.setGeometry(QtCore.QRect(480, 88, 120, 60))
         font = QtGui.QFont()
         font.setFamily("Poppins")
@@ -1525,13 +1525,13 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btnCuartoColor.setFont(font)
-        self.btnCuartoColor.setStyleSheet("background-color: rgb(39, 175, 28);\n"
+        self.btnCuartoColor.setStyleSheet("background-color: #1693a7;\n"
 "color: rgb(255, 255, 255);\n"
 "border:none;\n"
 "border-radius: 5px;")
         self.btnCuartoColor.setAlignment(QtCore.Qt.AlignCenter)
         self.btnCuartoColor.setObjectName("btnCuartoColor")
-        self.btnQuintoColor = QtWidgets.QLabel(self.frmColores)
+        self.btnQuintoColor = QtWidgets.QLabel(self.frmCubetas)
         self.btnQuintoColor.setGeometry(QtCore.QRect(620, 88, 120, 60))
         font = QtGui.QFont()
         font.setFamily("Poppins")
@@ -1539,191 +1539,131 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btnQuintoColor.setFont(font)
-        self.btnQuintoColor.setStyleSheet("background-color: rgb(255, 170, 0);\n"
+        self.btnQuintoColor.setStyleSheet("background-color: #88159e;\n"
 "color: rgb(255, 255, 255);\n"
 "border:none;\n"
 "border-radius: 5px;")
         self.btnQuintoColor.setAlignment(QtCore.Qt.AlignCenter)
         self.btnQuintoColor.setObjectName("btnQuintoColor")
-        self.txtCantidadPrimerColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadPrimerColor.setGeometry(QtCore.QRect(60, 183, 120, 40))
+        self.txtCantidadPrimeraVariedad = QtWidgets.QLineEdit(self.frmCubetas)
+        self.txtCantidadPrimeraVariedad.setGeometry(QtCore.QRect(60, 183, 120, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.txtCantidadPrimerColor.setFont(font)
-        self.txtCantidadPrimerColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.txtCantidadPrimeraVariedad.setFont(font)
+        self.txtCantidadPrimeraVariedad.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 5px;\n"
 "border: 2px solid #000;\n"
 "padding: 5px")
-        self.txtCantidadPrimerColor.setText("")
-        self.txtCantidadPrimerColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadPrimerColor.setObjectName("txtCantidadPrimerColor")
-        self.txtCantidadSegundoColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadSegundoColor.setGeometry(QtCore.QRect(200, 183, 120, 40))
+        self.txtCantidadPrimeraVariedad.setText("")
+        self.txtCantidadPrimeraVariedad.setAlignment(QtCore.Qt.AlignCenter)
+        self.txtCantidadPrimeraVariedad.setObjectName("txtCantidadPrimeraVariedad")
+        self.txtCantidadSegundaVariedad = QtWidgets.QLineEdit(self.frmCubetas)
+        self.txtCantidadSegundaVariedad.setGeometry(QtCore.QRect(200, 183, 120, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.txtCantidadSegundoColor.setFont(font)
-        self.txtCantidadSegundoColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.txtCantidadSegundaVariedad.setFont(font)
+        self.txtCantidadSegundaVariedad.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 5px;\n"
 "border: 2px solid #000;\n"
 "padding: 5px")
-        self.txtCantidadSegundoColor.setText("")
-        self.txtCantidadSegundoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadSegundoColor.setObjectName("txtCantidadSegundoColor")
-        self.txtCantidadTercerColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadTercerColor.setGeometry(QtCore.QRect(340, 183, 120, 40))
+        self.txtCantidadSegundaVariedad.setText("")
+        self.txtCantidadSegundaVariedad.setAlignment(QtCore.Qt.AlignCenter)
+        self.txtCantidadSegundaVariedad.setObjectName("txtCantidadSegundaVariedad")
+        self.txtCantidadTerceraVariedad = QtWidgets.QLineEdit(self.frmCubetas)
+        self.txtCantidadTerceraVariedad.setGeometry(QtCore.QRect(340, 183, 120, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.txtCantidadTercerColor.setFont(font)
-        self.txtCantidadTercerColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.txtCantidadTerceraVariedad.setFont(font)
+        self.txtCantidadTerceraVariedad.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 5px;\n"
 "border: 2px solid #000;\n"
 "padding: 5px")
-        self.txtCantidadTercerColor.setText("")
-        self.txtCantidadTercerColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadTercerColor.setObjectName("txtCantidadTercerColor")
-        self.txtCantidadCuartoColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadCuartoColor.setGeometry(QtCore.QRect(480, 183, 120, 40))
+        self.txtCantidadTerceraVariedad.setText("")
+        self.txtCantidadTerceraVariedad.setAlignment(QtCore.Qt.AlignCenter)
+        self.txtCantidadTerceraVariedad.setObjectName("txtCantidadTerceraVariedad")
+        self.txtCantidadCuartaVariedad = QtWidgets.QLineEdit(self.frmCubetas)
+        self.txtCantidadCuartaVariedad.setGeometry(QtCore.QRect(480, 183, 120, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.txtCantidadCuartoColor.setFont(font)
-        self.txtCantidadCuartoColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.txtCantidadCuartaVariedad.setFont(font)
+        self.txtCantidadCuartaVariedad.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 5px;\n"
 "border: 2px solid #000;\n"
 "padding: 5px")
-        self.txtCantidadCuartoColor.setText("")
-        self.txtCantidadCuartoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadCuartoColor.setObjectName("txtCantidadCuartoColor")
-        self.txtCantidadQuintoColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadQuintoColor.setGeometry(QtCore.QRect(620, 183, 120, 40))
+        self.txtCantidadCuartaVariedad.setText("")
+        self.txtCantidadCuartaVariedad.setAlignment(QtCore.Qt.AlignCenter)
+        self.txtCantidadCuartaVariedad.setObjectName("txtCantidadCuartaVariedad")
+        self.txtCantidadQuintaVariedad = QtWidgets.QLineEdit(self.frmCubetas)
+        self.txtCantidadQuintaVariedad.setGeometry(QtCore.QRect(620, 183, 120, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.txtCantidadQuintoColor.setFont(font)
-        self.txtCantidadQuintoColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.txtCantidadQuintaVariedad.setFont(font)
+        self.txtCantidadQuintaVariedad.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 5px;\n"
 "border: 2px solid #000;\n"
 "padding: 5px")
-        self.txtCantidadQuintoColor.setText("")
-        self.txtCantidadQuintoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadQuintoColor.setObjectName("txtCantidadQuintoColor")
-        self.lblSeleccioneColores = QtWidgets.QLabel(self.frmColores)
-        self.lblSeleccioneColores.setGeometry(QtCore.QRect(240, 30, 600, 40))
+        self.txtCantidadQuintaVariedad.setText("")
+        self.txtCantidadQuintaVariedad.setAlignment(QtCore.Qt.AlignCenter)
+        self.txtCantidadQuintaVariedad.setObjectName("txtCantidadQuintaVariedad")
+        self.lblSeleccioneCubetas = QtWidgets.QLabel(self.frmCubetas)
+        self.lblSeleccioneCubetas.setGeometry(QtCore.QRect(120, 20, 600, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(18)
         font.setBold(True)
         font.setWeight(75)
-        self.lblSeleccioneColores.setFont(font)
-        self.lblSeleccioneColores.setAlignment(QtCore.Qt.AlignCenter)
-        self.lblSeleccioneColores.setObjectName("lblSeleccioneColores")
-        self.btnAceptarFrmColores = QtWidgets.QPushButton(self.frmColores)
-        self.btnAceptarFrmColores.setGeometry(QtCore.QRect(330, 250, 150, 50))
+        self.lblSeleccioneCubetas.setFont(font)
+        self.lblSeleccioneCubetas.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblSeleccioneCubetas.setObjectName("lblSeleccioneCubetas")
+        self.btnAceptarFrmCubetas = QtWidgets.QPushButton(self.frmCubetas)
+        self.btnAceptarFrmCubetas.setGeometry(QtCore.QRect(190, 250, 150, 50))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.btnAceptarFrmColores.setFont(font)
-        self.btnAceptarFrmColores.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.btnAceptarFrmColores.setStyleSheet("background-color: rgb(36, 211, 21);\n"
+        self.btnAceptarFrmCubetas.setFont(font)
+        self.btnAceptarFrmCubetas.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btnAceptarFrmCubetas.setStyleSheet("background-color: rgb(36, 211, 21);\n"
 "color: rgb(255, 255, 255);\n"
 "border:none;\n"
 "border-radius: 5px;")
-        self.btnAceptarFrmColores.setFlat(False)
-        self.btnAceptarFrmColores.setObjectName("btnAceptarFrmColores")
-        self.btnCancelarFrmColores = QtWidgets.QPushButton(self.frmColores)
-        self.btnCancelarFrmColores.setGeometry(QtCore.QRect(600, 250, 150, 50))
+        self.btnAceptarFrmCubetas.setFlat(False)
+        self.btnAceptarFrmCubetas.setObjectName("btnAceptarFrmCubetas")
+        self.btnCancelarFrmCubetas = QtWidgets.QPushButton(self.frmCubetas)
+        self.btnCancelarFrmCubetas.setGeometry(QtCore.QRect(460, 250, 150, 50))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.btnCancelarFrmColores.setFont(font)
-        self.btnCancelarFrmColores.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.btnCancelarFrmColores.setStyleSheet("background-color: rgb(234, 29, 49);\n"
+        self.btnCancelarFrmCubetas.setFont(font)
+        self.btnCancelarFrmCubetas.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btnCancelarFrmCubetas.setStyleSheet("background-color: rgb(234, 29, 49);\n"
 "color: rgb(255, 255, 255);\n"
 "border:none;\n"
 "border-radius: 5px;")
-        self.btnCancelarFrmColores.setObjectName("btnCancelarFrmColores")
-        self.btnSextoColor = QtWidgets.QLabel(self.frmColores)
-        self.btnSextoColor.setGeometry(QtCore.QRect(760, 90, 120, 60))
-        font = QtGui.QFont()
-        font.setFamily("Poppins")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btnSextoColor.setFont(font)
-        self.btnSextoColor.setStyleSheet("background-color: rgb(255, 255, 0);\n"
-"color: rgb(0, 0, 0);\n"
-"border:none;\n"
-"border-radius: 5px;")
-        self.btnSextoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.btnSextoColor.setObjectName("btnSextoColor")
-        self.btnSeptimoColor = QtWidgets.QLabel(self.frmColores)
-        self.btnSeptimoColor.setGeometry(QtCore.QRect(900, 90, 120, 60))
-        font = QtGui.QFont()
-        font.setFamily("Poppins")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btnSeptimoColor.setFont(font)
-        self.btnSeptimoColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);\n"
-"border:2px solid #000000;\n"
-"border-radius: 5px;")
-        self.btnSeptimoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.btnSeptimoColor.setObjectName("btnSeptimoColor")
-        self.txtCantidadSextoColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadSextoColor.setGeometry(QtCore.QRect(760, 183, 120, 40))
-        font = QtGui.QFont()
-        font.setFamily("Poppins")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.txtCantidadSextoColor.setFont(font)
-        self.txtCantidadSextoColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);\n"
-"border-radius: 5px;\n"
-"border: 2px solid #000;\n"
-"padding: 5px")
-        self.txtCantidadSextoColor.setText("")
-        self.txtCantidadSextoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadSextoColor.setObjectName("txtCantidadSextoColor")
-        self.txtCantidadSeptimoColor = QtWidgets.QLineEdit(self.frmColores)
-        self.txtCantidadSeptimoColor.setGeometry(QtCore.QRect(900, 183, 120, 40))
-        font = QtGui.QFont()
-        font.setFamily("Poppins")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.txtCantidadSeptimoColor.setFont(font)
-        self.txtCantidadSeptimoColor.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);\n"
-"border-radius: 5px;\n"
-"border: 2px solid #000;\n"
-"padding: 5px")
-        self.txtCantidadSeptimoColor.setText("")
-        self.txtCantidadSeptimoColor.setAlignment(QtCore.Qt.AlignCenter)
-        self.txtCantidadSeptimoColor.setObjectName("txtCantidadSeptimoColor")
+        self.btnCancelarFrmCubetas.setObjectName("btnCancelarFrmCubetas")
         self.frmIngresarCantidadJabas = QtWidgets.QFrame(self.centralwidget)
         self.frmIngresarCantidadJabas.setGeometry(QtCore.QRect(685, 390, 550, 300))
         self.frmIngresarCantidadJabas.setStyleSheet("#frmIngresarCantidadJabas{background-color: rgb(255, 255, 255);\n"
@@ -2041,7 +1981,7 @@ class Ui_MainWindow(object):
         self.btnSiPrecioReporte.setFlat(False)
         self.btnSiPrecioReporte.setObjectName("btnSiPrecioReporte")
         self.frmAlertaTipoTrozadosDesc = QtWidgets.QFrame(self.centralwidget)
-        self.frmAlertaTipoTrozadosDesc.setGeometry(QtCore.QRect(30, 1140, 800, 400))
+        self.frmAlertaTipoTrozadosDesc.setGeometry(QtCore.QRect(560, 340, 800, 400))
         self.frmAlertaTipoTrozadosDesc.setStyleSheet("#frmAlertaTipoTrozadosDesc{background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border:none;\n"
@@ -2166,7 +2106,7 @@ class Ui_MainWindow(object):
         self.lblTextSeleccioneTipoTrozado_2.setAlignment(QtCore.Qt.AlignCenter)
         self.lblTextSeleccioneTipoTrozado_2.setObjectName("lblTextSeleccioneTipoTrozado_2")
         self.frmPrincipal.raise_()
-        self.frmColores.raise_()
+        self.frmCubetas.raise_()
         self.frmIngresarCantidadJabas.raise_()
         self.frmIngresarCantidad.raise_()
         self.frmAlertaEliminar.raise_()
@@ -2175,8 +2115,8 @@ class Ui_MainWindow(object):
         self.frmAlertaTipoTrozados.raise_()
         self.frmIngresarNumeroPesada.raise_()
         self.frmDecidirReporte.raise_()
-        self.frmAlerta.raise_()
         self.frmAlertaTipoTrozadosDesc.raise_()
+        self.frmAlerta.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -2301,23 +2241,23 @@ class Ui_MainWindow(object):
         self.btnAceptarFrmAlertaEliminar.setText(_translate("MainWindow", "Aceptar (↵)"))
         self.btnCancelarFrmAlertaEliminar.setText(_translate("MainWindow", "Cancelar (-)"))
         self.lblAlertaEliminarTexto.setText(_translate("MainWindow", "¿Realmente estas seguro de eliminar este Registro?"))
-        self.btnPrimerColor.setText(_translate("MainWindow", "(R)"))
-        self.btnSegundoColor.setText(_translate("MainWindow", "(C)"))
-        self.btnTercerColor.setText(_translate("MainWindow", "(A)"))
-        self.btnCuartoColor.setText(_translate("MainWindow", "(V)"))
-        self.btnQuintoColor.setText(_translate("MainWindow", "(N)"))
-        self.txtCantidadPrimerColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
-        self.txtCantidadSegundoColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
-        self.txtCantidadTercerColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
-        self.txtCantidadCuartoColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
-        self.txtCantidadQuintoColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
-        self.lblSeleccioneColores.setText(_translate("MainWindow", "Seleccione los colores de las jabas:"))
-        self.btnAceptarFrmColores.setText(_translate("MainWindow", "Aceptar (↵)"))
-        self.btnCancelarFrmColores.setText(_translate("MainWindow", "Cancelar (-)"))
-        self.btnSextoColor.setText(_translate("MainWindow", "(D)"))
-        self.btnSeptimoColor.setText(_translate("MainWindow", "(O)"))
-        self.txtCantidadSextoColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
-        self.txtCantidadSeptimoColor.setPlaceholderText(_translate("MainWindow", "Cantidad"))
+        self.btnPrimerColor.setText(_translate("MainWindow", "Cubeta \n"
+" Cerrada (C)"))
+        self.btnSegundoColor.setText(_translate("MainWindow", "Cubeta \n"
+" Abierta (A)"))
+        self.btnTercerColor.setText(_translate("MainWindow", "Cubeta \n"
+" Pequeña (P)"))
+        self.btnCuartoColor.setText(_translate("MainWindow", "Cubeta \n"
+" Grande (G)"))
+        self.btnQuintoColor.setText(_translate("MainWindow", "Otros (O)"))
+        self.txtCantidadPrimeraVariedad.setPlaceholderText(_translate("MainWindow", "Cantidad"))
+        self.txtCantidadSegundaVariedad.setPlaceholderText(_translate("MainWindow", "Cantidad"))
+        self.txtCantidadTerceraVariedad.setPlaceholderText(_translate("MainWindow", "Cantidad"))
+        self.txtCantidadCuartaVariedad.setPlaceholderText(_translate("MainWindow", "Cantidad"))
+        self.txtCantidadQuintaVariedad.setPlaceholderText(_translate("MainWindow", "Cantidad"))
+        self.lblSeleccioneCubetas.setText(_translate("MainWindow", "Seleccione tipo de cubetas:"))
+        self.btnAceptarFrmCubetas.setText(_translate("MainWindow", "Aceptar (↵)"))
+        self.btnCancelarFrmCubetas.setText(_translate("MainWindow", "Cancelar (-)"))
         self.lblTextoIngresarCantidad_2.setText(_translate("MainWindow", "Ingresar Peso de Jabas"))
         self.txtPesoParaIngresarJabas.setPlaceholderText(_translate("MainWindow", "Ingrese cantidad"))
         self.btnAceptarFrmRegistrarCantidadJabas.setText(_translate("MainWindow", "Aceptar (↵)"))

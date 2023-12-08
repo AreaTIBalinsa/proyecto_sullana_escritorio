@@ -1,50 +1,32 @@
 
- FECHA : 2023-12-06     HORA : 16:21:25
- CLIENTE :  GENERICO  
+ FECHA : 2023-12-08     HORA : 07:33:20
+ CLIENTE :  GENERICO 
 
  PRODUCTO          Kg      CANT. PRECIO   
 ========================================
- YUGO VIVO         10.00   5     10.00    
+ YUGO VIVO         10.00   4     10.00    
+ GALLINA DOBLE     10.00   5     10.00    
+ GALLINA CHICA     10.00   5     10.00    
  YUGO PELADO       10.00   6     10.00    
  TECNICO VIVO      10.00   4     10.00    
- TECNICO PELADO    10.00   6     10.00    
- GALLINA DOBLE     10.00   6     10.00    
- GALLINA CHICA     10.00   3     10.00    
- GALLO             10.00   5     10.00    
- POLLO MALTRATADO  10.00   4     10.00    
- DORSO             10.00   3     10.00    
- YUGO VIVO         10.00   6     10.00    
-
- DESCUENTOS :
-========================================
- YUGO VIVO         -10.00  -4    10.00    
 
  JABAS :
 ========================================
- YUGO VIVO         4.24    4     10.00    
- YUGO PELADO       0.00    5     10.00    
- TECNICO VIVO      0.00    3     10.00    
- TECNICO PELADO    0.00    4     10.00    
- GALLINA DOBLE     0.00    4     10.00    
- GALLINA CHICA     4.10    2     10.00    
- GALLO             3.87    3     10.00    
- POLLO MALTRATADO  3.50    5     10.00    
- DORSO             5.20    2     10.00    
- YUGO VIVO         0.00    5     10.00    
+ YUGO VIVO         4.20    4     10.00    
+ GALLINA DOBLE     4.65    5     10.00    
+ GALLINA CHICA     5.10    3     10.00    
+ YUGO PELADO       3.56    3     10.00    
+ TECNICO VIVO      3.78    3     10.00    
 
  TOTALES :           
 ========================================
  PRODUCTO          Kg.     CANTIDAD     
 ========================================
- YUGO VIVO         5.76      7        
- YUGO PELADO       10.00     6        
- TECNICO VIVO      10.00     4        
- TECNICO PELADO    10.00     6        
- GALLINA DOBLE     10.00     6        
- GALLINA CHICA     5.90      3        
- GALLO             6.13      5        
- POLLO MALTRATADO  6.50      4        
- DORSO             4.80      3        
+ YUGO VIVO         5.80      4        
+ YUGO PELADO       6.44      6        
+ TECNICO VIVO      6.22      4        
+ GALLINA DOBLE     5.35      5        
+ GALLINA CHICA     4.90      5        
 ========================================
 ===       GRACIAS POR SU COMPRA      ===
 ========================================

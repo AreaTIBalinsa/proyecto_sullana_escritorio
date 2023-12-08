@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\AproyectoSullana\ProyectoSullana_Escritorio\View\sistemaVentas.ui'
+# Form implementation generated from reading ui file 'c:\AproyectoSullana\ProyectoSullana_Escritorio\View\sistemaVentasBeneficiado.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1920, 1080)
+        MainWindow.resize(1920, 1623)
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -1467,7 +1467,7 @@ class Ui_MainWindow(object):
         self.lblAlertaEliminarTexto.setWordWrap(True)
         self.lblAlertaEliminarTexto.setObjectName("lblAlertaEliminarTexto")
         self.frmColores = QtWidgets.QFrame(self.centralwidget)
-        self.frmColores.setGeometry(QtCore.QRect(420, 375, 1080, 330))
+        self.frmColores.setGeometry(QtCore.QRect(420, 1140, 1080, 330))
         self.frmColores.setStyleSheet("#frmColores{background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
 "border:none;\n"
@@ -2040,6 +2040,131 @@ class Ui_MainWindow(object):
 "border-radius: 5px;")
         self.btnSiPrecioReporte.setFlat(False)
         self.btnSiPrecioReporte.setObjectName("btnSiPrecioReporte")
+        self.frmAlertaTipoTrozadosDesc = QtWidgets.QFrame(self.centralwidget)
+        self.frmAlertaTipoTrozadosDesc.setGeometry(QtCore.QRect(30, 1140, 800, 400))
+        self.frmAlertaTipoTrozadosDesc.setStyleSheet("#frmAlertaTipoTrozadosDesc{background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"border:none;\n"
+"border-radius: 10px;\n"
+"border: 2px solid #D9D9D9;}")
+        self.frmAlertaTipoTrozadosDesc.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frmAlertaTipoTrozadosDesc.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frmAlertaTipoTrozadosDesc.setObjectName("frmAlertaTipoTrozadosDesc")
+        self.btnAceptarFrmTipoTrozadosDesc = QtWidgets.QPushButton(self.frmAlertaTipoTrozadosDesc)
+        self.btnAceptarFrmTipoTrozadosDesc.setGeometry(QtCore.QRect(600, 310, 150, 50))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnAceptarFrmTipoTrozadosDesc.setFont(font)
+        self.btnAceptarFrmTipoTrozadosDesc.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btnAceptarFrmTipoTrozadosDesc.setStyleSheet("background-color: rgb(36, 211, 21);\n"
+"color: rgb(255, 255, 255);\n"
+"border:none;\n"
+"border-radius: 5px;")
+        self.btnAceptarFrmTipoTrozadosDesc.setFlat(False)
+        self.btnAceptarFrmTipoTrozadosDesc.setObjectName("btnAceptarFrmTipoTrozadosDesc")
+        self.btnPechugaDesc = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.btnPechugaDesc.setGeometry(QtCore.QRect(50, 116, 160, 60))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnPechugaDesc.setFont(font)
+        self.btnPechugaDesc.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border: 2px solid black;\n"
+"  border-radius: 15px;")
+        self.btnPechugaDesc.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnPechugaDesc.setObjectName("btnPechugaDesc")
+        self.btnPiernaDesc = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.btnPiernaDesc.setGeometry(QtCore.QRect(320, 116, 160, 60))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnPiernaDesc.setFont(font)
+        self.btnPiernaDesc.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border: 2px solid black;\n"
+"  border-radius: 15px;")
+        self.btnPiernaDesc.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnPiernaDesc.setObjectName("btnPiernaDesc")
+        self.btnAlasDesc = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.btnAlasDesc.setGeometry(QtCore.QRect(590, 116, 160, 60))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnAlasDesc.setFont(font)
+        self.btnAlasDesc.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border: 2px solid black;\n"
+"  border-radius: 15px;")
+        self.btnAlasDesc.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnAlasDesc.setObjectName("btnAlasDesc")
+        self.btnMenudenciaDesc = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.btnMenudenciaDesc.setGeometry(QtCore.QRect(50, 205, 160, 60))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnMenudenciaDesc.setFont(font)
+        self.btnMenudenciaDesc.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border: 2px solid black;\n"
+"  border-radius: 15px;")
+        self.btnMenudenciaDesc.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnMenudenciaDesc.setObjectName("btnMenudenciaDesc")
+        self.btnDorsoDesc = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.btnDorsoDesc.setGeometry(QtCore.QRect(320, 205, 160, 60))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnDorsoDesc.setFont(font)
+        self.btnDorsoDesc.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border: 2px solid black;\n"
+"  border-radius: 15px;")
+        self.btnDorsoDesc.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnDorsoDesc.setObjectName("btnDorsoDesc")
+        self.btnOtrosDesc = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.btnOtrosDesc.setGeometry(QtCore.QRect(590, 205, 160, 60))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnOtrosDesc.setFont(font)
+        self.btnOtrosDesc.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(0, 0, 0);\n"
+"border: 2px solid black;\n"
+"  border-radius: 15px;")
+        self.btnOtrosDesc.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnOtrosDesc.setObjectName("btnOtrosDesc")
+        self.frame_7 = QtWidgets.QFrame(self.frmAlertaTipoTrozadosDesc)
+        self.frame_7.setGeometry(QtCore.QRect(50, 90, 700, 3))
+        self.frame_7.setStyleSheet("background-color: rgb(139, 139, 139);")
+        self.frame_7.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_7.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_7.setObjectName("frame_7")
+        self.lblTextSeleccioneTipoTrozado_2 = QtWidgets.QLabel(self.frmAlertaTipoTrozadosDesc)
+        self.lblTextSeleccioneTipoTrozado_2.setGeometry(QtCore.QRect(50, 25, 700, 50))
+        font = QtGui.QFont()
+        font.setFamily("Poppins")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.lblTextSeleccioneTipoTrozado_2.setFont(font)
+        self.lblTextSeleccioneTipoTrozado_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblTextSeleccioneTipoTrozado_2.setObjectName("lblTextSeleccioneTipoTrozado_2")
         self.frmPrincipal.raise_()
         self.frmColores.raise_()
         self.frmIngresarCantidadJabas.raise_()
@@ -2051,6 +2176,7 @@ class Ui_MainWindow(object):
         self.frmIngresarNumeroPesada.raise_()
         self.frmDecidirReporte.raise_()
         self.frmAlerta.raise_()
+        self.frmAlertaTipoTrozadosDesc.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -2108,11 +2234,11 @@ class Ui_MainWindow(object):
         item = self.tblDetallePesadas.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "Cantidad"))
         item = self.tblDetallePesadas.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "Jabas"))
+        item.setText(_translate("MainWindow", "Cubetas"))
         item = self.tblDetallePesadas.horizontalHeaderItem(7)
-        item.setText(_translate("MainWindow", "Colores"))
+        item.setText(_translate("MainWindow", "Variedad Cubeta"))
         item = self.tblDetallePesadas.horizontalHeaderItem(8)
-        item.setText(_translate("MainWindow", "Peso Jabas"))
+        item.setText(_translate("MainWindow", "Peso Cubetas"))
         item = self.tblDetallePesadas.horizontalHeaderItem(9)
         item.setText(_translate("MainWindow", "Hora"))
         item = self.tblDetallePesadas.horizontalHeaderItem(10)
@@ -2211,3 +2337,11 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "¿Incluir Precio en el Reporte?"))
         self.btnNoPrecioReporte.setText(_translate("MainWindow", "NO (2)"))
         self.btnSiPrecioReporte.setText(_translate("MainWindow", "SI (1)"))
+        self.btnAceptarFrmTipoTrozadosDesc.setText(_translate("MainWindow", "Aceptar (↵)"))
+        self.btnPechugaDesc.setText(_translate("MainWindow", "PECHUGA (1)"))
+        self.btnPiernaDesc.setText(_translate("MainWindow", "PIERNA (2)"))
+        self.btnAlasDesc.setText(_translate("MainWindow", "ALAS (3)"))
+        self.btnMenudenciaDesc.setText(_translate("MainWindow", "MENUDENCIA (4)"))
+        self.btnDorsoDesc.setText(_translate("MainWindow", "DORSO (5)"))
+        self.btnOtrosDesc.setText(_translate("MainWindow", "OTROS (6)"))
+        self.lblTextSeleccioneTipoTrozado_2.setText(_translate("MainWindow", "SELECCIONE TIPO TROZADO"))

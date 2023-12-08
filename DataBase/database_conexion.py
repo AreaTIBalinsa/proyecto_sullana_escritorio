@@ -108,7 +108,7 @@ class Conectar():
         sql = """SELECT
                     CAST((@rownum:=@rownum-1) as INT) as num,
                     IFNULL(CONCAT_WS(' ', nombresCli, apellidoPaternoCli), '') AS cliente,
-                    (SELECT TRUNCATE(pesoNetoPes / cantidadPes, 2) FROM tb_pesadas WHERE idPesada = p.idPesada) AS promedioPesoNetoCantidad,
+                    (SELECT TRUNCATE((pesoNetoPes-pesoNetoJabas) / cantidadPes, 2) FROM tb_pesadas WHERE idPesada = p.idPesada) AS promedioPesoNetoCantidad,
                     nombreEspecie, TRUNCATE(pesoNetoPes, 2), cantidadPes, numeroJabasPes, coloresJabas, pesoNetoJabas, horaPes, estadoPes, idPesada, pesoNetoJabas
                 FROM
                     (SELECT @rownum:=(SELECT COUNT(idPesada) FROM tb_pesadas WHERE fechaRegistroPes = DATE(NOW()) AND tb_pesadas.codigoCli = %s) + 1) r,

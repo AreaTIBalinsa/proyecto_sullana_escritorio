@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\proyecto_in_escritorio\View\inicioSistema.ui'
+# Form implementation generated from reading ui file 'c:\AproyectoSullana\ProyectoSullana_Escritorio\View\inicioSistema.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1600, 900)
+        MainWindow.resize(1920, 1080)
         MainWindow.setStyleSheet("background-color: rgb(254, 182, 26);\n"
 "border-radius: 7px;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lblTituloPrincipal = QtWidgets.QLabel(self.centralwidget)
-        self.lblTituloPrincipal.setGeometry(QtCore.QRect(370, 73, 850, 250))
+        self.lblTituloPrincipal.setGeometry(QtCore.QRect(535, 154, 850, 250))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(32)
@@ -31,7 +31,7 @@ class Ui_MainWindow(object):
         self.lblTituloPrincipal.setWordWrap(True)
         self.lblTituloPrincipal.setObjectName("lblTituloPrincipal")
         self.imgVenta = QtWidgets.QLabel(self.centralwidget)
-        self.imgVenta.setGeometry(QtCore.QRect(625, 415, 350, 250))
+        self.imgVenta.setGeometry(QtCore.QRect(785, 504, 350, 250))
         self.imgVenta.setStyleSheet("border-color: rgb(0, 0, 0);\n"
 "border: 2px solid black;\n"
 "border-radius: 15px;\n"
@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.imgVenta.setWordWrap(True)
         self.imgVenta.setObjectName("imgVenta")
         self.lblVenta = QtWidgets.QLabel(self.centralwidget)
-        self.lblVenta.setGeometry(QtCore.QRect(625, 720, 350, 40))
+        self.lblVenta.setGeometry(QtCore.QRect(785, 794, 350, 40))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(28)
@@ -51,7 +51,7 @@ class Ui_MainWindow(object):
         self.lblVenta.setAlignment(QtCore.Qt.AlignCenter)
         self.lblVenta.setObjectName("lblVenta")
         self.lblSubTituloPrincipal = QtWidgets.QLabel(self.centralwidget)
-        self.lblSubTituloPrincipal.setGeometry(QtCore.QRect(370, 323, 850, 60))
+        self.lblSubTituloPrincipal.setGeometry(QtCore.QRect(535, 404, 850, 60))
         font = QtGui.QFont()
         font.setFamily("Poppins SemiBold")
         font.setPointSize(24)
@@ -64,14 +64,14 @@ class Ui_MainWindow(object):
         self.lblSubTituloPrincipal.setIndent(-1)
         self.lblSubTituloPrincipal.setObjectName("lblSubTituloPrincipal")
         self.lblmimizar = QtWidgets.QLabel(self.centralwidget)
-        self.lblmimizar.setGeometry(QtCore.QRect(1520, 10, 30, 30))
+        self.lblmimizar.setGeometry(QtCore.QRect(1840, 10, 30, 30))
         self.lblmimizar.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
         self.lblmimizar.setText("")
         self.lblmimizar.setScaledContents(True)
         self.lblmimizar.setWordWrap(False)
         self.lblmimizar.setObjectName("lblmimizar")
         self.lblcerrar = QtWidgets.QLabel(self.centralwidget)
-        self.lblcerrar.setGeometry(QtCore.QRect(1560, 10, 30, 30))
+        self.lblcerrar.setGeometry(QtCore.QRect(1880, 10, 30, 30))
         self.lblcerrar.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.lblcerrar.setAutoFillBackground(False)
         self.lblcerrar.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
@@ -82,13 +82,13 @@ class Ui_MainWindow(object):
         self.lblcerrar.setIndent(-1)
         self.lblcerrar.setObjectName("lblcerrar")
         self.btnminimizar = QtWidgets.QPushButton(self.centralwidget)
-        self.btnminimizar.setGeometry(QtCore.QRect(1520, 10, 30, 30))
+        self.btnminimizar.setGeometry(QtCore.QRect(1840, 10, 30, 30))
         self.btnminimizar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btnminimizar.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
         self.btnminimizar.setText("")
         self.btnminimizar.setObjectName("btnminimizar")
         self.btnCerrar = QtWidgets.QPushButton(self.centralwidget)
-        self.btnCerrar.setGeometry(QtCore.QRect(1560, 10, 30, 30))
+        self.btnCerrar.setGeometry(QtCore.QRect(1880, 10, 30, 30))
         self.btnCerrar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btnCerrar.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
         self.btnCerrar.setText("")
@@ -101,6 +101,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.lblTituloPrincipal.setText(_translate("MainWindow", "SISTEMA INTEGRADO DE COMPRA Y VENTA"))
+        self.lblTituloPrincipal.setText(_translate("MainWindow", "SISTEMA INTEGRADO DE VENTA"))
         self.lblVenta.setText(_translate("MainWindow", "VENTA"))
         self.lblSubTituloPrincipal.setText(_translate("MainWindow", "PRESIONE ENTER PARA INICIAR :"))

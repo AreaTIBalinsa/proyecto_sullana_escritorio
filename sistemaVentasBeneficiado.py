@@ -1,7 +1,6 @@
 # Importación de Librerias
 from PyQt5.QtWidgets import QMainWindow, QLabel, QTableWidgetItem , QWidget, QLabel, QHBoxLayout
 from PyQt5 import QtCore
-from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -14,9 +13,10 @@ from datetime import datetime
 import socket
 from PyQt5.QtGui import QMovie, QColor, QFont
 import threading
+import re
 
 # Importación de los Layout
-from View.Ui_sistemaVentas import Ui_MainWindow # La clase Ui_MainWindow del archivo ui_Principal.py 
+from View.Ui_sistemaVentasBeneficiado import Ui_MainWindow # La clase Ui_MainWindow del archivo ui_Principal.py 
 
 # Importación de Base de Datos
 import DataBase.database_conexion # El archivo database_conexion.py
@@ -160,6 +160,14 @@ observacionPes = ""
 # Variantes de las variables para la Base de datos pero para Descuento
 precioClienteDesc = 0
 idEspecieDesc = 0
+
+# Variables para los kg de pollo trozado
+pesoKgPechuga = 0.00
+pesoKgPierna = 0.00
+pesoKgAlas = 0.00
+pesoKgMenudencia = 0.00
+pesoKgDorso = 0.00
+pesoKgOtros = 0.00
 
 # Variable que indica si esta listo para realizar acciones 
 listoParaAccionar = False
@@ -360,6 +368,7 @@ class Inicio(QMainWindow):
         self.ui.frmAlertaTipoTrozados.setHidden(True)
         self.ui.frmIngresarNumeroPesada.setHidden(True)
         self.ui.frmDecidirReporte.setHidden(True)
+        self.ui.frmAlertaTipoTrozadosDesc.setHidden(True)
         
         self.ui.txtCantidadParaIngresar.textChanged.connect(self.fn_validarEntradaNumerica)
         self.ui.txtCantidadDescuento.textChanged.connect(self.fn_validarEntradaNumerica)
@@ -390,84 +399,7 @@ class Inicio(QMainWindow):
         tablaDePesos.setColumnHidden(11, True)
         tablaDePesos.setAlternatingRowColors(True)
         
-        self.estilosPorDefectoTabla = self.ui.tblDetallePesadas.styleSheet()
-
-        self.ui.btnCambiarModo.clicked.connect(self.fn_cambiarModo)
-        
     # ======================== Funciones llamadas por los Hilos ========================
-
-    def fn_cambiarModo(self):
-        global modoOscuro
-        
-        tablaDePesos = self.ui.tblDetallePesadas
-        
-        if modoOscuro == False:
-            modoOscuro = True
-            self.ui.lblSeleccioneEspecie.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblPesoIndicador.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblUnidadPesaje.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.frmIndicadorSistema.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            
-            self.ui.lblKgYugoVivo.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgYugoPelado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgTecnicoVivo.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgTecnicoPelado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgGallinaDoble.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgGallinaChica.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgGallo.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgPolloMaltratado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.lblKgPolloTrozado.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            
-            self.ui.frmTotales.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            self.ui.txtCodigoCliente.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-            
-            self.ui.tblDetallePesadas.setStyleSheet("background-color: rgb(32, 33, 36); color: rgb(255, 255, 255);")
-        else:
-            modoOscuro = False
-            
-            self.ui.lblSeleccioneEspecie.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblPesoIndicador.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblUnidadPesaje.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.frmIndicadorSistema.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            
-            self.ui.lblKgYugoVivo.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgYugoPelado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgTecnicoVivo.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgTecnicoPelado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgGallinaDoble.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgGallinaChica.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgGallo.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgPolloMaltratado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.lblKgPolloTrozado.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.frmTotales.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            self.ui.txtCodigoCliente.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);")
-            
-            self.ui.tblDetallePesadas.setStyleSheet(self.estilosPorDefectoTabla)
-            
-        self.ajustarColoresAlternosTabla(tablaDePesos)
-            
-    # Función para ajustar colores alternos de las filas en la tabla
-    def ajustarColoresAlternosTabla(self, tabla):
-        if modoOscuro:
-            # Establecer colores oscuros para el modo oscuro
-            color_fila_alternante = QtGui.QColor(45, 45, 45)  # Puedes ajustar estos valores según tu preferencia
-            color_header = QtGui.QColor(32, 33, 36)  # Color para el header en modo oscuro
-        else:
-            # Establecer colores claros para el modo claro
-            color_fila_alternante = QtGui.QColor(240, 240, 240)  # Puedes ajustar estos valores según tu preferencia
-            color_header = QtGui.QColor(255, 255, 255)  # Color para el header en modo claro
-
-        # Aplicar colores alternos a las filas de la tabla
-        for fila in range(tabla.rowCount()):
-            if fila % 2 == 1:
-                for columna in range(tabla.columnCount()):
-                    item = tabla.item(fila, columna)
-                    if item is not None:
-                        item.setBackground(color_fila_alternante)
-
-        # Aplicar color al header
-        header = tabla.horizontalHeader()
-        header.setStyleSheet("QHeaderView::section { background-color: %s; }" % color_header.name())
     
     def evt_actualizar_peso(self, val):
         global pesoBalanza1
@@ -602,7 +534,10 @@ class Inicio(QMainWindow):
             not self.ui.frmColores.isVisible() and
             not self.ui.frmIngresarCantidadJabas.isVisible() and
             not self.ui.frmAlertaTipoTrozados.isVisible() and
-            not self.ui.frmIngresarNumeroPesada.isVisible()
+            not self.ui.frmIngresarNumeroPesada.isVisible() and
+            not self.ui.frmDecidirReporte.isVisible() and
+            not self.ui.frmIngresarCantidadJabas.isVisible() and
+            not self.ui.frmAlertaTipoTrozadosDesc.isVisible()
         )
         
     def keyPressEvent(self,event):
@@ -759,8 +694,8 @@ class Inicio(QMainWindow):
             frmRegistrarDescuentoCan = True
             self.ui.txtCantidadDescuento.setFocus(True)
             
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == False and frmSeleccionarTipoTrozadoDesc == True:
-            self.ui.frmAlertaTipoTrozados.setHidden(True)
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozado == False and frmSeleccionarTipoTrozadoDesc == True:
+            self.ui.frmAlertaTipoTrozadosDesc.setHidden(True)
             frmSeleccionarTipoTrozadoDesc = False
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarDescuento == False and frmRegistrarDescuentoCan == True and frmInicioProceso == True and self.ui.frmAplicarDescuento.isVisible() and self.ui.txtCantidadDescuento.text() != "":
@@ -959,21 +894,29 @@ class Inicio(QMainWindow):
         elif (event.key() == Qt.Key_O) and not self.ui.lwListaClientes.isVisible() and self.ui.frmColores.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
             self.ui.txtCantidadSeptimoColor.setFocus(True)
         
-        if (event.key() == Qt.Key_Right) and self.condiciones_base():
+        if (event.key() == Qt.Key_Right) and self.condiciones_base() and self.condiciones_alertas():
             balanzaSeleccionada = 1
             self.fn_seleccionaBalanza()
             self.fn_seleccionarEspecie(idEspecie)
             self.fn_seleccionarEspecieDescuento(idEspecieDesc)
             self.fn_verificarProceso()
             self.fn_listarVenta()
+            self.ui.frmAlertaTipoTrozados.setHidden(True)
+            self.ui.frmAlertaTipoTrozadosDesc.setHidden(True)
+            frmSeleccionarTipoTrozado = False
+            frmSeleccionarTipoTrozadoDesc = False
         
-        if (event.key() == Qt.Key_Left) and self.condiciones_base():
+        if (event.key() == Qt.Key_Left) and self.condiciones_base() and self.condiciones_alertas():
             balanzaSeleccionada = 2
             self.fn_seleccionaBalanza()
             self.fn_seleccionarEspecie(idEspecie)
             self.fn_seleccionarEspecieDescuento(idEspecieDesc)
             self.fn_verificarProceso()
             self.fn_listarVenta()
+            self.ui.frmAlertaTipoTrozados.setHidden(True)
+            self.ui.frmAlertaTipoTrozadosDesc.setHidden(True)
+            frmSeleccionarTipoTrozado = False
+            frmSeleccionarTipoTrozadoDesc = False
             
         if event.key() == Qt.Key_Up and self.ui.lwListaClientes.isVisible():
             self.fn_ArribaLista()
@@ -1000,44 +943,44 @@ class Inicio(QMainWindow):
         elif (event.key() == Qt.Key_8) and not self.ui.lwListaClientes.isVisible() and self.condiciones_base() and self.condiciones_alertas():
             self.fn_seleccionarEspecie(octavaEspecie)
         elif (event.key() == Qt.Key_9) and not self.ui.lwListaClientes.isVisible() and self.condiciones_base() and self.condiciones_alertas():
-            self.fn_seleccionarEspecie(decimaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaEspecie))
+            self.fn_seleccionarEspecie(decimaEspecie)
                 
         if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
-            self.fn_seleccionarEspecie(decimaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaEspecie))
+            self.fn_seleccionarEspecie(decimaEspecie)
         elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
-            self.fn_seleccionarEspecie(decimaPrimeraEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaPrimeraEspecie))
+            self.fn_seleccionarEspecie(decimaPrimeraEspecie)
         elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
-            self.fn_seleccionarEspecie(decimaSegundaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaSegundaEspecie))
+            self.fn_seleccionarEspecie(decimaSegundaEspecie)
         elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
-            self.fn_seleccionarEspecie(decimaTerceraEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaTerceraEspecie))
+            self.fn_seleccionarEspecie(decimaTerceraEspecie)
         elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
-            self.fn_seleccionarEspecie(decimaCuartaEspecie)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaCuartaEspecie))
+            self.fn_seleccionarEspecie(decimaCuartaEspecie)
         elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozado == True and frmSeleccionarTipoTrozadoDesc == False:
-            self.fn_seleccionarEspecie(decimaQuintaOtrasEspecies)
             self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaQuintaOtrasEspecies))
+            self.fn_seleccionarEspecie(decimaQuintaOtrasEspecies)
             
-        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+        if (event.key() == Qt.Key_1) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
             self.fn_seleccionarEspecieDescuento(decimaEspecie)
             self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaEspecie))
-        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+        elif (event.key() == Qt.Key_2) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
             self.fn_seleccionarEspecieDescuento(decimaPrimeraEspecie)
             self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaPrimeraEspecie))
-        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+        elif (event.key() == Qt.Key_3) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
             self.fn_seleccionarEspecieDescuento(decimaSegundaEspecie)
             self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaSegundaEspecie))
-        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+        elif (event.key() == Qt.Key_4) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
             self.fn_seleccionarEspecieDescuento(decimaTerceraEspecie)
             self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaTerceraEspecie))
-        elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+        elif (event.key() == Qt.Key_5) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
             self.fn_seleccionarEspecieDescuento(decimaCuartaEspecie)
             self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaCuartaEspecie))
-        elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozados.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
+        elif (event.key() == Qt.Key_6) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAlertaTipoTrozadosDesc.isVisible() and frmSeleccionarTipoTrozadoDesc == True and frmSeleccionarTipoTrozado == False:
             self.fn_seleccionarEspecieDescuento(decimaQuintaOtrasEspecies)
             self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaQuintaOtrasEspecies))
             
@@ -1099,13 +1042,15 @@ class Inicio(QMainWindow):
                 self.fn_alerta("¡ADVERTENCIA!",error,"No puede seleccionar la especie {} porque la cantidad es 0.".format(nombreOctavaEspecie),1500)
         elif (event.key() == Qt.Key_9) and not self.ui.lwListaClientes.isVisible() and self.ui.frmAplicarDescuento.isVisible() and frmRegistrarDescuento == True and frmRegistrarDescuentoCan == False and frmSeleccionarTipoTrozadoDesc == False:
             self.fn_seleccionarEspecieDescuento(decimaEspecie)
-            self.ui.btnPolloTrozado.setText("{} (9) \n {}".format(nombreNovenaEspecie,nombreDecimaEspecie))
+            self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie,nombreDecimaEspecie))
             
         if (event.key() == Qt.Key_Slash) and self.condiciones_base() and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
             if listoParaAccionar == True :
                 self.ui.imgIconDesc.setPixmap(QPixmap(""))
                 self.ui.txtCantidadDescuento.setText("")
                 self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.ui.frmAlertaTipoTrozadosDesc.setHidden(True)
+                frmSeleccionarTipoTrozadoDesc = False
                 self.ui.txtCantidadDescuento.setEnabled(False)
                 self.ui.frmAplicarDescuento.setHidden(False)
                 frmRegistrarDescuento = True
@@ -1133,11 +1078,6 @@ class Inicio(QMainWindow):
                 self.fn_alerta("¡ADVERTENCIA!",error,"En este momento no puedes editar por que no hay registros.",3000)
             
         if (event.key() == Qt.Key_0) and self.condiciones_base() and frmInicioProceso == True and self.condiciones_alertas() and not self.ui.lwListaClientes.isVisible():
-            # self.ui.txtPesoParaIngresarJabas.setText("")
-            # self.ui.frmIngresarCantidadJabas.setHidden(False)
-            # frmRegistrarJabas = True
-            # self.ui.txtPesoParaIngresarJabas.setFocus(True)
-            
             if listoParaAccionar == True :
                 idPesadaEditarOEliminar = 0
                 self.ui.txtNumeroDePesada.setText("")
@@ -1691,6 +1631,11 @@ class Inicio(QMainWindow):
         self.ui.btnDorso.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         self.ui.btnOtros.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         
+        if especie == 10 or especie == 11 or especie == 12 or especie == 13 or especie == 14 or especie == 15:
+            self.ui.btnPolloTrozado.setStyleSheet("background-color: #2ABF4E; color: #fff")
+            self.ui.frmAlertaTipoTrozados.setHidden(False)
+            frmSeleccionarTipoTrozado = True
+        
         if especie == 1:
             self.ui.btnYugoVivo.setStyleSheet("background-color: #2ABF4E; color: #fff")
             precioCliente = precioPrimerEspecie
@@ -1748,10 +1693,27 @@ class Inicio(QMainWindow):
             precioCliente = precioDecimaQuintaOtrasEspecies
             idEspecie = decimaQuintaOtrasEspecies
             
-        if especie == 10 or especie == 11 or especie == 12 or especie == 13 or especie == 14 or especie == 15:
-            self.ui.btnPolloTrozado.setStyleSheet("background-color: #2ABF4E; color: #fff")
-            self.ui.frmAlertaTipoTrozados.setHidden(False)
-            frmSeleccionarTipoTrozado = True
+        textoPolloTrozado = self.ui.btnPolloTrozado.text()
+        # Utilizar expresiones regulares para encontrar el patrón
+        patron = r'\(9\)\s*([\s\S]+)'
+        coincidencias = re.search(patron, textoPolloTrozado)
+        if coincidencias:
+            textoPolloTrozado = coincidencias.group(1).strip()
+        else:
+            print("No se encontró el patrón en el texto.")
+        
+        if textoPolloTrozado == nombreDecimaEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgPechuga))
+        elif textoPolloTrozado == nombreDecimaPrimeraEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgPierna))
+        elif textoPolloTrozado == nombreDecimaSegundaEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgAlas))
+        elif textoPolloTrozado == nombreDecimaTerceraEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgMenudencia))
+        elif textoPolloTrozado == nombreDecimaCuartaEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgDorso))
+        elif textoPolloTrozado == nombreDecimaQuintaOtrasEspecies:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgOtros))
             
         if balanzaSeleccionada == 1:
             especieCli1 = idEspecie
@@ -1774,12 +1736,18 @@ class Inicio(QMainWindow):
         self.ui.btnDescGallo.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         self.ui.btnDescPolloMaltratado.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
         self.ui.btnDescPolloTrozado.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
-        self.ui.btnPechuga.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
-        self.ui.btnPierna.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
-        self.ui.btnAlas.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
-        self.ui.btnMenudencia.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
-        self.ui.btnDorso.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
-        self.ui.btnOtros.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        
+        self.ui.btnPechugaDesc.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnPiernaDesc.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnAlasDesc.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnMenudenciaDesc.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnDorsoDesc.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        self.ui.btnOtrosDesc.setStyleSheet("background-color: #FFF; color: #000; border: 2px solid black; border-radius: 15px;")
+        
+        if especieDesc == 10 or especieDesc == 11 or especieDesc == 12 or especieDesc == 13 or especieDesc == 14 or especieDesc == 15:
+            self.ui.btnDescPolloTrozado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.frmAlertaTipoTrozadosDesc.setHidden(False)
+            frmSeleccionarTipoTrozadoDesc = True
         
         if especieDesc == 1:
             self.ui.btnDescYugoVivo.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
@@ -1813,35 +1781,31 @@ class Inicio(QMainWindow):
             self.ui.btnDescPolloMaltratado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioOctavaEspecie
             idEspecieDesc = octavaEspecie
+            
         elif especieDesc == 10:
-            self.ui.btnPechuga.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnPechugaDesc.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioDecimaEspecie
             idEspecieDesc = decimaEspecie
         elif especieDesc == 11:
-            self.ui.btnPierna.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnPiernaDesc.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioDecimaPrimeraEspecie
             idEspecieDesc = decimaPrimeraEspecie
         elif especieDesc == 12:
-            self.ui.btnAlas.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnAlasDesc.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioDecimaSegundaEspecie
             idEspecieDesc = decimaSegundaEspecie
         elif especieDesc == 13:
-            self.ui.btnMenudencia.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnMenudenciaDesc.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioDecimaTerceraEspecie
             idEspecieDesc = decimaTerceraEspecie
         elif especieDesc == 14:
-            self.ui.btnDorso.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnDorsoDesc.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioDecimaCuartaEspecie
             idEspecieDesc = decimaCuartaEspecie
         elif especieDesc == 15:
-            self.ui.btnOtros.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
+            self.ui.btnOtrosDesc.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
             precioClienteDesc = precioDecimaQuintaOtrasEspecies
             idEspecieDesc = decimaQuintaOtrasEspecies
-            
-        if especieDesc == 10 or especieDesc == 11 or especieDesc == 12 or especieDesc == 13 or especieDesc == 14 or especieDesc == 15:
-            self.ui.btnDescPolloTrozado.setStyleSheet("background-color: #2ABF4E; color: #fff; border: 2px solid black; border-radius: 15px;")
-            self.ui.frmAlertaTipoTrozados.setHidden(False)
-            frmSeleccionarTipoTrozadoDesc = True
             
         if balanzaSeleccionada == 1:
             especieDesCli1 = idEspecieDesc
@@ -1972,14 +1936,16 @@ class Inicio(QMainWindow):
         global pesoBalanza2
         global horaPeso
         global fechaPeso
+        global coloresJabas
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
         
         pesoNeto = float(self.ui.lblPesoIndicador.text())*-1
         cantidadRegistro = int(self.ui.txtCantidadDescuento.text())*-1
+        coloresJabas = "R0 | C0 | A0 | V0 | N0 | D0 | O0"
         self.conexion.db_registrarPesadas(numProceso,idEspecieDesc,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioClienteDesc,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
-        
+        coloresJabas = ""
         if balanzaSeleccionada == 1:
             user_input_arduino = "agi"
             time.sleep(1)
@@ -2021,6 +1987,12 @@ class Inicio(QMainWindow):
     def fn_listarVenta(self):
         global frmInicioProceso
         global listoParaAccionar
+        global pesoKgPechuga
+        global pesoKgPierna
+        global pesoKgAlas
+        global pesoKgMenudencia
+        global pesoKgDorso
+        global pesoKgOtros
         
         tablaDePesos = self.ui.tblDetallePesadas
         tablaDePesos.clearContents()
@@ -2034,7 +2006,13 @@ class Inicio(QMainWindow):
         totalPesoSextaEspecie = 0
         totalPesoSeptimaEspecie = 0
         totalPesoOctavaEspecie = 0
-        totalPesoNovenaEspecie = 0
+        
+        pesoKgPechugaSecun = 0.00
+        pesoKgPiernaSecun = 0.00
+        pesoKgAlasSecun = 0.00
+        pesoKgMenudenciaSecun = 0.00
+        pesoKgDorsoSecun = 0.00
+        pesoKgOtrosSecun = 0.00
         
         totalCantidadTotalEspecies = 0
         
@@ -2082,6 +2060,9 @@ class Inicio(QMainWindow):
                                 hours, remainder = divmod(data.seconds, 3600)
                                 minutes, seconds = divmod(remainder, 60)
                                 data = "{:02}:{:02}:{:02}".format(hours, minutes, seconds)
+                                
+                            if column_number == 4 : # Columna de ""
+                                data = row_data[4] - row_data[12]
                             
                             if column_number == 2 and row_data[2] is None and row_data[8] > 0: # Columna de "Promedio"
                                 data = (row_data[4] / row_data[8])*-1
@@ -2111,9 +2092,22 @@ class Inicio(QMainWindow):
                                 elif data == nombreOctavaEspecie:
                                     totalPesoOctavaEspecie += (row_data[4]-row_data[12])
                                     totalCantidadOctavaEspecie += row_data[5]
-                                elif data == nombreDecimaEspecie or data == nombreDecimaPrimeraEspecie or data == nombreDecimaSegundaEspecie or data == nombreDecimaTerceraEspecie or data == nombreDecimaCuartaEspecie or data == nombreDecimaQuintaOtrasEspecies:
-                                    totalPesoNovenaEspecie += (row_data[4]-row_data[12])
+                                    
+                                if data == nombreDecimaEspecie or data == nombreDecimaPrimeraEspecie or data == nombreDecimaSegundaEspecie or data == nombreDecimaTerceraEspecie or data == nombreDecimaCuartaEspecie or data == nombreDecimaQuintaOtrasEspecies:
                                     totalCantidadNovenaEspecie += row_data[5]
+                                    
+                                if data == nombreDecimaEspecie:
+                                    pesoKgPechugaSecun += float(row_data[4] - row_data[12])
+                                elif data == nombreDecimaPrimeraEspecie:
+                                    pesoKgPiernaSecun += float(row_data[4] - row_data[12])
+                                elif data == nombreDecimaSegundaEspecie:
+                                    pesoKgAlasSecun += float(row_data[4] - row_data[12])
+                                elif data == nombreDecimaTerceraEspecie:
+                                    pesoKgMenudenciaSecun += float(row_data[4] - row_data[12])
+                                elif data == nombreDecimaCuartaEspecie:
+                                    pesoKgDorsoSecun += float(row_data[4] - row_data[12])
+                                elif data == nombreDecimaQuintaOtrasEspecies:
+                                    pesoKgOtrosSecun += float(row_data[4] - row_data[12])
                                 
                                 totalCantidadTotalEspecies += row_data[5]
                                 
@@ -2141,6 +2135,13 @@ class Inicio(QMainWindow):
                             
                         if (row_data[10] == 0):
                             self.fn_pintarCeldasRegistrosEliminados(row_number)
+                            
+        pesoKgPechuga = pesoKgPechugaSecun
+        pesoKgPierna = pesoKgPiernaSecun
+        pesoKgAlas = pesoKgAlasSecun
+        pesoKgMenudencia = pesoKgMenudenciaSecun
+        pesoKgDorso = pesoKgDorsoSecun
+        pesoKgOtros = pesoKgOtrosSecun
         
         self.ui.txtCantidadDeJabas.setHidden(False)
         self.ui.txtCantJabasTotales.setHidden(False)
@@ -2154,7 +2155,28 @@ class Inicio(QMainWindow):
         self.ui.lblKgGallinaChica.setText("{:.2f} Kg".format(totalPesoSextaEspecie))
         self.ui.lblKgGallo.setText("{:.2f} Kg".format(totalPesoSeptimaEspecie))
         self.ui.lblKgPolloMaltratado.setText("{:.2f} Kg".format(totalPesoOctavaEspecie))
-        self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(totalPesoNovenaEspecie))
+        
+        textoPolloTrozado = self.ui.btnPolloTrozado.text()
+        # Utilizar expresiones regulares para encontrar el patrón
+        patron = r'\(9\)\s*([\s\S]+)'
+        coincidencias = re.search(patron, textoPolloTrozado)
+        if coincidencias:
+            textoPolloTrozado = coincidencias.group(1).strip()
+        else:
+            print("No se encontró el patrón en el texto.")
+        
+        if textoPolloTrozado == nombreDecimaEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgPechuga))
+        elif textoPolloTrozado == nombreDecimaPrimeraEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgPierna))
+        elif textoPolloTrozado == nombreDecimaSegundaEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgAlas))
+        elif textoPolloTrozado == nombreDecimaTerceraEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgMenudencia))
+        elif textoPolloTrozado == nombreDecimaCuartaEspecie:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgDorso))
+        elif textoPolloTrozado == nombreDecimaQuintaOtrasEspecies:
+            self.ui.lblKgPolloTrozado.setText("{:.2f} Kg".format(pesoKgOtros))
         
         self.ui.txtCantPolloTotales.setText("{} {}".format(totalCantidadTotalEspecies, "Ud." if totalCantidadTotalEspecies == 1 else "Uds."))
         
@@ -2496,6 +2518,3 @@ class Inicio(QMainWindow):
                 win32print.EndDocPrinter(hPrinter)
         finally:
             win32print.ClosePrinter(hPrinter)
-    
-# DISEÑADO Y DESARROLLADO POR SANTOS VILCHEZ EDINSON PASCUAL
-# LA UNIÓN - PIURA - PERU ; 2023

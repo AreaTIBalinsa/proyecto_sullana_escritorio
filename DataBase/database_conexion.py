@@ -30,6 +30,22 @@ class Conectar():
         cursor.close()
         return result
     
+    def db_asignarPesosCubetas(self):
+        cursor = self.conexionsql.cursor()
+        sql = "SELECT pesoColorCubetaUno, pesoColorCubetaDos, pesoColorCubetaTres, pesoColorCubetaCuatro, pesoColorCubetaCinco FROM pesos_de_jabas"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        cursor.close()
+        return result[0]
+    
+    def db_asignarPesosJabas(self):
+        cursor = self.conexionsql.cursor()
+        sql = "SELECT pesoColorJavaUno, pesoColorJavaDos, pesoColorJavaTres, pesoColorJavaCuatro, pesoColorJavaCinco, pesoColorJavaSeis, pesoColorJavaSiete FROM pesos_de_jabas"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        cursor.close()
+        return result[0]
+    
     def db_seleccionaPuertoIndicadores(self):
         cursor = self.conexionsql.cursor()
         sql = "SELECT puerto_indicador1, puerto_indicador2 FROM tb_puertos"
@@ -232,17 +248,17 @@ class Conectar():
         cursor.close()
         return result[0]
     
-    def db_actualizarPesadaColores(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas):
+    def db_actualizarPesadaColores(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas,pesoNetoJabas):
         cursor = self.conexionsql.cursor()
-        sql = "UPDATE tb_pesadas SET coloresJabas = %s, numeroJabasPes = %s WHERE idPesada = %s"
-        cursor.execute(sql, (coloresJabas,numeroJabasPes,idPesadaEditarOEliminar))
+        sql = "UPDATE tb_pesadas SET coloresJabas = %s, numeroJabasPes = %s, pesoNetoJabas = %s WHERE idPesada = %s"
+        cursor.execute(sql, (coloresJabas,numeroJabasPes,pesoNetoJabas,idPesadaEditarOEliminar))
         self.conexionsql.commit()
         cursor.close()
         
-    def db_actualizarPesadaVariedad(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas):
+    def db_actualizarPesadaVariedad(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas,pesoNetoJabas):
         cursor = self.conexionsql.cursor()
-        sql = "UPDATE tb_pesadas SET tipoCubetas = %s, numeroCubetasPes = %s WHERE idPesada = %s"
-        cursor.execute(sql, (coloresJabas,numeroJabasPes,idPesadaEditarOEliminar))
+        sql = "UPDATE tb_pesadas SET tipoCubetas = %s, numeroCubetasPes = %s, pesoNetoJabas = %s WHERE idPesada = %s"
+        cursor.execute(sql, (coloresJabas,numeroJabasPes,pesoNetoJabas,idPesadaEditarOEliminar))
         self.conexionsql.commit()
         cursor.close()
         

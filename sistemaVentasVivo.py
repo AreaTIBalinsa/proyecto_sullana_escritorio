@@ -82,6 +82,14 @@ cantidadQuintoColor = 0
 cantidadSextoColor = 0
 cantidadSeptimoColor = 0
 
+pesoPrimerColor = 0
+pesoSegundoColor = 0
+pesoTercerColor = 0
+pesoCuartaColor = 0
+pesoQuintoColor = 0
+pesoSextoColor = 0
+pesoSeptimoColor = 0
+
 # Variables de Clientes por Balanza
 codCliente1 = 0
 codCliente2 = 0
@@ -398,8 +406,28 @@ class Inicio(QMainWindow):
         tablaDePesos.setColumnHidden(10, True)
         tablaDePesos.setColumnHidden(11, True)
         tablaDePesos.setAlternatingRowColors(True)
+        self.fn_asignarPesos()
         
     # ======================== Funciones llamadas por los Hilos ========================
+    
+    def fn_asignarPesos(self):
+        global pesoPrimerColor
+        global pesoSegundoColor
+        global pesoTercerColor
+        global pesoCuartaColor
+        global pesoQuintoColor
+        global pesoSextoColor
+        global pesoSeptimoColor
+        
+        pesosAsignarJabas = self.conexion.db_asignarPesosJabas()
+        
+        pesoPrimerColor = float(pesosAsignarJabas[0])
+        pesoSegundoColor = float(pesosAsignarJabas[1])
+        pesoTercerColor = float(pesosAsignarJabas[2])
+        pesoCuartaColor = float(pesosAsignarJabas[3])
+        pesoQuintoColor = float(pesosAsignarJabas[4])
+        pesoSextoColor = float(pesosAsignarJabas[5])
+        pesoSeptimoColor = float(pesosAsignarJabas[6])
     
     def evt_actualizar_peso(self, val):
         global pesoBalanza1
@@ -1844,6 +1872,7 @@ class Inicio(QMainWindow):
         global cantidadQuintoColor
         global cantidadSextoColor
         global cantidadSeptimoColor
+        global pesoNetoJabas
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
@@ -1859,6 +1888,7 @@ class Inicio(QMainWindow):
         cantidadSextoColor = 0
         cantidadSeptimoColor = 0
         numeroJabasPes = 0
+        pesoNetoJabas = 0
         
         colores = ['PrimerColor', 'SegundoColor', 'TercerColor', 'CuartoColor', 'QuintoColor', 'SextoColor', 'SeptimoColor']
 
@@ -1872,6 +1902,21 @@ class Inicio(QMainWindow):
                 cantidad_color = int(cantidad_color)
 
             numeroJabasPes += cantidad_color
+            
+            if color == 'PrimerColor':
+                pesoNetoJabas += (cantidad_color * pesoPrimerColor)
+            elif color == 'SegundoColor':
+                pesoNetoJabas += (cantidad_color * pesoSegundoColor)
+            elif color == 'TercerColor':
+                pesoNetoJabas += (cantidad_color * pesoTercerColor)
+            elif color == 'CuartoColor':
+                pesoNetoJabas += (cantidad_color * pesoCuartaColor)
+            elif color == 'QuintoColor':
+                pesoNetoJabas += (cantidad_color * pesoQuintoColor)
+            elif color == 'SextoColor':
+                pesoNetoJabas += (cantidad_color * pesoSextoColor)
+            elif color == 'SeptimoColor':
+                pesoNetoJabas += (cantidad_color * pesoSeptimoColor)
 
         coloresJabas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("RCAVNDO", colores))
         
@@ -1899,6 +1944,7 @@ class Inicio(QMainWindow):
         global cantidadQuintoColor
         global cantidadSextoColor
         global cantidadSeptimoColor
+        global pesoNetoJabas
         
         cantidadPrimerColor = 0
         cantidadSegundoColor = 0
@@ -1908,6 +1954,7 @@ class Inicio(QMainWindow):
         cantidadSextoColor = 0
         cantidadSeptimoColor = 0
         numeroJabasPes = 0
+        pesoNetoJabas = 0
         
         colores = ['PrimerColor', 'SegundoColor', 'TercerColor', 'CuartoColor', 'QuintoColor', 'SextoColor', 'SeptimoColor']
 
@@ -1921,10 +1968,25 @@ class Inicio(QMainWindow):
                 cantidad_color = int(cantidad_color)
 
             numeroJabasPes += cantidad_color
+            
+            if color == 'PrimerColor':
+                pesoNetoJabas += (cantidad_color * pesoPrimerColor)
+            elif color == 'SegundoColor':
+                pesoNetoJabas += (cantidad_color * pesoSegundoColor)
+            elif color == 'TercerColor':
+                pesoNetoJabas += (cantidad_color * pesoTercerColor)
+            elif color == 'CuartoColor':
+                pesoNetoJabas += (cantidad_color * pesoCuartaColor)
+            elif color == 'QuintoColor':
+                pesoNetoJabas += (cantidad_color * pesoQuintoColor)
+            elif color == 'SextoColor':
+                pesoNetoJabas += (cantidad_color * pesoSextoColor)
+            elif color == 'SeptimoColor':
+                pesoNetoJabas += (cantidad_color * pesoSeptimoColor)
 
         coloresJabas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("RCAVNDO", colores))
         
-        self.conexion.db_actualizarPesadaColores(idPesadaEditarOEliminar,numeroJabasPes,coloresJabas)
+        self.conexion.db_actualizarPesadaColores(idPesadaEditarOEliminar,numeroJabasPes,coloresJabas,pesoNetoJabas)
         
         self.fn_listarVenta()
         

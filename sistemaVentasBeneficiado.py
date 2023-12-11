@@ -74,13 +74,17 @@ nombreDecimaCuartaEspecie = ""
 nombreDecimaQuintaOtrasEspecies = ""
 
 # Cantidad Colores de Jabas
-cantidadPrimerColor = 0
-cantidadSegundoColor = 0
-cantidadTercerColor = 0
-cantidadCuartaColor = 0
-cantidadQuintoColor = 0
-cantidadSextoColor = 0
-cantidadSeptimoColor = 0
+cantidadPrimeraVariedad = 0
+cantidadSegundaVariedad = 0
+cantidadTerceraVariedad = 0
+cantidadCuartaVariedad = 0
+cantidadQuintaVariedad = 0
+
+pesoPrimeraVariedad = 0
+pesoSegundaVariedad = 0
+pesoTerceraVariedad = 0
+pesoCuartaVariedad = 0
+pesoQuintaVariedad = 0
 
 # Variables de Clientes por Balanza
 codCliente1 = 0
@@ -395,8 +399,24 @@ class Inicio(QMainWindow):
         tablaDePesos.setColumnHidden(10, True)
         tablaDePesos.setColumnHidden(11, True)
         tablaDePesos.setAlternatingRowColors(True)
+        self.fn_asignarPesos()
         
     # ======================== Funciones llamadas por los Hilos ========================
+    
+    def fn_asignarPesos(self):
+        global pesoPrimeraVariedad
+        global pesoSegundaVariedad
+        global pesoTerceraVariedad
+        global pesoCuartaVariedad
+        global pesoQuintaVariedad
+        
+        pesosAsignarCubetas = self.conexion.db_asignarPesosCubetas()
+        
+        pesoPrimeraVariedad = float(pesosAsignarCubetas[0])
+        pesoSegundaVariedad = float(pesosAsignarCubetas[1])
+        pesoTerceraVariedad = float(pesosAsignarCubetas[2])
+        pesoCuartaVariedad = float(pesosAsignarCubetas[3])
+        pesoQuintaVariedad = float(pesosAsignarCubetas[4])
     
     def evt_actualizar_peso(self, val):
         global pesoBalanza1
@@ -1822,14 +1842,13 @@ class Inicio(QMainWindow):
         global pesoBalanza2
         global horaPeso
         global fechaPeso
-        global cantidadPrimerColor
-        global cantidadSegundoColor
-        global cantidadTercerColor
-        global cantidadCuartaColor
-        global cantidadQuintoColor
-        global cantidadSextoColor
-        global cantidadSeptimoColor
+        global cantidadPrimeraVariedad
+        global cantidadSegundaVariedad
+        global cantidadTerceraVariedad
+        global cantidadCuartaVariedad
+        global cantidadQuintaVariedad
         global tipoCubetas
+        global pesoNetoJabas
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
@@ -1837,14 +1856,14 @@ class Inicio(QMainWindow):
         pesoNeto = float(self.ui.lblPesoIndicador.text())
         cantidadRegistro = int(self.ui.txtCantidadParaIngresar.text())
         
-        cantidadPrimerColor = 0
-        cantidadSegundoColor = 0
-        cantidadTercerColor = 0
-        cantidadCuartaColor = 0
-        cantidadQuintoColor = 0
-        cantidadSextoColor = 0
-        cantidadSeptimoColor = 0
+        cantidadPrimeraVariedad = 0
+        cantidadSegundaVariedad = 0
+        cantidadTerceraVariedad = 0
+        cantidadCuartaVariedad = 0
+        cantidadQuintaVariedad = 0
         numeroCubetasPes = 0
+        
+        pesoNetoJabas = 0
         
         colores = ['PrimeraVariedad', 'SegundaVariedad', 'TerceraVariedad', 'CuartaVariedad', 'QuintaVariedad']
 
@@ -1858,6 +1877,17 @@ class Inicio(QMainWindow):
                 cantidad_variedad = int(cantidad_variedad)
 
             numeroCubetasPes += cantidad_variedad
+            
+            if color == 'PrimeraVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoPrimeraVariedad)
+            elif color == 'SegundaVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoSegundaVariedad )
+            elif color == 'TerceraVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoTerceraVariedad )
+            elif color == 'CuartaVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoCuartaVariedad )
+            elif color == 'QuintaVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoQuintaVariedad )
 
         tipoCubetas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("CAPGO", colores))
         
@@ -1878,22 +1908,20 @@ class Inicio(QMainWindow):
         self.fn_listarVenta()
         
     def fn_actualizarPesadaColores(self):
-        global cantidadPrimerColor
-        global cantidadSegundoColor
-        global cantidadTercerColor
-        global cantidadCuartaColor
-        global cantidadQuintoColor
-        global cantidadSextoColor
-        global cantidadSeptimoColor
+        global cantidadPrimeraVariedad
+        global cantidadSegundaVariedad
+        global cantidadTerceraVariedad
+        global cantidadCuartaVariedad
+        global cantidadQuintaVariedad
+        global pesoNetoJabas
         
-        cantidadPrimerColor = 0
-        cantidadSegundoColor = 0
-        cantidadTercerColor = 0
-        cantidadCuartaColor = 0
-        cantidadQuintoColor = 0
-        cantidadSextoColor = 0
-        cantidadSeptimoColor = 0
+        cantidadPrimeraVariedad = 0
+        cantidadSegundaVariedad = 0
+        cantidadTerceraVariedad = 0
+        cantidadCuartaVariedad = 0
+        cantidadQuintaVariedad = 0
         numeroJabasPes = 0
+        pesoNetoJabas = 0
         
         colores = ['PrimeraVariedad', 'SegundaVariedad', 'TerceraVariedad', 'CuartaVariedad', 'QuintaVariedad']
 
@@ -1907,10 +1935,21 @@ class Inicio(QMainWindow):
                 cantidad_variedad = int(cantidad_variedad)
 
             numeroJabasPes += cantidad_variedad
+            
+            if color == 'PrimeraVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoPrimeraVariedad)
+            elif color == 'SegundaVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoSegundaVariedad )
+            elif color == 'TerceraVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoTerceraVariedad )
+            elif color == 'CuartaVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoCuartaVariedad )
+            elif color == 'QuintaVariedad':
+                pesoNetoJabas += (cantidad_variedad * pesoQuintaVariedad )
 
         tipoCubetas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("CAPGO", colores))
         
-        self.conexion.db_actualizarPesadaVariedad(idPesadaEditarOEliminar,numeroJabasPes,tipoCubetas)
+        self.conexion.db_actualizarPesadaVariedad(idPesadaEditarOEliminar,numeroJabasPes,tipoCubetas,pesoNetoJabas)
         
         self.fn_listarVenta()
         

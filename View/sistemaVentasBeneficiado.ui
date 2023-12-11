@@ -482,9 +482,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="txtCantidadDeJabas">
       <property name="geometry">
        <rect>
-        <x>1580</x>
+        <x>1539</x>
         <y>0</y>
-        <width>140</width>
+        <width>181</width>
         <height>50</height>
        </rect>
       </property>
@@ -500,7 +500,7 @@ color: rgb(255, 255, 255);</string>
        <string notr="true">color: #FFD100;</string>
       </property>
       <property name="text">
-       <string>T. JABAS:</string>
+       <string>T. CUBETAS:</string>
       </property>
      </widget>
     </widget>
@@ -4681,7 +4681,6 @@ border: 2px solid black;
     </widget>
    </widget>
    <zorder>frmPrincipal</zorder>
-   <zorder>frmCubetas</zorder>
    <zorder>frmIngresarCantidadJabas</zorder>
    <zorder>frmIngresarCantidad</zorder>
    <zorder>frmAlertaEliminar</zorder>
@@ -4691,6 +4690,7 @@ border: 2px solid black;
    <zorder>frmIngresarNumeroPesada</zorder>
    <zorder>frmDecidirReporte</zorder>
    <zorder>frmAlertaTipoTrozadosDesc</zorder>
+   <zorder>frmCubetas</zorder>
    <zorder>frmAlerta</zorder>
   </widget>
  </widget>

@@ -361,8 +361,8 @@ class Inicio(QMainWindow):
         self.ui.frmAplicarDescuento.setHidden(True)
         self.ui.frmIngresarPassword.setHidden(True)
         self.ui.frmAlertaEliminar.setHidden(True)
-        self.ui.txtCantJabasTotales.setHidden(True)
-        self.ui.txtCantidadDeJabas.setHidden(True)
+        # self.ui.txtCantJabasTotales.setHidden(True)
+        # self.ui.txtCantidadDeJabas.setHidden(True)
         self.ui.frmColores.setHidden(True)
         self.ui.frmIngresarCantidadJabas.setHidden(True)
         self.ui.frmAlertaTipoTrozados.setHidden(True)
@@ -699,23 +699,23 @@ class Inicio(QMainWindow):
             frmSeleccionarTipoTrozadoDesc = False
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarDescuento == False and frmRegistrarDescuentoCan == True and frmInicioProceso == True and self.ui.frmAplicarDescuento.isVisible() and self.ui.txtCantidadDescuento.text() != "":
-            if idEspecieDesc == primerEspecie and int(self.ui.txtCantYugoVivo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            if idEspecieDesc == primerEspecie and int(self.ui.txtCantYugoVivo.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == segundaEspecie and int(self.ui.txtCantYugoPelado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == segundaEspecie and int(self.ui.txtCantYugoPelado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == terceraEspecie and int(self.ui.txtCantTecnicoVivo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == terceraEspecie and int(self.ui.txtCantTecnicoVivo.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == cuartaEspecie and int(self.ui.txtCantTecnicoPelado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == cuartaEspecie and int(self.ui.txtCantTecnicoPelado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == quintaEspecie and int(self.ui.txtCantGallinaDoble.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == quintaEspecie and int(self.ui.txtCantGallinaDoble.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == sextaEspecie and int(self.ui.txtCantGallinaChica.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == sextaEspecie and int(self.ui.txtCantGallinaChica.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == septimaEspecie and int(self.ui.txtCantGallo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == septimaEspecie and int(self.ui.txtCantGallo.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == octavaEspecie and int(self.ui.txtCantPolloMaltratado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == octavaEspecie and int(self.ui.txtCantPolloMaltratado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == decimaEspecie and int(self.ui.txtCantPolloTrozado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == decimaEspecie and int(self.ui.txtCantPolloTrozado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
             else:
                 self.fn_registrarDescuento()
@@ -848,7 +848,7 @@ class Inicio(QMainWindow):
                     frmRegistrarColoresJabasEditar = True
                     frmIngresarNumeroColoresEditar = False
                 else:
-                    self.fn_alerta("¡ADVERTENCIA!",error,"El registro es un descuento, por lo tanto no puede realizar esta acción.",1500)
+                    self.fn_alerta("¡ADVERTENCIA!",error,"Diríjase al otro modulo para poder editar esta pesada.",2000)
             else:
                 self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
             
@@ -2397,7 +2397,7 @@ class Inicio(QMainWindow):
         if contarJabas > 0 :
             
             file.write("\n")
-            file.write(" JABAS :\n")
+            file.write(" CUBETAS O JABAS:\n")
             file.write("========================================\n")
             
             for item in datosTicket:

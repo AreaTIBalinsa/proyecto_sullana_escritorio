@@ -125,6 +125,28 @@ class Conectar():
         cursor.close()
         return result
     
+    def db_listarPesosTablaBeneficiado(self,numProceso,codigoCli):
+        cursor = self.conexionsql.cursor()
+        sql = """SELECT
+                    CAST((@rownum:=@rownum-1) as INT) as num,
+                    IFNULL(CONCAT_WS(' ', nombresCli, apellidoPaternoCli), '') AS cliente,
+                    (SELECT TRUNCATE((pesoNetoPes-pesoNetoJabas) / cantidadPes, 2) FROM tb_pesadas WHERE idPesada = p.idPesada) AS promedioPesoNetoCantidad,
+                    nombreEspecie, TRUNCATE(pesoNetoPes, 2), cantidadPes, numeroCubetasPes, tipoCubetas, pesoNetoJabas, horaPes, estadoPes, idPesada, pesoNetoJabas
+                FROM
+                    (SELECT @rownum:=(SELECT COUNT(idPesada) FROM tb_pesadas WHERE fechaRegistroPes = DATE(NOW()) AND tb_pesadas.codigoCli = %s) + 1) r,
+                    tb_pesadas p
+                    INNER JOIN tb_clientes ON p.codigoCli = tb_clientes.codigoCli
+                    INNER JOIN tb_procesos ON p.idProceso = tb_procesos.idProceso
+                    INNER JOIN tb_especies_venta ON p.idEspecie = tb_especies_venta.idEspecie
+                WHERE
+                    p.fechaRegistroPes = DATE(NOW()) AND p.idProceso = %s AND p.codigoCli = %s AND p.estadoPes = 1
+                ORDER BY
+                    p.idPesada desc"""
+        cursor.execute(sql,(codigoCli, numProceso, codigoCli))
+        result = cursor.fetchall()
+        cursor.close()
+        return result
+    
     def db_editarCantidadNueva(self, cantidadNueva, idPesadaEditarOEliminar):
         cursor = self.conexionsql.cursor()
         sql = "UPDATE tb_pesadas SET cantidadPes = %s WHERE idPesada = %s"
@@ -202,9 +224,24 @@ class Conectar():
         cursor.close()
         return result[0]
     
+    def db_consultarVariedadEditar(self, idPesadaEditarOEliminar):
+        cursor = self.conexionsql.cursor()
+        sql = """SELECT tipoCubetas FROM tb_pesadas WHERE idPesada = %s"""
+        cursor.execute(sql, (idPesadaEditarOEliminar, ))
+        result = cursor.fetchone()
+        cursor.close()
+        return result[0]
+    
     def db_actualizarPesadaColores(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas):
         cursor = self.conexionsql.cursor()
         sql = "UPDATE tb_pesadas SET coloresJabas = %s, numeroJabasPes = %s WHERE idPesada = %s"
+        cursor.execute(sql, (coloresJabas,numeroJabasPes,idPesadaEditarOEliminar))
+        self.conexionsql.commit()
+        cursor.close()
+        
+    def db_actualizarPesadaVariedad(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas):
+        cursor = self.conexionsql.cursor()
+        sql = "UPDATE tb_pesadas SET tipoCubetas = %s, numeroCubetasPes = %s WHERE idPesada = %s"
         cursor.execute(sql, (coloresJabas,numeroJabasPes,idPesadaEditarOEliminar))
         self.conexionsql.commit()
         cursor.close()

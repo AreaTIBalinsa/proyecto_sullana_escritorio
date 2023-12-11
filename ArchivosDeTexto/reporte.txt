@@ -1,60 +1,35 @@
 
- FECHA : 2023-12-08     HORA : 17:19:07
+ FECHA : 2023-12-11     HORA : 10:44:39
  CLIENTE :  GENERICO 
 
  PRODUCTO          Kg      CANT. PRECIO   
 ========================================
  YUGO VIVO         10.00   4     10.00    
+ TECNICO VIVO      10.00   3     10.00    
  GALLINA DOBLE     10.00   5     10.00    
- GALLINA CHICA     10.00   5     10.00    
- YUGO PELADO       10.00   6     10.00    
- TECNICO VIVO      10.00   4     10.00    
- YUGO VIVO         10.00   5     10.00    
- PECHUGA           10.00   3     10.00    
- PECHUGA           10.00   3     10.00    
- ALAS              10.00   4     10.00    
- PIERNA            10.00   3     10.00    
- YUGO VIVO         10.00   4     10.00    
- TECNICO PELADO    10.00   5     10.00    
- GALLO             10.00   5     10.00    
- POLLO MALTRATADO  10.00   6     10.00    
+ YUGO PELADO       10.00   5     10.00    
+ TECNICO PELADO    10.00   4     10.00    
+ GALLINA CHICA     10.00   3     10.00    
+ YUGO VIVO         10.00   3     10.00    
 
  DESCUENTOS :
 ========================================
- YUGO VIVO         -10.00  -2    10.00    
+ YUGO VIVO         -10.00  -3    10.00    
 
- JABAS :
+ CUBETAS O JABAS:
 ========================================
- YUGO VIVO         4.20    4     10.00    
- GALLINA DOBLE     4.65    5     10.00    
- GALLINA CHICA     5.10    3     10.00    
- YUGO PELADO       3.56    3     10.00    
- TECNICO VIVO      3.78    3     10.00    
- YUGO VIVO         5.16    3     10.00    
- PECHUGA           5.26    3     10.00    
- PECHUGA           3.98    3     10.00    
- ALAS              4.25    3     10.00    
- PIERNA            3.54    3     10.00    
- YUGO VIVO         3.25    4     10.00    
- TECNICO PELADO    4.56    3     10.00    
- GALLO             4.36    4     10.00    
- POLLO MALTRATADO  3.29    4     10.00    
+ GALLINA CHICA     3.15    3     10.00    
 
  TOTALES :           
 ========================================
  PRODUCTO          Kg.     CANTIDAD     
 ========================================
- YUGO VIVO         7.39      11       
- YUGO PELADO       6.44      6        
- TECNICO VIVO      6.22      4        
- TECNICO PELADO    5.44      5        
- GALLINA DOBLE     5.35      5        
- GALLINA CHICA     4.90      5        
- GALLO             5.64      5        
- POLLO MALTRATADO  6.71      6        
- PECHUGA           10.76     6        
- PIERNA            6.46      3        
- ALAS              5.75      4        
+ YUGO VIVO         10.00     4        
+ YUGO PELADO       10.00     5        
+ TECNICO VIVO      10.00     3        
+ TECNICO PELADO    10.00     4        
+ GALLINA DOBLE     10.00     5        
+ GALLINA CHICA     6.85      3        
 ========================================
 ===       GRACIAS POR SU COMPRA      ===
 ========================================

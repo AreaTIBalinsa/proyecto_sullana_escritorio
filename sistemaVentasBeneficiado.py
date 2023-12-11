@@ -130,9 +130,9 @@ frmSeleccionarTipoTrozado = False
 frmIngresarNumeroPesadaEditar = False
 frmIngresarNumeroPesadaEliminar = False
 frmIngresarNumeroColoresEditar = False
-frmRegistrarColoresJabas = False
+frmRegistrarVariedadCubetas = False
 frmSeleccionarTipoTrozadoDesc = False
-frmRegistrarColoresJabasEditar = False
+frmRegistrarVariedadCubetasEditar = False
 frmDecidirReporte = False
 frmIngresarNumeroPesoJabaEditar = False
 
@@ -181,9 +181,8 @@ descuento = "imagenes/seleccionado.png"
 loading = "imagenes/loading.gif"
 
 def obtener_estilo(letra):
-        colores = {'R': QColor('red'), 'C': QColor('cyan'), 'A': QColor('blue'),
-               'V': QColor('green'), 'N': QColor('orange'), 'D': QColor('gold'),
-               'O': QColor('white')}
+        colores = {'C': QColor('#a47f1a'), 'A': QColor('#00AAFF'), 'P': QColor('#0055FF'),
+               'G': QColor('#1693a7'), 'O': QColor('#88159e')}
     
         fuente = QFont()
         fuente.setBold(True)
@@ -361,8 +360,8 @@ class Inicio(QMainWindow):
         self.ui.frmAplicarDescuento.setHidden(True)
         self.ui.frmIngresarPassword.setHidden(True)
         self.ui.frmAlertaEliminar.setHidden(True)
-        self.ui.txtCantJabasTotales.setHidden(True)
-        self.ui.txtCantidadDeJabas.setHidden(True)
+        # self.ui.txtCantJabasTotales.setHidden(True)
+        # self.ui.txtCantidadDeJabas.setHidden(True)
         self.ui.frmCubetas.setHidden(True)
         self.ui.frmIngresarCantidadJabas.setHidden(True)
         self.ui.frmAlertaTipoTrozados.setHidden(True)
@@ -510,13 +509,13 @@ class Inicio(QMainWindow):
             not frmRegistrarDescuento and
             not frmEditarCantidad and
             not frmRegistrarJabas and 
-            not frmRegistrarColoresJabas and
+            not frmRegistrarVariedadCubetas and
             not frmRegistrarDescuentoCan and
             not frmSeleccionarTipoTrozado and
             not frmIngresarNumeroPesadaEditar and
             not frmIngresarNumeroPesadaEliminar and
             not frmSeleccionarTipoTrozadoDesc and
-            not frmRegistrarColoresJabasEditar and
+            not frmRegistrarVariedadCubetasEditar and
             not frmIngresarNumeroColoresEditar and
             not frmDecidirReporte and
             not frmIngresarNumeroPesoJabaEditar
@@ -556,10 +555,10 @@ class Inicio(QMainWindow):
         global frmIngresarNumeroPesadaEditar
         global frmIngresarNumeroPesadaEliminar
         global idPesadaEditarOEliminar
-        global frmRegistrarColoresJabas
+        global frmRegistrarVariedadCubetas
         global frmSeleccionarTipoTrozadoDesc
         global frmIngresarNumeroColoresEditar
-        global frmRegistrarColoresJabasEditar
+        global frmRegistrarVariedadCubetasEditar
         global frmDecidirReporte
         global imprimePrecio
         global frmIngresarNumeroPesoJabaEditar
@@ -567,7 +566,7 @@ class Inicio(QMainWindow):
         if event.key() == Qt.Key_Escape:
             self.close()
             
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarColoresJabas == True and frmRegistrarCantidad == False and frmInicioProceso == True and self.ui.frmCubetas.isVisible():     
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarVariedadCubetas == True and frmRegistrarCantidad == False and frmInicioProceso == True and self.ui.frmCubetas.isVisible():     
             
             cantidadTotalJabas = 0
             registroCantidadPrimerColor = int(self.ui.txtCantidadPrimeraVariedad.text().strip()) if self.ui.txtCantidadPrimeraVariedad.text().strip() else 0
@@ -580,7 +579,7 @@ class Inicio(QMainWindow):
                     
             if cantidadTotalJabas != 0:
                 self.ui.frmCubetas.setHidden(True)
-                frmRegistrarColoresJabas = False
+                frmRegistrarVariedadCubetas = False
                 self.ui.txtCantidadParaIngresar.setText("")
                 self.fn_alertaCantidad("Ingresar cantidad de Pollos")
                 frmRegistrarCantidad = True
@@ -596,7 +595,7 @@ class Inicio(QMainWindow):
             self.ui.txtCantidadQuintaVariedad.setText("")
             self.ui.txtCantidadParaIngresar.setText("")
             self.ui.frmCubetas.setHidden(False)  
-            frmRegistrarColoresJabas = True
+            frmRegistrarVariedadCubetas = True
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and self.ui.lwListaClientes.isVisible():
             if (len(listCodCliente)):
@@ -693,23 +692,23 @@ class Inicio(QMainWindow):
             frmSeleccionarTipoTrozadoDesc = False
             
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmRegistrarDescuento == False and frmRegistrarDescuentoCan == True and frmInicioProceso == True and self.ui.frmAplicarDescuento.isVisible() and self.ui.txtCantidadDescuento.text() != "":
-            if idEspecieDesc == primerEspecie and int(self.ui.txtCantYugoVivo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            if idEspecieDesc == primerEspecie and int(self.ui.txtCantYugoVivo.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == segundaEspecie and int(self.ui.txtCantYugoPelado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == segundaEspecie and int(self.ui.txtCantYugoPelado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == terceraEspecie and int(self.ui.txtCantTecnicoVivo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == terceraEspecie and int(self.ui.txtCantTecnicoVivo.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == cuartaEspecie and int(self.ui.txtCantTecnicoPelado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == cuartaEspecie and int(self.ui.txtCantTecnicoPelado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == quintaEspecie and int(self.ui.txtCantGallinaDoble.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == quintaEspecie and int(self.ui.txtCantGallinaDoble.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == sextaEspecie and int(self.ui.txtCantGallinaChica.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == sextaEspecie and int(self.ui.txtCantGallinaChica.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == septimaEspecie and int(self.ui.txtCantGallo.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == septimaEspecie and int(self.ui.txtCantGallo.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == octavaEspecie and int(self.ui.txtCantPolloMaltratado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == octavaEspecie and int(self.ui.txtCantPolloMaltratado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
-            elif idEspecieDesc == decimaEspecie and int(self.ui.txtCantPolloTrozado.text().split()[0].strip()) <= int(self.ui.txtCantidadDescuento.text()):
+            elif idEspecieDesc == decimaEspecie and int(self.ui.txtCantPolloTrozado.text().split()[0].strip()) < int(self.ui.txtCantidadDescuento.text()):
                 self.fn_alerta("¡ADVERTENCIA!",error,"La cantidad de descuento no puede ser mayor a la registrada.",2000)
             else:
                 self.fn_registrarDescuento()
@@ -798,11 +797,11 @@ class Inicio(QMainWindow):
             else:
                 self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
         
-        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and frmRegistrarColoresJabasEditar == True and frmIngresarNumeroColoresEditar == False:
+        if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and frmRegistrarVariedadCubetasEditar == True and frmIngresarNumeroColoresEditar == False:
             self.ui.frmCubetas.setHidden(True)
             self.fn_actualizarPesadaColores()
             self.fn_alerta("¡EDITADO EXITOSO!",correcto,"El registro se edito correctamente.",1500)
-            frmRegistrarColoresJabasEditar = False
+            frmRegistrarVariedadCubetasEditar = False
                 
         if (event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return) and frmInicioProceso == True and frmIngresarNumeroColoresEditar == True and not self.ui.lwListaClientes.isVisible() and self.ui.txtNumeroDePesada.text()  != "" and int(self.ui.txtNumeroDePesada.text()) > 0 :
             numeroDePesada = int(self.ui.txtNumeroDePesada.text())
@@ -814,7 +813,7 @@ class Inicio(QMainWindow):
                 txtNumeroDePesada = totalFilas - numeroDePesada
                 idPesadaEditarOEliminar = tablaDePesos.item(txtNumeroDePesada, 11).text()
                 
-                datosColoresEditar = self.conexion.db_consultarColoresEditar(idPesadaEditarOEliminar)
+                datosColoresEditar = self.conexion.db_consultarVariedadEditar(idPesadaEditarOEliminar)
                 
                 if datosColoresEditar != "":
                 
@@ -837,10 +836,10 @@ class Inicio(QMainWindow):
                     self.ui.txtNumeroDePesada.setText("")
                     self.ui.frmIngresarNumeroPesada.setHidden(True)
                     self.ui.frmCubetas.setHidden(False)
-                    frmRegistrarColoresJabasEditar = True
+                    frmRegistrarVariedadCubetasEditar = True
                     frmIngresarNumeroColoresEditar = False
                 else:
-                    self.fn_alerta("¡ADVERTENCIA!",error,"El registro es un descuento, por lo tanto no puede realizar esta acción.",1500)
+                    self.fn_alerta("¡ADVERTENCIA!",error,"Diríjase al otro modulo para poder editar esta pesada.",2000)
             else:
                 self.fn_alerta("¡ADVERTENCIA!",error,"El registro no existe, intente de nuevo.",1000)
             
@@ -864,22 +863,22 @@ class Inicio(QMainWindow):
         global frmIngresarNumeroPesadaEditar
         global frmIngresarNumeroPesadaEliminar
         global idPesadaEditarOEliminar
-        global frmRegistrarColoresJabas
+        global frmRegistrarVariedadCubetas
         global frmSeleccionarTipoTrozadoDesc
-        global frmRegistrarColoresJabasEditar
+        global frmRegistrarVariedadCubetasEditar
         global frmIngresarNumeroColoresEditar
         global frmDecidirReporte
         global frmIngresarNumeroPesoJabaEditar
         
-        if (event.key() == Qt.Key_C) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+        if (event.key() == Qt.Key_C) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarVariedadCubetas == True or frmRegistrarVariedadCubetasEditar == True):
             self.ui.txtCantidadPrimeraVariedad.setFocus(True)
-        elif (event.key() == Qt.Key_A) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+        elif (event.key() == Qt.Key_A) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarVariedadCubetas == True or frmRegistrarVariedadCubetasEditar == True):
             self.ui.txtCantidadSegundaVariedad.setFocus(True)
-        elif (event.key() == Qt.Key_P) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+        elif (event.key() == Qt.Key_P) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarVariedadCubetas == True or frmRegistrarVariedadCubetasEditar == True):
             self.ui.txtCantidadTerceraVariedad.setFocus(True)
-        elif (event.key() == Qt.Key_G) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+        elif (event.key() == Qt.Key_G) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarVariedadCubetas == True or frmRegistrarVariedadCubetasEditar == True):
             self.ui.txtCantidadCuartaVariedad.setFocus(True)
-        elif (event.key() == Qt.Key_O) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarColoresJabas == True or frmRegistrarColoresJabasEditar == True):
+        elif (event.key() == Qt.Key_O) and not self.ui.lwListaClientes.isVisible() and self.ui.frmCubetas.isVisible() and (frmRegistrarVariedadCubetas == True or frmRegistrarVariedadCubetasEditar == True):
             self.ui.txtCantidadQuintaVariedad.setFocus(True)
         
         if (event.key() == Qt.Key_Right) and self.condiciones_base() and self.condiciones_alertas():
@@ -1107,8 +1106,8 @@ class Inicio(QMainWindow):
                 frmIngresarNumeroPesoJabaEditar = False
             elif (self.ui.frmCubetas.isVisible()):
                 self.ui.frmCubetas.setHidden(True)
-                frmRegistrarColoresJabas = False
-                frmRegistrarColoresJabasEditar = False
+                frmRegistrarVariedadCubetas = False
+                frmRegistrarVariedadCubetasEditar = False
             elif (self.ui.frmDecidirReporte.isVisible()):
                 self.ui.frmDecidirReporte.setHidden(True)
                 frmDecidirReporte = False
@@ -1830,6 +1829,7 @@ class Inicio(QMainWindow):
         global cantidadQuintoColor
         global cantidadSextoColor
         global cantidadSeptimoColor
+        global tipoCubetas
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
@@ -1844,22 +1844,22 @@ class Inicio(QMainWindow):
         cantidadQuintoColor = 0
         cantidadSextoColor = 0
         cantidadSeptimoColor = 0
-        numeroJabasPes = 0
+        numeroCubetasPes = 0
         
-        colores = ['PrimerColor', 'SegundoColor', 'TercerColor', 'CuartoColor', 'QuintoColor', 'SextoColor', 'SeptimoColor']
+        colores = ['PrimeraVariedad', 'SegundaVariedad', 'TerceraVariedad', 'CuartaVariedad', 'QuintaVariedad']
 
         for color in colores:
-            cantidad_color = getattr(self.ui, f"txtCantidad{color}").text()
+            cantidad_variedad = getattr(self.ui, f"txtCantidad{color}").text()
             
             # Verificar si el campo está vacío y asignar 0 en ese caso
-            if cantidad_color == "":
-                cantidad_color = 0
+            if cantidad_variedad == "":
+                cantidad_variedad = 0
             else:
-                cantidad_color = int(cantidad_color)
+                cantidad_variedad = int(cantidad_variedad)
 
-            numeroJabasPes += cantidad_color
+            numeroCubetasPes += cantidad_variedad
 
-        coloresJabas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("RCAVNDO", colores))
+        tipoCubetas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("CAPGO", colores))
         
         self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioCliente,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
         
@@ -1895,22 +1895,22 @@ class Inicio(QMainWindow):
         cantidadSeptimoColor = 0
         numeroJabasPes = 0
         
-        colores = ['PrimerColor', 'SegundoColor', 'TercerColor', 'CuartoColor', 'QuintoColor', 'SextoColor', 'SeptimoColor']
+        colores = ['PrimeraVariedad', 'SegundaVariedad', 'TerceraVariedad', 'CuartaVariedad', 'QuintaVariedad']
 
         for color in colores:
-            cantidad_color = getattr(self.ui, f"txtCantidad{color}").text()
+            cantidad_variedad = getattr(self.ui, f"txtCantidad{color}").text()
             
             # Verificar si el campo está vacío y asignar 0 en ese caso
-            if cantidad_color == "":
-                cantidad_color = 0
+            if cantidad_variedad == "":
+                cantidad_variedad = 0
             else:
-                cantidad_color = int(cantidad_color)
+                cantidad_variedad = int(cantidad_variedad)
 
-            numeroJabasPes += cantidad_color
+            numeroJabasPes += cantidad_variedad
 
-        coloresJabas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("RCAVNDO", colores))
+        tipoCubetas = " | ".join(f"{letra}{getattr(self.ui, f'txtCantidad{color}').text()}" if getattr(self.ui, f'txtCantidad{color}').text() != "" else f"{letra}0" for letra, color in zip("CAPGO", colores))
         
-        self.conexion.db_actualizarPesadaColores(idPesadaEditarOEliminar,numeroJabasPes,coloresJabas)
+        self.conexion.db_actualizarPesadaVariedad(idPesadaEditarOEliminar,numeroJabasPes,tipoCubetas)
         
         self.fn_listarVenta()
         
@@ -1929,7 +1929,7 @@ class Inicio(QMainWindow):
         
         pesoNeto = float(self.ui.lblPesoIndicador.text())*-1
         cantidadRegistro = int(self.ui.txtCantidadDescuento.text())*-1
-        coloresJabas = "R0 | C0 | A0 | V0 | N0 | D0 | O0"
+        coloresJabas = "C0 | A0 | P0 | G0 | O0"
         self.conexion.db_registrarPesadas(numProceso,idEspecieDesc,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioClienteDesc,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
         coloresJabas = ""
         if balanzaSeleccionada == 1:
@@ -2021,7 +2021,7 @@ class Inicio(QMainWindow):
         self.ui.txtCantidadDeJabas.setHidden(True)
         
         if codCliente != 0:
-            pesosListarTabla = self.conexion.db_listarPesosTabla(numProceso,codCliente)
+            pesosListarTabla = self.conexion.db_listarPesosTablaBeneficiado(numProceso,codCliente)
             
             frmInicioProceso = True
             
@@ -2383,7 +2383,7 @@ class Inicio(QMainWindow):
         if contarJabas > 0 :
             
             file.write("\n")
-            file.write(" JABAS :\n")
+            file.write(" CUBETAS O JABAS:\n")
             file.write("========================================\n")
             
             for item in datosTicket:

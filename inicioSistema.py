@@ -11,11 +11,14 @@ import serial
 # Importación de Base de Datos
 import DataBase.database_conexion # El archivo database_conexion.py
 
+# Puertos COM
+COMAR = ""
 COM1 = ""
 COM2 = ""
 
 appVentaBeneficiado = False
 appVentaVivo = False
+user_input_arduino = ""
 
 """Creamos hilo para la ejecución en segundo plano del Indicador , de esta forma
 evitamos que la aplicación se detenga por la lectura constante """
@@ -75,6 +78,27 @@ class WorkerThread2(QThread):
     def stop(self):
         print("Thread Stopped")
         self.terminate()   
+        
+""" Creamos hilo para la ejecución en segundo plano del Arduino, de esta forma
+evitamos que la aplicación se detenga por la lectura constante  """
+
+user_input_arduino = ""
+            
+class WorkerThreadAR(QThread):
+    def run(self):
+        try:
+            COMARDUINO = "COM"+COMAR
+            serialArduino = serial.Serial(COMARDUINO, baudrate=9600, timeout=1)
+            
+            while True:
+                if user_input_arduino != "":
+                    serialArduino.write(str(user_input_arduino).encode('utf8'))
+        except Exception as e:
+            print("WT AR"+str(e))
+    
+    def stop(self):
+        print("Thread Stopped")
+        self.terminate()
 
 # ===============================
 # Creación de la Clase Principal
@@ -122,6 +146,16 @@ class InicioSistema(QMainWindow):
         self.worker2.update_peso2.connect(self.moduloVentasBeneficiado.evt_actualizar_peso2)
         self.worker2.update_estado2.connect(self.moduloVentasBeneficiado.evt_actualizar_estado2)
         self.worker2.update_baliza2.connect(self.moduloVentasBeneficiado.evt_actualizar_baliza2)
+        
+        self.fn_declararPuertoArduino()
+        self.workerAR = WorkerThreadAR() # Hilo de Arduino
+        self.workerAR.start() # Iniciamos el hilo
+        
+    def fn_declararPuertoArduino(self):
+        global COMAR
+        
+        puertoArduino = self.conexion.db_seleccionaPuertoArduino()
+        COMAR = str(puertoArduino[0])
     
     def fn_declararPuertoIndicadores(self):
         global COM1

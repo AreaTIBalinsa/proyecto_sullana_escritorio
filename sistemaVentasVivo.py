@@ -7,22 +7,19 @@ from PyQt5.QtGui import *
 from datetime import datetime
 from PyQt5.QtGui import QPixmap
 import time
-import serial
 import win32print
 from datetime import datetime
 import socket
 from PyQt5.QtGui import QMovie, QColor, QFont
 import threading
 import re
+import inicioSistema
 
 # Importación de los Layout
 from View.Ui_sistemaVentasVivo import Ui_MainWindow # La clase Ui_MainWindow del archivo ui_Principal.py 
 
 # Importación de Base de Datos
 import DataBase.database_conexion # El archivo database_conexion.py
-
-# Puertos COM
-COMAR = ""
 
 # BalanzaSeleccionada
 balanzaSeleccionada = 1
@@ -245,27 +242,6 @@ class WorkerThreadSubirDatosBase(QThread):
                     s.close()
             time.sleep(120)
 
-""" Creamos hilo para la ejecución en segundo plano del Arduino, de esta forma
-evitamos que la aplicación se detenga por la lectura constante  """
-
-user_input_arduino = ""
-            
-class WorkerThreadAR(QThread):
-    def run(self):
-        try:
-            COMARDUINO = "COM"+COMAR
-            serialArduino = serial.Serial(COMARDUINO, baudrate=9600, timeout=1)
-            
-            while True:
-                if user_input_arduino != "":
-                    serialArduino.write(str(user_input_arduino).encode('utf8'))
-        except Exception as e:
-            print("WT AR"+str(e))
-    
-    def stop(self):
-        print("Thread Stopped")
-        self.terminate()
-
 """ Creamos hilo para la ejecución en segundo plano de la Fecha y Hora, de esta forma
 evitamos que la aplicación se detenga por la lectura constante """
 
@@ -333,6 +309,7 @@ class Inicio(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.conexion = DataBase.database_conexion.Conectar()
+        self.moduloInicioSistema = inicioSistema
         
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -341,10 +318,6 @@ class Inicio(QMainWindow):
         self.workerFechaHora.start() # Iniciamos el hilo
         self.workerFechaHora.update_fecha.connect(self.mostrar_fecha) # Llamamos a la función mostrar_fecha
         self.workerFechaHora.update_hora.connect(self.mostrar_hora) # Llamamos a la función mostrar_hora
-        
-        self.fn_declararPuertoArduino()
-        self.workerAR = WorkerThreadAR() # Hilo de Arduino
-        self.workerAR.start() # Iniciamos el hilo
         
         self.fn_declararApiURL()
         self.fn_traerDatosServidor() 
@@ -369,8 +342,6 @@ class Inicio(QMainWindow):
         self.ui.frmAplicarDescuento.setHidden(True)
         self.ui.frmIngresarPassword.setHidden(True)
         self.ui.frmAlertaEliminar.setHidden(True)
-        # self.ui.txtCantJabasTotales.setHidden(True)
-        # self.ui.txtCantidadDeJabas.setHidden(True)
         self.ui.frmColores.setHidden(True)
         self.ui.frmIngresarCantidadJabas.setHidden(True)
         self.ui.frmAlertaTipoTrozados.setHidden(True)
@@ -431,7 +402,6 @@ class Inicio(QMainWindow):
     
     def evt_actualizar_peso(self, val):
         global pesoBalanza1
-        global user_input_arduino
         
         if (balanzaSeleccionada == 1) :
             try:
@@ -447,20 +417,19 @@ class Inicio(QMainWindow):
 
     def evt_actualizar_baliza(self, val):    
         global pesoBalanza1
-        global user_input_arduino
 
         try:
 
             val = float(val[1:9])
 
             if (pesoBalanza1 == False and float(val)> 0.5):
-                user_input_arduino = "c"
+                self.moduloInicioSistema.user_input_arduino = "c"
             else:
-                user_input_arduino = "g"
+                self.moduloInicioSistema.user_input_arduino = "g"
             
             if (pesoBalanza1 == True and float(val) < 0.5):
                 pesoBalanza1 = False
-                user_input_arduino = "e"
+                self.moduloInicioSistema.user_input_arduino = "e"
            
         except ValueError:
            pass
@@ -477,7 +446,6 @@ class Inicio(QMainWindow):
             
     def evt_actualizar_peso2(self, val):
         global pesoBalanza2
-        global user_input_arduino
         
         if (balanzaSeleccionada == 2) :
             try:
@@ -503,20 +471,19 @@ class Inicio(QMainWindow):
 
     def evt_actualizar_baliza2(self, val):    
         global pesoBalanza2
-        global user_input_arduino
 
         try:
 
             val = float(val[1:9])
 
             if (pesoBalanza2 == False and float(val)> 0.5):
-                user_input_arduino = "d"
+                self.moduloInicioSistema.user_input_arduino = "d"
             else:
-                user_input_arduino = "h"
+                self.moduloInicioSistema.user_input_arduino = "h"
             
             if (pesoBalanza2 == True and float(val) < 0.5):
                 pesoBalanza2 = False
-                user_input_arduino = "f"
+                self.moduloInicioSistema.user_input_arduino = "f"
            
         except ValueError:
            pass
@@ -1328,13 +1295,6 @@ class Inicio(QMainWindow):
         nombreOctavaEspecie_formateado = " \n ".join(nombreOctavaEspecie.split())
         self.ui.btnDescPolloMaltratado.setText("{} (8)".format(nombreOctavaEspecie_formateado))
         self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie, nombresEspecies[9][1]))
-
-        
-    def fn_declararPuertoArduino(self):
-        global COMAR
-        
-        puertoArduino = self.conexion.db_seleccionaPuertoArduino()
-        COMAR = str(puertoArduino[0])
         
     def fn_declararApiURL(self):
         
@@ -1589,7 +1549,7 @@ class Inicio(QMainWindow):
         
         codCliente = 0
         
-        self.ui.txtCantJabasTotales.setText("{}".format(0))
+        self.ui.txtCantJabasTotales.setText("{} Uds.".format(0))
                             
         self.ui.lblKgYugoVivo.setText("{:.2f} Kg".format(0))
         self.ui.lblKgYugoPelado.setText("{:.2f} Kg".format(0))
@@ -1612,9 +1572,6 @@ class Inicio(QMainWindow):
         self.ui.txtCantGallo.setText("{} Uds.".format(0))
         self.ui.txtCantPolloMaltratado.setText("{} Uds.".format(0))
         self.ui.txtCantPolloTrozado.setText("{} Uds.".format(0))
-        
-        self.ui.txtCantJabasTotales.setHidden(False)
-        self.ui.txtCantidadDeJabas.setHidden(False)
         
         tablaDePesos = self.ui.tblDetallePesadas
         tablaDePesos.clearContents()
@@ -1860,7 +1817,6 @@ class Inicio(QMainWindow):
     def fn_registrarPesada(self):
         global pesoNeto
         global cantidadRegistro
-        global user_input_arduino
         global pesoBalanza1
         global pesoBalanza2
         global horaPeso
@@ -1923,15 +1879,15 @@ class Inicio(QMainWindow):
         self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioCliente,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
         
         if balanzaSeleccionada == 1:
-            user_input_arduino = "agi"
+            self.moduloInicioSistema.user_input_arduino = "agi"
             time.sleep(1)
-            user_input_arduino = "k"
+            self.moduloInicioSistema.user_input_arduino = "k"
             pesoBalanza1 = True
             
         elif balanzaSeleccionada == 2:
-            user_input_arduino = "bhj"
+            self.moduloInicioSistema.user_input_arduino = "bhj"
             time.sleep(1)
-            user_input_arduino = "l"
+            self.moduloInicioSistema.user_input_arduino = "l"
             pesoBalanza2 = True  
                   
         self.fn_listarVenta()
@@ -1993,7 +1949,6 @@ class Inicio(QMainWindow):
     def fn_registrarDescuento(self):
         global pesoNeto
         global cantidadRegistro
-        global user_input_arduino
         global pesoBalanza1
         global pesoBalanza2
         global horaPeso
@@ -2009,15 +1964,15 @@ class Inicio(QMainWindow):
         self.conexion.db_registrarPesadas(numProceso,idEspecieDesc,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioClienteDesc,pesoNetoJabas,numeroJabasPes,numeroCubetasPes,estadoPeso,estadoWebPeso,tipoCubetas,coloresJabas,observacionPes)
         coloresJabas = ""
         if balanzaSeleccionada == 1:
-            user_input_arduino = "agi"
+            self.moduloInicioSistema.user_input_arduino = "agi"
             time.sleep(1)
-            user_input_arduino = "k"
+            self.moduloInicioSistema.user_input_arduino = "k"
             pesoBalanza1 = True
             
         elif balanzaSeleccionada == 2:
-            user_input_arduino = "bhj"
+            self.moduloInicioSistema.user_input_arduino = "bhj"
             time.sleep(1)
-            user_input_arduino = "l"
+            self.moduloInicioSistema.user_input_arduino = "l"
             pesoBalanza2 = True 
         
         self.fn_listarVenta()
@@ -2092,9 +2047,6 @@ class Inicio(QMainWindow):
         
         frmInicioProceso = False
         listoParaAccionar = False
-        
-        self.ui.txtCantJabasTotales.setHidden(True)
-        self.ui.txtCantidadDeJabas.setHidden(True)
         
         if codCliente != 0:
             pesosListarTabla = self.conexion.db_listarPesosTabla(numProceso,codCliente)
@@ -2205,8 +2157,6 @@ class Inicio(QMainWindow):
         pesoKgDorso = pesoKgDorsoSecun
         pesoKgOtros = pesoKgOtrosSecun
         
-        self.ui.txtCantidadDeJabas.setHidden(False)
-        self.ui.txtCantJabasTotales.setHidden(False)
         self.ui.txtCantJabasTotales.setText("{} {}".format(totalDeJabas, "Ud." if totalDeJabas == 1 else "Uds."))
                             
         self.ui.lblKgYugoVivo.setText("{:.2f} Kg".format(totalPesoPrimerEspecie))

@@ -2409,7 +2409,7 @@ class Inicio(QMainWindow):
         if contarJabas > 0 :
             
             file.write("\n")
-            file.write(" CUBETAS O JABAS:\n")
+            file.write(" TARA:\n")
             file.write("========================================\n")
             
             for item in datosTicket:

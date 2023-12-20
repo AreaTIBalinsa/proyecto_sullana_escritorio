@@ -7,6 +7,8 @@ import sys
 import sistemaVentasVivo
 import sistemaVentasBeneficiado
 import serial
+import time
+import socket
 
 # Importación de Base de Datos
 import DataBase.database_conexion # El archivo database_conexion.py
@@ -99,6 +101,28 @@ class WorkerThreadAR(QThread):
     def stop(self):
         print("Thread Stopped")
         self.terminate()
+        
+""" Creamos hilo para la ejecución en segundo plano para subir los datos al servidor """
+
+class WorkerThreadSubirDatosBase(QThread):
+    # Tarea a ejecutarse cada determinado tiempo.
+    def run(self):
+        while True:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(5)
+            try:
+                s.connect(("www.google.com", 80))
+            except (socket.gaierror, socket.timeout):
+                print("Sin conexión a internet")
+            else:
+                print("Con conexión a internet")
+                try:
+                    self.conexion = DataBase.database_conexion.Conectar()
+                except Exception as e:
+                    print(f"Error al interactuar con la base de datos: {e}")
+                else:
+                    s.close()
+            time.sleep(120)
 
 # ===============================
 # Creación de la Clase Principal
@@ -151,6 +175,34 @@ class InicioSistema(QMainWindow):
         self.workerAR = WorkerThreadAR() # Hilo de Arduino
         self.workerAR.start() # Iniciamos el hilo
         
+        self.fn_declararApiURL()
+        self.fn_traerDatosServidor() 
+        self.workerBase = WorkerThreadSubirDatosBase() # Actualización Base de Datos de Local a Servidor
+        self.workerBase.start()
+        
+    def fn_traerDatosServidor(self):
+        s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s2.settimeout(5)
+        try:
+            s2.connect(("www.google.com", 80))
+        except (socket.gaierror, socket.timeout):
+            print("Sin conexión a internet")
+        else:
+            print("Con conexión a internet")
+            try:
+                time.sleep(3)
+                print("Exito al interactuar con la base de datos")
+            except Exception as e:
+                print(f"Error al interactuar con la base de datos: {e}")
+            else:
+                s2.close()
+            
+    def fn_declararApiURL(self):
+        
+        apiURL = self.conexion.db_seleccionaApiURL()
+        DataBase.database_conexion.URLSERVIDOR = str(apiURL[0][0])
+        DataBase.database_conexion.URLLOCAL = str(apiURL[0][1])  
+        
     def fn_declararPuertoArduino(self):
         global COMAR
         
@@ -166,6 +218,15 @@ class InicioSistema(QMainWindow):
         COM2 = str(puertoIndicadores[0][1])
         
     def fn_cerrarPrograma(self):
+        # Cerrar la instancia de Ventas en Vivo si existe
+        if self.moduloVentasVivo and self.moduloVentasVivo.isVisible():
+            self.moduloVentasVivo.close()
+
+        # Cerrar la instancia de Ventas Beneficiado si existe
+        if self.moduloVentasBeneficiado and self.moduloVentasBeneficiado.isVisible():
+            self.moduloVentasBeneficiado.close()
+
+        # Cerrar la ventana principal
         self.close()
     
     def fn_minimizarPrograma(self):

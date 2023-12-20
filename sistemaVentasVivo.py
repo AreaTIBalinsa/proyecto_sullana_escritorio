@@ -8,7 +8,6 @@ from datetime import datetime
 from PyQt5.QtGui import QPixmap
 import time
 import win32print
-from datetime import datetime
 import socket
 from PyQt5.QtGui import QMovie, QColor, QFont
 import threading
@@ -220,28 +219,6 @@ class LetrasWidget(QWidget):
                 label.setAlignment(Qt.AlignCenter)
                 layout.addWidget(label)
 
-""" Creamos hilo para la ejecución en segundo plano para subir los datos al servidor """
-
-class WorkerThreadSubirDatosBase(QThread):
-    # Tarea a ejecutarse cada determinado tiempo.
-    def run(self):
-        while True:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(5)
-            try:
-                s.connect(("www.google.com", 80))
-            except (socket.gaierror, socket.timeout):
-                print("Sin conexión a internet")
-            else:
-                print("Con conexión a internet")
-                try:
-                    self.conexion = DataBase.database_conexion.Conectar()
-                except Exception as e:
-                    print(f"Error al interactuar con la base de datos: {e}")
-                else:
-                    s.close()
-            time.sleep(120)
-
 """ Creamos hilo para la ejecución en segundo plano de la Fecha y Hora, de esta forma
 evitamos que la aplicación se detenga por la lectura constante """
 
@@ -320,10 +297,6 @@ class Inicio(QMainWindow):
         self.workerFechaHora.update_fecha.connect(self.mostrar_fecha) # Llamamos a la función mostrar_fecha
         self.workerFechaHora.update_hora.connect(self.mostrar_hora) # Llamamos a la función mostrar_hora
         
-        self.fn_declararApiURL()
-        self.fn_traerDatosServidor() 
-        """ self.workerBase = WorkerThreadSubirDatosBase() # Actualización Base de Datos de Local a Servidor
-        self.workerBase.start() """
         threadBtn = threading.Thread(target=self.fn_temporizadorBtn)
         threadBtn.start()
 
@@ -1295,13 +1268,7 @@ class Inicio(QMainWindow):
         self.ui.btnDescGallo.setText("{} (7)".format(nombreSeptimaEspecie))
         nombreOctavaEspecie_formateado = " \n ".join(nombreOctavaEspecie.split())
         self.ui.btnDescPolloMaltratado.setText("{} (8)".format(nombreOctavaEspecie_formateado))
-        self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie, nombresEspecies[9][1]))
-        
-    def fn_declararApiURL(self):
-        
-        apiURL = self.conexion.db_seleccionaApiURL()
-        DataBase.database_conexion.URLSERVIDOR = str(apiURL[0][0])
-        DataBase.database_conexion.URLLOCAL = str(apiURL[0][1])        
+        self.ui.btnDescPolloTrozado.setText("{} \n {} (9)".format(nombreNovenaEspecie, nombresEspecies[9][1])) 
         
     def fn_declaraPassword(self):
         global passwordEliminar

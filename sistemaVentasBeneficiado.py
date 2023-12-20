@@ -299,11 +299,13 @@ class WorkerThreadFechaHora(QThread):
 
 class Inicio(QMainWindow):
     
+    _instancia_conexion = DataBase.database_conexion.Conectar()
+    
     def __init__(self):
         super(Inicio, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.conexion = DataBase.database_conexion.Conectar()
+        self.conexion = self._instancia_conexion
         self.moduloInicioSistema = inicioSistema
         
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)

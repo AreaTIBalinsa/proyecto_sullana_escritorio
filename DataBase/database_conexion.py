@@ -5,14 +5,25 @@ import json
 URLSERVIDOR=""
 URLLOCAL = ""
 
-class Conectar():
-    def __init__(self):
-        # Conexion para MySql
-        self.conexionsql = mysql.connector.connect(host='localhost',
-                                        user='root',
-                                        password='',
-                                        database='bd_proyectosullana',
-                                        port='3306')
+class Conectar:
+    _instancia = None
+
+    def __new__(cls):
+        if cls._instancia is None:
+            cls._instancia = super(Conectar, cls).__new__(cls)
+            # Configuración de la conexión a la base de datos
+            cls._instancia.conexionsql = mysql.connector.connect(
+                host='localhost',
+                user='root',
+                password='',
+                database='bd_proyectosullana',
+                port='3306'
+            )
+        return cls._instancia
+
+    def cerrar_conexion(self):
+        if self.conexionsql.is_connected():
+            self.conexionsql.close()
         
     def db_seleccionaApiURL(self):
         cursor = self.conexionsql.cursor()

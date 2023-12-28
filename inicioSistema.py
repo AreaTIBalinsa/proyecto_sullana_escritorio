@@ -22,7 +22,7 @@ appVentaBeneficiado = False
 appVentaVivo = False
 user_input_arduino = ""
 
-"""Creamos hilo para la ejecución en segundo plano del Indicador , de esta forma
+""" Creamos hilo para la ejecución en segundo plano del Indicador , de esta forma
 evitamos que la aplicación se detenga por la lectura constante """
 
 class WorkerThread(QThread):
@@ -51,7 +51,7 @@ class WorkerThread(QThread):
         print("Thread Stopped")
         self.terminate()
 
-"""Creamos hilo para la ejecución en segundo plano del Indicador , de esta forma
+""" Creamos hilo para la ejecución en segundo plano del Indicador, de esta forma
 evitamos que la aplicación se detenga por la lectura constante """
 
 class WorkerThread2(QThread):
@@ -122,7 +122,7 @@ class WorkerThreadSubirDatosBase(QThread):
                     print(f"Error al interactuar con la base de datos: {e}")
                 else:
                     s.close()
-            time.sleep(120)
+            time.sleep(12000)
 
 # ===============================
 # Creación de la Clase Principal

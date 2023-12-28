@@ -2044,52 +2044,105 @@ class Inicio(QMainWindow):
                                 data = "{:02}:{:02}:{:02}".format(hours, minutes, seconds)
                                 
                             if column_number == 4 : # Columna de ""
-                                data = row_data[4] - row_data[12]
+                                if row_data[4] > 0 :
+                                    data = row_data[4] - row_data[12]
+                                else:
+                                    data = row_data[4] + row_data[12]
                             
                             if column_number == 2 and row_data[2] is None and row_data[8] > 0: # Columna de "Promedio"
                                 data = (row_data[4] / row_data[8])*-1
                                 
                             if column_number == 3 and row_data[10] == 1: # Columna de "idEspecie" y columna de "estadoPes"
                                 if data == nombrePrimerEspecie:
-                                    totalPesoPrimerEspecie += (row_data[4]-row_data[12]) # Columna de "pesoNetoPes"
-                                    totalCantidadPrimerEspecie += row_data[5] # Columna de "cantidadPes"
+                                    if row_data[4] > 0 :
+                                        totalPesoPrimerEspecie += (row_data[4]-row_data[12]) # Columna de "pesoNetoPes"
+                                    else:
+                                        totalPesoPrimerEspecie += (row_data[4]+row_data[12]) # Columna de "pesoNetoPes"
+                                    
+                                    totalCantidadPrimerEspecie += row_data[5] # Columna de "cantidadPes"  
                                 elif data == nombreSegundaEspecie:
-                                    totalPesoSegundaEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoSegundaEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoSegundaEspecie += (row_data[4]+row_data[12])
+                                    
                                     totalCantidadSegundaEspecie += row_data[5]
                                 elif data == nombreTerceraEspecie:
-                                    totalPesoTerceraEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoTerceraEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoTerceraEspecie += (row_data[4]+row_data[12])
+                                         
                                     totalCantidadTerceraEspecie += row_data[5]
                                 elif data == nombreCuartaEspecie:
-                                    totalPesoCuartaEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoCuartaEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoCuartaEspecie += (row_data[4]+row_data[12])
+                                        
                                     totalCantidadCuartaEspecie += row_data[5]
                                 elif data == nombreQuintaEspecie:
-                                    totalPesoQuintaEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoQuintaEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoQuintaEspecie += (row_data[4]+row_data[12])
+                                        
                                     totalCantidadQuintaEspecie += row_data[5]
                                 elif data == nombreSextaEspecie:
-                                    totalPesoSextaEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoSextaEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoSextaEspecie += (row_data[4]+row_data[12])
+                                        
                                     totalCantidadSextaEspecie += row_data[5]
                                 elif data == nombreSeptimaEspecie:
-                                    totalPesoSeptimaEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoSeptimaEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoSeptimaEspecie += (row_data[4]+row_data[12])
+                                        
                                     totalCantidadSeptimaEspecie += row_data[5]
                                 elif data == nombreOctavaEspecie:
-                                    totalPesoOctavaEspecie += (row_data[4]-row_data[12])
+                                    if row_data[4] > 0 :
+                                        totalPesoOctavaEspecie += (row_data[4]-row_data[12])
+                                    else:
+                                        totalPesoOctavaEspecie += (row_data[4]+row_data[12])
+                                        
                                     totalCantidadOctavaEspecie += row_data[5]
                                     
                                 if data == nombreDecimaEspecie or data == nombreDecimaPrimeraEspecie or data == nombreDecimaSegundaEspecie or data == nombreDecimaTerceraEspecie or data == nombreDecimaCuartaEspecie or data == nombreDecimaQuintaOtrasEspecies:
                                     totalCantidadNovenaEspecie += row_data[5]
                                     
                                 if data == nombreDecimaEspecie:
-                                    pesoKgPechugaSecun += float(row_data[4] - row_data[12])
+                                    if row_data[4] > 0 :
+                                        pesoKgPechugaSecun += float(row_data[4] - row_data[12])
+                                    else:
+                                        pesoKgPechugaSecun += float(row_data[4] + row_data[12])
                                 elif data == nombreDecimaPrimeraEspecie:
-                                    pesoKgPiernaSecun += float(row_data[4] - row_data[12])
+                                    if row_data[4] > 0 :
+                                        pesoKgPiernaSecun += float(row_data[4] - row_data[12])
+                                    else:
+                                        pesoKgPiernaSecun += float(row_data[4] + row_data[12])
                                 elif data == nombreDecimaSegundaEspecie:
-                                    pesoKgAlasSecun += float(row_data[4] - row_data[12])
+                                    if row_data[4] > 0 :
+                                        pesoKgAlasSecun += float(row_data[4] - row_data[12])
+                                    else:
+                                        pesoKgAlasSecun += float(row_data[4] + row_data[12])
                                 elif data == nombreDecimaTerceraEspecie:
-                                    pesoKgMenudenciaSecun += float(row_data[4] - row_data[12])
+                                    if row_data[4] > 0 :
+                                        pesoKgMenudenciaSecun += float(row_data[4] - row_data[12])
+                                    else:
+                                        pesoKgMenudenciaSecun += float(row_data[4] + row_data[12])
                                 elif data == nombreDecimaCuartaEspecie:
-                                    pesoKgDorsoSecun += float(row_data[4] - row_data[12])
+                                    if row_data[4] > 0 :
+                                        pesoKgDorsoSecun += float(row_data[4] - row_data[12])
+                                    else:
+                                        pesoKgDorsoSecun += float(row_data[4] + row_data[12])
                                 elif data == nombreDecimaQuintaOtrasEspecies:
-                                    pesoKgOtrosSecun += float(row_data[4] - row_data[12])
+                                    if row_data[4] > 0 :
+                                        pesoKgOtrosSecun += float(row_data[4] - row_data[12])
+                                    else:
+                                        pesoKgOtrosSecun += float(row_data[4] + row_data[12])
                                 
                                 totalCantidadTotalEspecies += row_data[5]
                                 
@@ -2185,7 +2238,6 @@ class Inicio(QMainWindow):
         reporteTotalCantidadSegundaEspecie = 0
         reporteTotalCantidadTerceraEspecie = 0
         reporteTotalCantidadCuartaEspecie = 0
-        
         reporteTotalCantidadQuintaEspecie = 0
         reporteTotalCantidadSextaEspecie = 0
         reporteTotalCantidadSeptimaEspecie = 0
@@ -2201,7 +2253,6 @@ class Inicio(QMainWindow):
         reporteTotalPesoSegundaEspecie = 0
         reporteTotalPesoTerceraEspecie = 0
         reporteTotalPesoCuartaEspecie = 0
-        
         reporteTotalPesoQuintaEspecie = 0
         reporteTotalPesoSextaEspecie = 0
         reporteTotalPesoSeptimaEspecie = 0
@@ -2212,6 +2263,21 @@ class Inicio(QMainWindow):
         reporteTotalPesoDecimaTerceraEspecie = 0
         reporteTotalPesoDecimaCuartaEspecie = 0
         reporteTotalPesoDecimaQuintaEspecie = 0
+        
+        precioPrimeraEspecieRep = 0
+        precioSegundaEspecieRep = 0
+        precioTerceraEspecieRep = 0
+        precioCuartaEspecieRep = 0
+        precioQuintaEspecieRep = 0
+        precioSextaEspecieRep = 0
+        precioSeptimaEspecieRep = 0
+        precioOctavaEspecieRep = 0
+        precioDecimaEspecieRep = 0
+        precioDecimaPrimeraEspecieRep = 0
+        precioDecimaSegundaEspecieRep = 0
+        precioDecimaTerceraEspecieRep = 0
+        precioDecimaCuartaEspecieRep = 0
+        precioDecimaQuintaEspecieRep = 0
         
         contarDescuentos = 0
         contarJabas = 0
@@ -2234,15 +2300,88 @@ class Inicio(QMainWindow):
             reporteCantidad = item[2]
             reportePrecio = item[3]
             reporteJabas = item[4]
-            
-            if imprimePrecio == False :
-                reportePrecio = ""
+            reporteJabasPeso = item[5]
+            numeroCubetasPes = item[6]
                 
             if reportePeso < 0:
                 contarDescuentos += 1
                 
-            if reporteJabas > 0:
+            if reporteJabas > 0 or numeroCubetasPes > 0:
                 contarJabas += 1
+                
+            if (reporteEspecie == nombrePrimerEspecie):
+                if reportePeso > 0 :
+                    precioPrimeraEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioPrimeraEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreSegundaEspecie) :
+                if reportePeso > 0 :
+                    precioSegundaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioSegundaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreTerceraEspecie):
+                if reportePeso > 0 :
+                    precioTerceraEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioTerceraEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreCuartaEspecie):
+                if reportePeso > 0 :
+                    precioCuartaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioCuartaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreQuintaEspecie):
+                if reportePeso > 0 :
+                    precioQuintaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioQuintaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreSextaEspecie):
+                if reportePeso > 0 :
+                    precioSextaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioSextaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreSeptimaEspecie):
+                if reportePeso > 0 :
+                    precioSeptimaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioSeptimaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreOctavaEspecie):
+                if reportePeso > 0 :
+                    precioOctavaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioOctavaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreDecimaEspecie):
+                if reportePeso > 0 :
+                    precioDecimaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioDecimaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreDecimaPrimeraEspecie):
+                if reportePeso > 0 :
+                    precioDecimaPrimeraEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioDecimaPrimeraEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreDecimaSegundaEspecie):
+                if reportePeso > 0 :
+                    precioDecimaSegundaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioDecimaSegundaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreDecimaTerceraEspecie):
+                if reportePeso > 0 :
+                    precioDecimaTerceraEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioDecimaTerceraEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreDecimaCuartaEspecie):
+                if reportePeso > 0 :
+                    precioDecimaCuartaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioDecimaCuartaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+            elif (reporteEspecie == nombreDecimaQuintaOtrasEspecies):
+                if reportePeso > 0 :
+                    precioDecimaQuintaEspecieRep += (reportePeso-reporteJabasPeso)*reportePrecio
+                else:
+                    precioDecimaQuintaEspecieRep += (reportePeso+reporteJabasPeso)*reportePrecio
+                    
+            if imprimePrecio == False :
+                reportePrecio = ""
             
             if (reporteEspecie == nombrePrimerEspecie) and reportePeso > 0 :
                 reporteTotalCantidadPrimerEspecie += reporteCantidad
@@ -2313,6 +2452,8 @@ class Inicio(QMainWindow):
                 reporteCantidad = item[2]
                 reportePrecio = item[3]
                 reporteJabas = item[4]
+                reporteJabasPeso = item[5]
+                numeroCubetasPes = item[6]
                 
                 if imprimePrecio == False :
                     reportePrecio = ""
@@ -2320,59 +2461,59 @@ class Inicio(QMainWindow):
                 if (reporteEspecie == nombrePrimerEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadPrimerEspecie += reporteCantidad
                     reporteTotalPesoPrimerEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreSegundaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadSegundaEspecie += reporteCantidad
                     reporteTotalPesoSegundaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreTerceraEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadTerceraEspecie += reporteCantidad
                     reporteTotalPesoTerceraEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreCuartaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadCuartaEspecie += reporteCantidad
                     reporteTotalPesoCuartaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreQuintaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadQuintaEspecie += reporteCantidad
                     reporteTotalPesoQuintaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreSextaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadSextaEspecie += reporteCantidad
                     reporteTotalPesoSextaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreSeptimaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadSeptimaEspecie += reporteCantidad
                     reporteTotalPesoSeptimaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreOctavaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadOctavaEspecie += reporteCantidad
                     reporteTotalPesoOctavaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreDecimaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadDecimaEspecie += reporteCantidad
                     reporteTotalPesoDecimaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreDecimaPrimeraEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadDecimaPrimeraEspecie += reporteCantidad
                     reporteTotalPesoDecimaPrimeraEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreDecimaSegundaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadDecimaSegundaEspecie += reporteCantidad
                     reporteTotalPesoDecimaSegundaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreDecimaTerceraEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadDecimaTerceraEspecie += reporteCantidad
                     reporteTotalPesoDecimaTerceraEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreDecimaCuartaEspecie) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadDecimaCuartaEspecie += reporteCantidad
                     reporteTotalPesoDecimaCuartaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                 elif (reporteEspecie == nombreDecimaQuintaOtrasEspecies) and reportePeso < 0 and reporteJabas == 0:
                     reporteTotalCantidadDecimaQuintaEspecie += reporteCantidad
                     reporteTotalPesoDecimaQuintaEspecie += reportePeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso, reporteCantidad, reportePrecio))
+                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reportePeso+reporteJabasPeso, reporteCantidad, reportePrecio))
                     
         if contarJabas > 0 :
             
@@ -2387,81 +2528,135 @@ class Inicio(QMainWindow):
                 reportePrecio = item[3]
                 reporteJabas = item[4]
                 reporteJabasPeso = item[5]
+                numeroCubetasPes = item[6]
+                
+                if numeroCubetasPes == 0 :
+                    reporteJabas = reporteJabas
+                    
+                if reporteJabas == 0 :
+                    reporteJabas = numeroCubetasPes
                 
                 if imprimePrecio == False :
                     reportePrecio = ""
                 
                 if (reporteEspecie == nombrePrimerEspecie) and reporteJabas != 0:
-                    reporteTotalPesoPrimerEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoPrimerEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoPrimerEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreSegundaEspecie) and reporteJabas != 0:
-                    reporteTotalPesoSegundaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoSegundaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoSegundaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreTerceraEspecie) and reporteJabas != 0:
-                    reporteTotalPesoTerceraEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoTerceraEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoTerceraEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreCuartaEspecie) and reporteJabas != 0:
-                    reporteTotalPesoCuartaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoCuartaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoCuartaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreQuintaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoQuintaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoQuintaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:    
+                        reporteTotalPesoQuintaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreSextaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoSextaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoSextaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoSextaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreSeptimaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoSeptimaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoSeptimaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoSeptimaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreOctavaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoOctavaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoOctavaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoOctavaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreDecimaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoDecimaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoDecimaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoDecimaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreDecimaPrimeraEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoDecimaPrimeraEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoDecimaPrimeraEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoDecimaPrimeraEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreDecimaSegundaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoDecimaSegundaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoDecimaSegundaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoDecimaSegundaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreDecimaTerceraEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoDecimaTerceraEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoDecimaTerceraEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoDecimaTerceraEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreDecimaCuartaEspecie) and reporteJabas != 0 :
-                    reporteTotalPesoDecimaCuartaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoDecimaCuartaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoDecimaCuartaEspecie += reporteJabasPeso
                 elif (reporteEspecie == nombreDecimaQuintaOtrasEspecies) and reporteJabas != 0 :
-                    reporteTotalPesoDecimaQuintaEspecie -= reporteJabasPeso
-                    file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    if reportePeso > 0 :
+                        reporteTotalPesoDecimaQuintaEspecie -= reporteJabasPeso
+                        file.write(" {:<18}{:<8}{:<6}{:<9}\n".format(reporteEspecie, reporteJabasPeso, reporteJabas, reportePrecio))
+                    else:
+                        reporteTotalPesoDecimaQuintaEspecie += reporteJabasPeso
                 
         
         file.write("\n")
         file.write(" TOTALES :           \n")
         file.write("========================================\n")
-        file.write(" PRODUCTO          Kg.     CANTIDAD     \n")
+        # file.write(" PRODUCTO          Kg.     CANTIDAD     \n")
+        file.write(" {:<18}{:<7}{:<6}{:<10}\n".format("PRODUCTO", "Kg.", "CANT.", precio))
         file.write("========================================\n")
 
         especies_info = [
-            (nombrePrimerEspecie, reporteTotalPesoPrimerEspecie, reporteTotalCantidadPrimerEspecie),
-            (nombreSegundaEspecie, reporteTotalPesoSegundaEspecie, reporteTotalCantidadSegundaEspecie),
-            (nombreTerceraEspecie, reporteTotalPesoTerceraEspecie, reporteTotalCantidadTerceraEspecie),
-            (nombreCuartaEspecie, reporteTotalPesoCuartaEspecie, reporteTotalCantidadCuartaEspecie),
-            (nombreQuintaEspecie, reporteTotalPesoQuintaEspecie, reporteTotalCantidadQuintaEspecie),
-            (nombreSextaEspecie, reporteTotalPesoSextaEspecie, reporteTotalCantidadSextaEspecie),
-            (nombreSeptimaEspecie, reporteTotalPesoSeptimaEspecie, reporteTotalCantidadSeptimaEspecie),
-            (nombreOctavaEspecie, reporteTotalPesoOctavaEspecie, reporteTotalCantidadOctavaEspecie),
-            (nombreDecimaEspecie, reporteTotalPesoDecimaEspecie, reporteTotalCantidadDecimaEspecie),
-            (nombreDecimaPrimeraEspecie, reporteTotalPesoDecimaPrimeraEspecie, reporteTotalCantidadDecimaPrimeraEspecie),
-            (nombreDecimaSegundaEspecie, reporteTotalPesoDecimaSegundaEspecie, reporteTotalCantidadDecimaSegundaEspecie),
-            (nombreDecimaTerceraEspecie, reporteTotalPesoDecimaTerceraEspecie, reporteTotalCantidadDecimaTerceraEspecie),
-            (nombreDecimaCuartaEspecie, reporteTotalPesoDecimaCuartaEspecie, reporteTotalCantidadDecimaCuartaEspecie),
-            (nombreDecimaQuintaOtrasEspecies, reporteTotalPesoDecimaQuintaEspecie, reporteTotalCantidadDecimaQuintaEspecie),
+            (nombrePrimerEspecie, reporteTotalPesoPrimerEspecie, reporteTotalCantidadPrimerEspecie, precioPrimeraEspecieRep),
+            (nombreSegundaEspecie, reporteTotalPesoSegundaEspecie, reporteTotalCantidadSegundaEspecie, precioSegundaEspecieRep),
+            (nombreTerceraEspecie, reporteTotalPesoTerceraEspecie, reporteTotalCantidadTerceraEspecie, precioTerceraEspecieRep),
+            (nombreCuartaEspecie, reporteTotalPesoCuartaEspecie, reporteTotalCantidadCuartaEspecie, precioCuartaEspecieRep),
+            (nombreQuintaEspecie, reporteTotalPesoQuintaEspecie, reporteTotalCantidadQuintaEspecie, precioQuintaEspecieRep),
+            (nombreSextaEspecie, reporteTotalPesoSextaEspecie, reporteTotalCantidadSextaEspecie, precioSextaEspecieRep),
+            (nombreSeptimaEspecie, reporteTotalPesoSeptimaEspecie, reporteTotalCantidadSeptimaEspecie, precioSeptimaEspecieRep),
+            (nombreOctavaEspecie, reporteTotalPesoOctavaEspecie, reporteTotalCantidadOctavaEspecie, precioOctavaEspecieRep),
+            (nombreDecimaEspecie, reporteTotalPesoDecimaEspecie, reporteTotalCantidadDecimaEspecie, precioDecimaEspecieRep),
+            (nombreDecimaPrimeraEspecie, reporteTotalPesoDecimaPrimeraEspecie, reporteTotalCantidadDecimaPrimeraEspecie, precioDecimaPrimeraEspecieRep),
+            (nombreDecimaSegundaEspecie, reporteTotalPesoDecimaSegundaEspecie, reporteTotalCantidadDecimaSegundaEspecie,precioDecimaSegundaEspecieRep),
+            (nombreDecimaTerceraEspecie, reporteTotalPesoDecimaTerceraEspecie, reporteTotalCantidadDecimaTerceraEspecie, precioDecimaTerceraEspecieRep),
+            (nombreDecimaCuartaEspecie, reporteTotalPesoDecimaCuartaEspecie, reporteTotalCantidadDecimaCuartaEspecie, precioDecimaCuartaEspecieRep),
+            (nombreDecimaQuintaOtrasEspecies, reporteTotalPesoDecimaQuintaEspecie, reporteTotalCantidadDecimaQuintaEspecie, precioDecimaQuintaEspecieRep),
         ]
 
         for especie_info in especies_info:
-            nombre_especie, peso_especie, cantidad_especie = especie_info
+            nombre_especie, peso_especie, cantidad_especie, precio_especie = especie_info
             if peso_especie != 0 or cantidad_especie != 0:
-                file.write(" {:<18}{:<10.2f}{:<9}\n".format(nombre_especie, peso_especie, cantidad_especie))
+                if imprimePrecio == False :
+                    precio_especie = ""
+                else :
+                    precio_especie = round(precio_especie,2)
+                file.write(" {:<18}{:<8.2f}{:<5}{:<10}\n".format(nombre_especie, peso_especie, cantidad_especie, precio_especie))
 
         file.write("========================================\n")
         file.write("===       GRACIAS POR SU COMPRA      ===\n")

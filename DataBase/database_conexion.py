@@ -205,7 +205,7 @@ class Conectar:
     def db_traerDatosReporte(self,numProceso,codigoCli):
         cursor = self.conexionsql.cursor()
         sql = """SELECT
-                    nombreEspecie, TRUNCATE(pesoNetoPes, 2), cantidadPes, precioPes, numeroJabasPes, pesoNetoJabas
+                    nombreEspecie, TRUNCATE(pesoNetoPes, 2), cantidadPes, precioPes, numeroJabasPes, pesoNetoJabas, numeroCubetasPes
                 FROM
                     tb_pesadas p
                     INNER JOIN tb_procesos ON p.idProceso = tb_procesos.idProceso
@@ -266,10 +266,10 @@ class Conectar:
         self.conexionsql.commit()
         cursor.close()
         
-    def db_actualizarPesadaVariedad(self, idPesadaEditarOEliminar,numeroJabasPes,coloresJabas,pesoNetoJabas):
+    def db_actualizarPesadaVariedad(self, idPesadaEditarOEliminar,numeroCubetasPes,coloresJabas,pesoNetoJabas):
         cursor = self.conexionsql.cursor()
         sql = "UPDATE tb_pesadas SET tipoCubetas = %s, numeroCubetasPes = %s, pesoNetoJabas = %s WHERE idPesada = %s"
-        cursor.execute(sql, (coloresJabas,numeroJabasPes,pesoNetoJabas,idPesadaEditarOEliminar))
+        cursor.execute(sql, (coloresJabas,numeroCubetasPes,pesoNetoJabas,idPesadaEditarOEliminar))
         self.conexionsql.commit()
         cursor.close()
         
